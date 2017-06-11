@@ -7,7 +7,7 @@
 #' @param data Used with `sw_augment` only.
 #' `NULL` by default which simply returns augmented columns only.
 #' User can supply the original data, which returns the data + augmented columns.
-#' @param index_rename Used with `sw_augment` only.
+#' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
 #'
 #'
@@ -113,14 +113,13 @@ sw_glance.bats <- function(x, ...) {
 #'   * `.resid`: The residual values from the model
 #'
 #' @export
-sw_augment.bats <- function(x, data = NULL, index_rename = "index", ...) {
+sw_augment.bats <- function(x, data = NULL, rename_index = "index", ...) {
 
-    ret <- suppressWarnings(
-        sw_tbl(cbind(.actual = x$y, .fitted = x$fitted.values, .resid = x$errors),
-               index_rename = index_rename)
-        )
+    ret <- tk_tbl(cbind(.actual = x$y, .fitted = x$fitted.values, .resid = x$errors),
+               rename_index = rename_index, silent = TRUE)
 
-    ret <- sw_augment_columns(ret, data, index_rename)
+
+    ret <- sw_augment_columns(ret, data, rename_index)
 
     return(ret)
 

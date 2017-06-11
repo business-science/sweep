@@ -12,7 +12,7 @@ modeling of time series}
 
 \method{sw_glance}{ets}(x, ...)
 
-\method{sw_augment}{ets}(x, data = NULL, index_rename = "index", ...)
+\method{sw_augment}{ets}(x, data = NULL, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "ets"}
@@ -23,7 +23,7 @@ modeling of time series}
 \code{NULL} by default which simply returns augmented columns only.
 User can supply the original data, which returns the data + augmented columns.}
 
-\item{index_rename}{Used with \code{sw_augment} only.
+\item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
 }
 \value{

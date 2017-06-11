@@ -4,29 +4,18 @@
 \name{sweep_package}
 \alias{sweep_package}
 \alias{sweep_package-package}
-\title{sweep: A "tidy" toolkit for forecasting and time series analysis}
+\title{sweep: Extending broom}
 \description{
-The \code{sweep} package is a swiss army knife for working with time-series
-within the "tidyverse".
-While the package is geared towards the workflow required to perform
-forecasts using Rob Hyndman's \code{forecast} package,
-it contains elements that can help when performing time series analysis
-using tibbles ("tidy" data frames).
+sweep: Extending broom
 }
 \details{
-The goal of the \code{sweep} package is to "tidy" up the
-forecasting workflow. The \code{sweep} package provides the following tools:
-\enumerate{
-\item It provides functions to easily coerce between
-"tibbles" ("tidy" data frames) and the various time series data structures.
-Refer to \code{\link[=sw_tbl]{sw_tbl()}}, \code{\link[=sw_xts]{sw_xts()}}, \code{\link[=sw_zoo]{sw_zoo()}}, \code{\link[=sw_zooreg]{sw_zooreg()}}, and \code{\link[=sw_ts]{sw_ts()}}.
-\item It extends the \code{broom} package by providing \code{\link[=sw_tidy]{sw_tidy()}}, \code{\link[=sw_glance]{sw_glance()}},
-\code{\link[=sw_augment]{sw_augment()}}, \code{\link[=sw_tidy_decomp]{sw_tidy_decomp()}} functions for various time-series models such as
-\code{Arima}, \code{ets}, \code{HoltzWinters}, \code{tbats}, etc.
-\item It provides the \code{\link[=sw_sweep]{sw_sweep()}} function which coerces
-\code{forecast} objects to "tibbles" for easy visualization with \code{ggplot2}
+The \code{sweep} package "tidies" up various
+modeling workflows (e.g. forecasting) that are not currently covered by
+the \code{broom} package. It includes the \code{\link[=sw_tidy]{sw_tidy()}}, \code{\link[=sw_glance]{sw_glance()}},
+and \code{\link[=sw_augment]{sw_augment()}} functions that work in a similar capacity as \code{broom} functions.
+In addition, it provides \code{\link[=sw_tidy_decomp]{sw_tidy_decomp()}} to tidy decompositions, and
+\code{\link[=sw_sweep]{sw_sweep()}} to coerce \code{forecast} objects to "tibbles" for easy visualization with \code{ggplot2}
 and manipulation with \code{dplyr}.
-}
 
 To learn more about \code{sweep}, start with the vignettes:
 \code{browseVignettes(package = "sweep")}

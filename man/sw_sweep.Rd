@@ -4,16 +4,20 @@
 \alias{sw_sweep}
 \title{Turn forecast objects into tibbles.}
 \usage{
-sw_sweep(x, .fitted = TRUE, index_rename = "index", ...)
+sw_sweep(x, fitted = TRUE, rename_index = "index", timekit_idx = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{A time-series forecast of class \code{forecast}.}
 
-\item{.fitted}{Whether or not to return the fitted value in the results}
+\item{fitted}{Whether or not to return the fitted values (model values) in the results}
 
-\item{index_rename}{Enables the index column to be renamed.}
+\item{rename_index}{Enables the index column to be renamed.}
 
-\item{...}{Additional parameters passed to the \code{\link[tibble:as_tibble]{tibble::as_tibble()}} function.}
+\item{timekit_idx}{If timekit index (non-regularized index) is present, uses it
+to develop forecast. Otherwise uses default index.}
+
+\item{...}{Not used.}
 }
 \value{
 Returns a \code{tibble} object.
@@ -29,7 +33,7 @@ and the forecasted values including the point forecast and upper and lower
 confidence intervals.
 A regularized time index is always constructed. If no time index is
 detected, a sequential index is returned as a default.
-The index column name can be changed using the \code{index_rename} argument.
+The index column name can be changed using the \code{rename_index} argument.
 }
 \examples{
 library(forecast)

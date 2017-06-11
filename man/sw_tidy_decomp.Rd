@@ -4,13 +4,13 @@
 \alias{sw_tidy_decomp}
 \title{Coerces decomposed time-series objects to tibble format.}
 \usage{
-sw_tidy_decomp(x, index_rename = "index", ...)
+sw_tidy_decomp(x, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{A time-series object of class \code{stl}, \code{ets}, \code{decomposed.ts}, \code{HoltWinters},
 \code{bats} or \code{tbats}.}
 
-\item{index_rename}{Enables the index column to be renamed.}
+\item{rename_index}{Enables the index column to be renamed.}
 
 \item{...}{Additional parameters passed to the \code{\link[tibble:as_tibble]{tibble::as_tibble()}} function.}
 }
@@ -26,7 +26,7 @@ to coerce time-series objects with decompositions to \code{tibble} objects.
 
 A regularized time index is always constructed. If no time index is
 detected, a sequential index is returned as a default.
-The index column name can be changed using the \code{index_rename} argument.
+The index column name can be changed using the \code{rename_index} argument.
 }
 \examples{
 library(forecast)

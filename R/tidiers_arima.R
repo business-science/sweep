@@ -7,7 +7,7 @@
 #' @param data Used with `sw_augment` only.
 #' `NULL` by default which simply returns augmented columns only.
 #' User can supply the original data, which returns the data + augmented columns.
-#' @param index_rename Used with `sw_augment` only.
+#' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
 #'
 #'
@@ -102,24 +102,22 @@ sw_glance.Arima <- function(x, ...) {
 #'   * `.resid`: The residual values from the model
 #'
 #' @export
-sw_augment.Arima <- function(x, data = NULL, index_rename = "index", ...) {
+sw_augment.Arima <- function(x, data = NULL, rename_index = "index", ...) {
 
     if ("fitted" %in% names(x)) {
         # forecast::Arima
-        ret <- suppressWarnings(
-            sw_tbl(cbind(.actual = x$x, .fitted = x$fitted, .resid = x$residuals),
-                   index_rename = index_rename)
-            )
+        ret <- tk_tbl(cbind(.actual = x$x, .fitted = x$fitted, .resid = x$residuals),
+                   rename_index = rename_index, silent = TRUE)
+
     } else {
         # stats::Arima
         warning("No `.actual` or `.fitted` within stats::arima() models. Use forecast::Arima() if more information is needed.")
-        ret <- suppressWarnings(
-            sw_tbl(x$residuals, index_rename = index_rename) %>%
+        ret <- tk_tbl(x$residuals, rename_index = rename_index, silent = TRUE) %>%
                 dplyr::rename(.resid = value)
-        )
+
     }
 
-    ret <- sw_augment_columns(ret, data, index_rename)
+    ret <- sw_augment_columns(ret, data, rename_index)
 
     return(ret)
 

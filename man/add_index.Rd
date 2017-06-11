@@ -4,12 +4,12 @@
 \alias{add_index}
 \title{Adds a sequential index column to a data frame}
 \usage{
-add_index(ret, index_rename)
+add_index(ret, rename_index)
 }
 \arguments{
 \item{ret}{An object of class tibble}
 
-\item{index_rename}{A variable indicating the index name to be used in the
+\item{rename_index}{A variable indicating the index name to be used in the
 tibble returned}
 }
 \description{

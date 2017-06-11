@@ -25,10 +25,11 @@ knitr::opts_chunk$set(
 library(tidyquant)
 library(sweep)
 library(forecast)
+library(timekit)
 # devtools::load_all() # Travis CI fails on load_all()
 ```
 
-> A "tidy" toolkit for forecasting and time series analysis
+> Extending `broom` to time series forecasting
 
 One of the most powerful benefits of `sweep` is that it helps forecasting at scale within the "tidyverse". There are two common situations:
 
@@ -44,6 +45,7 @@ Before we get started, load the following packages.
 ```{r, eval = F}
 library(forecast)
 library(tidyquant)
+library(timekit)
 library(sweep)
 ```
 
@@ -56,7 +58,7 @@ gas_prices_monthly_raw <- tq_get(
     x    = "GASREGCOVM", 
     get  = "economic.data", 
     from = "1990-01-01", 
-    to   = today()) 
+    to   = "2016-12-31") 
 gas_prices_monthly_raw
 ```
 
@@ -80,7 +82,8 @@ We can now visualize the data.
 gas_prices_monthly %>%
     ggplot(aes(x = date, y = price)) +
     geom_line(color = palette_light()[[1]]) +
-    labs(title = "Gasoline Prices", subtitle = "Monthly Periodicity", x = "", y = "USD") +
+    geom_point(color = palette_light()[[1]]) +
+    labs(title = "Gasoline Prices, Monthly", x = "", y = "USD") +
     scale_y_continuous(labels = scales::dollar) +
     theme_tq()
 ```
@@ -89,8 +92,7 @@ Monthly periodicity might be a bit granular for model fitting. We can easily swi
 
 ```{r}
 gas_prices_quarterly <- gas_prices_monthly %>%
-    tq_transmute(mutate_fun = to.period, period = "quarters") %>%
-    mutate(date = as.yearqtr(date))
+    tq_transmute(mutate_fun = to.period, period = "quarters") 
 gas_prices_quarterly
 ```
 
@@ -99,16 +101,17 @@ Another quick visualization to show the reduction in granularity.
 ```{r}
 gas_prices_quarterly %>%
     ggplot(aes(x = date, y = price)) +
-    geom_line(color = palette_light()[[1]]) +
-    labs(title = "Gasoline Prices", subtitle = "Quarterly Periodicity", x = "", y = "USD") +
+    geom_line(color = palette_light()[[1]], size = 1) +
+    geom_point(color = palette_light()[[1]]) +
+    labs(title = "Gasoline Prices, Quarterly", x = "", y = "USD") +
     scale_y_continuous(labels = scales::dollar) +
-    scale_x_yearqtr() + 
+    scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
     theme_tq()
 ```
 
 # Performing Forecasts Using Multiple Models
 
-In this section we will use three models to forecast Gasoline prices:
+In this section we will use three models to forecast gasoline prices:
 
 1. ARIMA
 2. ETS
@@ -141,9 +144,17 @@ df$params
 Next we apply the functions to the parameters using a special function, `invoke_map()`. The parameter lists in the "params" column are passed to the function in the "f" column. The output is in a nested list-column named "out".
 
 ```{r}
-df %>% 
+df_out <- df %>% 
     mutate(out = invoke_map(f, params))
+df_out
 ```
+
+And, here's the contents of "out", which is the result of mapping a list of functions to a list of parameters. Pretty powerful!
+
+```{r}
+df_out$out
+```
+
 
 Take a minute to understand the conceptual process of the `invoke_map` function and specifically the parameter setup. Once you are comfortable, we can move on to model implementation.
 
@@ -151,16 +162,16 @@ Take a minute to understand the conceptual process of the `invoke_map` function 
 
 We'll need to take the following steps to in an actual forecast model implementation:
 
-1. Coerce the data to time series using `sw_ts()`
+1. Coerce the data to time series 
 2. Build a model list using nested lists
 3. Create the the model data frame
 4. Invoke a function map
 
-This is easier than it sounds. Let's start by coercing the univariate time series with `sw_ts()`.
+This is easier than it sounds. Let's start by coercing the univariate time series with `tk_ts()`.
 
 ```{r}
 gas_prices_quarterly_ts <- gas_prices_quarterly %>% 
-    sw_ts(select = -date, start = c(1990, 3), freq = 4)
+    tk_ts(select = -date, start = c(1990, 3), freq = 4)
 gas_prices_quarterly_ts
 ```
 
@@ -226,37 +237,53 @@ models_tbl_fit %>%
 We can augment the models to get the residuals following the same procedure. We can pipe (`%>%`) the results right into `ggplot()` for plotting. Notice the ARIMA model has the largest residuals especially as the model index increases whereas the bats model has relatively low residuals.
 
 
-```{r}
+```{r, warning=F, fig.height=8}
 models_tbl_fit %>%
-    mutate(augment = map(fit, sw_augment)) %>%
+    mutate(augment = map(fit, sw_augment, rename_index = "date")) %>%
     unnest(augment) %>%
-    ggplot(aes(x = index, y = .resid, group = f)) +
+    ggplot(aes(x = date, y = .resid, group = f)) +
     geom_line(color = palette_light()[[2]]) +
     geom_point(color = palette_light()[[1]]) +
-    geom_ma(n = 6) +
-    facet_wrap(~ f, ncol = 3, scales = "free_y") +
+    geom_smooth(method = "loess") +
+    facet_wrap(~ f, nrow = 3) +
     labs(title = "Residuals Plot") +
     theme_tq()
 ```
 
 
-# Forecasting with sw_sweep
+# Forecasting the model
 
-Creating the forecast for the models is accomplished by mapping the `forecast` function. We can also map `sw_sweep`, which coerces the forecast into tibble format. 
+Creating the forecast for the models is accomplished by mapping the `forecast` function. The next six quarters are forecasted withe the argument `h = 6`. 
 
 ```{r}
 models_tbl_fcast <- models_tbl_fit %>%
-    mutate(fcast = map(fit, forecast, h = 6),
-           sweep = map(fcast, sw_sweep, .fitted = FALSE))
+    mutate(fcast = map(fit, forecast, h = 6))
 models_tbl_fcast
 ```
 
-Last, we can plot the forecast by unnesting the "sweep" column and piping to `ggplot()`.
+# Tidying the forecast
+
+Next, we map `sw_sweep`, which coerces the forecast into the "tidy" tibble format. We set `fitted = FALSE` to remove the model fitted values from the output. We set `timekit_idx = TRUE` to use dates instead of numeric values for the index.
+
+```{r}
+models_tbl_fcast_tidy <- models_tbl_fcast %>%
+    mutate(sweep = map(fcast, sw_sweep, fitted = FALSE, timekit_idx = TRUE, rename_index = "date"))
+models_tbl_fcast_tidy
+```
+
+We can unnest the "sweep" column to get the results of all three models.
+
+```{r}
+models_tbl_fcast_tidy %>%
+    unnest(sweep)
+```
+
+Finally, we can plot the forecasts by unnesting the "sweep" column and piping to `ggplot()`.
 
 ```{r, fig.height=8}
-models_tbl_fcast %>%
+models_tbl_fcast_tidy %>%
     unnest(sweep) %>%
-    ggplot(aes(x = index, y = price, color = key, group = f)) +
+    ggplot(aes(x = date, y = price, color = key, group = f)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
                 fill = "#D5DBFF", color = NA, size = 0) +
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
@@ -264,9 +291,10 @@ models_tbl_fcast %>%
     geom_line(size = 1) +
     facet_wrap(~f, nrow = 3) +
     labs(title = "Gasoline Price Forecasts",
-         subtitle = "Multiple Models: ARIMA, BATS, ETS",
+         subtitle = "Forecasting multiple models with sweep: ARIMA, BATS, ETS",
          x = "", y = "Price") +
     scale_y_continuous(labels = scales::dollar) +
+    scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
     theme_tq() +
     scale_color_tq()
 ```

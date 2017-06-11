@@ -2,16 +2,16 @@
 % Please edit documentation in R/utils-broom.R
 \name{validate_index}
 \alias{validate_index}
-\title{Validates data frame has column named the same name as variable index_rename}
+\title{Validates data frame has column named the same name as variable rename_index}
 \usage{
-validate_index(ret, index_rename)
+validate_index(ret, rename_index)
 }
 \arguments{
 \item{ret}{An object of class tibble}
 
-\item{index_rename}{A variable indicating the index name to be used in the
+\item{rename_index}{A variable indicating the index name to be used in the
 tibble returned}
 }
 \description{
-Validates data frame has column named the same name as variable index_rename
+Validates data frame has column named the same name as variable rename_index
 }

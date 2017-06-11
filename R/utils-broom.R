@@ -4,9 +4,9 @@
 #'
 #' @param ret An object of class tibble
 #' @param data Any time series data that is to be augmented
-#' @param index_rename A variable indicating the index name to be used in the
+#' @param rename_index A variable indicating the index name to be used in the
 #' tibble returned
-sw_augment_columns <- function(ret, data, index_rename) {
+sw_augment_columns <- function(ret, data, rename_index) {
 
     ret_1 <- data
     ret_2 <- ret
@@ -14,9 +14,9 @@ sw_augment_columns <- function(ret, data, index_rename) {
     if (is.null(ret_1)) {
         # No data supplied, return ret_2 with index
 
-        if(!validate_index(ret_2, index_rename)) {
+        if(!validate_index(ret_2, rename_index)) {
             # No index, must add
-            ret <- add_index(ret_2, index_rename)
+            ret <- add_index(ret_2, rename_index)
         } else {
             # Has index, return ret_2
             ret <- ret_2
@@ -25,12 +25,10 @@ sw_augment_columns <- function(ret, data, index_rename) {
         # data supplied, attempt to combine
 
         # Prep ret_1, coerce to tbl, add index
-        ret_1 <- suppressWarnings(
-            sw_tbl(ret_1, index_rename = index_rename)
-            )
-        if (!validate_index(ret_1, index_rename)) {
+        ret_1 <- tk_tbl(ret_1, rename_index = rename_index, silent = TRUE)
+        if (!validate_index(ret_1, rename_index)) {
             # if no index, add index
-            ret_1 <- add_index(ret_1, index_rename)
+            ret_1 <- add_index(ret_1, rename_index)
         }
 
         # Check structure
@@ -40,7 +38,7 @@ sw_augment_columns <- function(ret, data, index_rename) {
         }
 
         # Prep ret_2, drop index column if exists
-        if (validate_index(ret_2, index_rename)) {
+        if (validate_index(ret_2, rename_index)) {
             ret_2 <- ret_2 %>%
                 dplyr::select(-1)
         }
@@ -57,32 +55,32 @@ sw_augment_columns <- function(ret, data, index_rename) {
     return(ret)
 }
 
-#' Validates data frame has column named the same name as variable index_rename
+#' Validates data frame has column named the same name as variable rename_index
 #'
 #' @param ret An object of class tibble
-#' @param index_rename A variable indicating the index name to be used in the
+#' @param rename_index A variable indicating the index name to be used in the
 #' tibble returned
-validate_index <- function(ret, index_rename) {
-    ret_has_index <- index_rename %in% colnames(ret)
+validate_index <- function(ret, rename_index) {
+    ret_has_index <- rename_index %in% colnames(ret)
     return(ret_has_index)
 }
 
 #' Adds a sequential index column to a data frame
 #'
 #' @param ret An object of class tibble
-#' @param index_rename A variable indicating the index name to be used in the
+#' @param rename_index A variable indicating the index name to be used in the
 #' tibble returned
-add_index <- function(ret, index_rename) {
+add_index <- function(ret, rename_index) {
 
     # Auto index
     ret_auto_index <- 1:nrow(ret)
     ret <- ret %>%
-        tibble::add_column(index = ret_auto_index)
-    colnames(ret)[[ncol(ret)]] <- index_rename
+        tibble::add_column(..index = ret_auto_index)
+    colnames(ret)[[ncol(ret)]] <- rename_index
 
     # Rearrange index
     ret <- ret %>%
-        dplyr::select_(index_rename, "dplyr::everything()")
+        dplyr::select_(rename_index, "dplyr::everything()")
 
     return(ret)
 

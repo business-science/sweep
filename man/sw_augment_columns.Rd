@@ -4,14 +4,14 @@
 \alias{sw_augment_columns}
 \title{Augments data}
 \usage{
-sw_augment_columns(ret, data, index_rename)
+sw_augment_columns(ret, data, rename_index)
 }
 \arguments{
 \item{ret}{An object of class tibble}
 
 \item{data}{Any time series data that is to be augmented}
 
-\item{index_rename}{A variable indicating the index name to be used in the
+\item{rename_index}{A variable indicating the index name to be used in the
 tibble returned}
 }
 \description{
