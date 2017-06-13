@@ -162,6 +162,9 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
 
     test <- sw_sweep(fcast, timekit_idx = T, skip_values = ymd("2017-12-01")) %>% tail()
     expect_equal(test$index[[6]], ymd("2018-01-01"))
+
+    test <- sw_sweep(fcast, fitted = T, timekit_idx = T, skip_values = ymd("2017-12-01"))
+    expect_equal(test$index[[nrow(test)]], ymd("2018-01-01"))
 })
 
 

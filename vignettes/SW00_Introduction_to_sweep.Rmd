@@ -122,28 +122,28 @@ Where `sweep` can help is in the evaluation of a model. Expanding on the `broom`
 * `sw_augment()`: Returns the fitted and residuals of the model
 * `sw_tidy_decomp()`: Returns a tidy decomposition from a model
 
-The guide below shows which modeling functions are compatible with which `sweep` tidier functions.
+The guide below shows which model object compatibility with `sweep` tidier functions.
 
 ```{r, echo = F}
 tibble::tribble(
-    ~Function,       ~`sw_tidy()`, ~`sw_glance()`, ~`sw_augment()`, ~`sw_tidy_decomp()`, ~`sw_sweep()`,
-    "ar()",          "",  "",  "", "",   "",
-    "arima()",       "X", "X", "X", "",  "",
-    "Arima()",       "X", "X", "X", "",  "",
-    "ets()",         "X", "X", "X", "X", "",
-    "baggedETS()",   "",  "",  "",  "",  "",
-    "bats()",        "X", "X", "X", "X", "",
-    "tbats()",       "X", "X", "X", "X", "",
-    "nnetar()",      "X", "X", "X", "",  "",
-    "stl()",         "",  "",  "",  "X", "",
-    "HoltWinters()", "X", "X", "X", "X", "",
+    ~Object,       ~`sw_tidy()`, ~`sw_glance()`, ~`sw_augment()`, ~`sw_tidy_decomp()`, ~`sw_sweep()`,
+    "ar",          "",  "",  "", "",   "",
+    "arima",       "X", "X", "X", "",  "",
+    "Arima",       "X", "X", "X", "",  "",
+    "ets",         "X", "X", "X", "X", "",
+    "baggedETS",   "",  "",  "",  "",  "",
+    "bats",        "X", "X", "X", "X", "",
+    "tbats",       "X", "X", "X", "X", "",
+    "nnetar",      "X", "X", "X", "",  "",
+    "stl",         "",  "",  "",  "X", "",
+    "HoltWinters", "X", "X", "X", "X", "",
     "StructTS",      "X", "X", "X", "X", "",
-    "tslm()",        "X", "X", "X", "",  "",
-    "decompose()",   "",  "",  "",  "X", "",
-    "adf.test()",    "X", "X", "",  "",  "",
-    "Box.test()",    "X", "X", "",  "",  "",
-    "kpss.test()",   "X", "X", "",  "",  "",
-    "forecast()",    "",  "",  "",  "",  "X"
+    "tslm",        "X", "X", "X", "",  "",
+    "decompose",   "",  "",  "",  "X", "",
+    "adf.test",    "X", "X", "",  "",  "",
+    "Box.test",    "X", "X", "",  "",  "",
+    "kpss.test",   "X", "X", "",  "",  "",
+    "forecast",    "",  "",  "",  "",  "X"
 ) %>%
     knitr::kable(caption = "Function Compatibility",
                  align = c("l", "c", "c", "c", "c", "c"))
@@ -232,22 +232,22 @@ fcast_ets <- fit_ets %>%
 We'll use the `sw_sweep()` function to coerce a `forecast` into a "tidy" data frame. The `sw_sweep()` function then coerces the `forecast` object into a tibble that can be sent to `ggplot` for visualization. Let's inspect the result.
 
 ```{r}
-sw_sweep(fcast_ets)
+sw_sweep(fcast_ets, fitted = TRUE)
 ```
 
 The tibble returned contains "index", "key" and "value" (or in this case "price") columns in a long or "tidy" format that is ideal for visualization with `ggplot2`. The "index" is in a regularized format (in this case `yearmon`) because the `forecast` package uses `ts` objects. We'll see how we can get back to the original irregularized format (in this case `date`) later. The "key" and "price" columns contains three groups of key-value pairs: 
 
-1. actual: the actual values from the original data
-2. fitted: the model values returned from the `ets()` function
-3. forecast: the predicted values from the `forecast()` function
+1. __actual__: the actual values from the original data
+2. __fitted__: the model values returned from the `ets()` function (excluded by default) 
+3. __forecast__: the predicted values from the `forecast()` function
 
-The `sw_sweep()` function contains an argument `fitted = TRUE` by default meaning that the "fitted" values are returned. We'll toggle this off in the next graph. The remaining columns are the forecast confidence intervals (typically 80 and 95, but this can be changed with `forecast(level = c(80, 95))`). These columns are setup to enable using the `geom_ribbon()` for visualization purposes. 
+The `sw_sweep()` function contains an argument `fitted = FALSE` by default meaning that the model "fitted" values are not returned. We can toggle this on if desired. The remaining columns are the forecast confidence intervals (typically 80 and 95, but this can be changed with `forecast(level = c(80, 95))`). These columns are setup in a wide format to enable using the `geom_ribbon()`. 
 
 
-Let's see how to visualize with `ggplot2`. We can visualize using a combination of `geom_line()` and `geom_ribbon()`. The fitted values can be toggled off setting `fitted = FALSE`, which reduces the complexity of the plot. Note that because we are using a regular time index of the `yearmon` class, we need to add `scale_x_yearmon()`.
+Let's visualize the forecast with `ggplot2`. We'll use a combination of `geom_line()` and `geom_ribbon()`. The fitted values are toggled off by default to reduce the complexity of the plot, but these can be added if desired. Note that because we are using a regular time index of the `yearmon` class, we need to add `scale_x_yearmon()`.
 
 ```{r}
-sw_sweep(fcast_ets, fitted = FALSE) %>%
+sw_sweep(fcast_ets) %>%
     ggplot(aes(x = index, y = price, color = key)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
                 fill = "#D5DBFF", color = NA, size = 0) +
@@ -263,7 +263,7 @@ sw_sweep(fcast_ets, fitted = FALSE) %>%
     theme_tq() 
 ```
 
-Because the `ts` object was created with `tk_ts()` function, it contained a timekit index that was carried with it throughout the forecasting workflow. As a result, we can use the `timekit_idx` argument, which maps the original irregular index (dates) and a generated future index to the regularized time series (yearmon). This results in the ability to return an index of date and datetime, which is not currently possible with the `forecast` objects. Notice that the index is returned as `date` class.
+Because the `ts` object was created with the `tk_ts()` function, it contained a timekit index that was carried with it throughout the forecasting workflow. As a result, we can use the `timekit_idx` argument, which maps the original irregular index (dates) and a generated future index to the regularized time series (yearmon). This results in the ability to return an index of date and datetime, which is not currently possible with the `forecast` objects. Notice that the index is returned as `date` class.
 
 ```{r}
 sw_sweep(fcast_ets, timekit_idx = TRUE) %>%
@@ -278,7 +278,7 @@ sw_sweep(fcast_ets, timekit_idx = TRUE) %>%
 We can build the same plot with dates in the x-axis now. 
 
 ```{r}
-sw_sweep(fcast_ets, fitted = FALSE, timekit_idx = TRUE) %>%
+sw_sweep(fcast_ets, timekit_idx = TRUE) %>%
     ggplot(aes(x = index, y = price, color = key)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
                 fill = "#D5DBFF", color = NA, size = 0) +
@@ -294,9 +294,9 @@ sw_sweep(fcast_ets, fitted = FALSE, timekit_idx = TRUE) %>%
     theme_tq() 
 ```
 
-In this example, there is not much benefit to returning an irregular time series. However, when working with frequencies below monthly, the ability to return irregular index values becomes more apparent. This is a topic of discussion in the fourth vignette.
+In this example, there is not much benefit to returning an irregular time series. However, when working with frequencies below monthly, the ability to return irregular index values becomes more apparent. 
 
 # Recap
 
-This was a brief overview of how various functions within the `sweep` package can be used to assist in forecasting and time series analysis. In the next vignette, we discuss some more powerful concepts including forecasting at scale with grouped time series analysis. 
+This was an overview of how various functions within the `sweep` package can be used to assist in forecast analysis. In the next vignette, we discuss some more powerful concepts including forecasting at scale with grouped time series analysis. 
 

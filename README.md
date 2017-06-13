@@ -7,15 +7,15 @@ sweep
 
 > Extending `broom` to time series forecasting
 
-The `sweep` package extends the `broom` tools (tidy, glance, and augment) for performing forecasts and time series analysis in the "tidyverse". The package is geared towards the workflow required to perform forecasts using Rob Hyndman's `forecast` package, and it contains elements that can help when performing time series analysis using tibbles ("tidy" data frames).
+The `sweep` package extends the `broom` tools (tidy, glance, and augment) for performing forecasts and time series analysis in the "tidyverse". The package is geared towards "tidying" the forecast workflow used with Rob Hyndman's `forecast` package.
 
 Benefits
 --------
 
 -   **Designed for modeling and scaling forecasts using the the `tidyverse` tools in [*R for Data Science*](http://r4ds.had.co.nz/)**
 -   **Extends `broom` for model analysis (ARIMA, ETS, BATS, etc)**
--   **Tidies the `forecast()` output for easy plotting and "tidy" data manipulation**
--   **Integrates `timekit` to enable working with dates and datetimes (irregular time series) as well as numeric time series (regular time series)**
+-   **Tidies the `forecast` objects for easy plotting and "tidy" data manipulation**
+-   **Integrates `timekit` to enable dates and datetimes (irregular time series) in the tidied forecast output**
 
 Tools
 -----
@@ -29,7 +29,7 @@ The package contains the following elements:
 Making forecasts in the tidyverse
 ---------------------------------
 
-`sweep` enables transitioning from tibble to ts, from ts to model (e.g. Arima, ets, etc), from model to forecast, and then from forecast to tibble. The result is ability to use `dplyr`, `tidyr`, and `ggplot` natively to manipulate, analyze and visualize forecasts.
+`sweep` enables converting a `forecast` object to `tibble`. The result is ability to use `dplyr`, `tidyr`, and `ggplot` natively to manipulate, analyze and visualize forecasts.
 
 <img src="img/forecast.png" width="100%" />
 
@@ -50,32 +50,40 @@ A common goal in forecasting is to compare different forecast models against eac
 broom extensions for forecasting
 --------------------------------
 
-If you are familiar with `broom`, you know how useful it is for retrieving "tidy" format model coefficients (`tidy`), accuracy statistics (`glance`), and residuals (`augment`). The `sweep` package extends these functions to forecast modeling functions such as ARIMA, ETS, BATS, TBATS, NNETAR, and more: just use the `sweep` functions, `sw_tidy`, `sw_glance`, and `sw_augment`. In addition, new tidiers, `sw_tidy_decomp` is designed to specifically tidy models that produce seasonal decompositions and `sw_sweep` is designed to tidy forecast prediction outputs. The compatibility chart is listed below.
+If you are familiar with `broom`, you know how useful it is for retrieving "tidy" format model components. `sweep` extends this benefit to the `forecast` package workflow with the following functions:
 
-| Function      | sw\_tidy() | sw\_glance() | sw\_augment() | sw\_tidy\_decomp() | sw\_sweep() |
-|:--------------|:----------:|:------------:|:-------------:|:------------------:|:-----------:|
-| ar()          |            |              |               |                    |             |
-| arima()       |      X     |       X      |       X       |                    |             |
-| Arima()       |      X     |       X      |       X       |                    |             |
-| ets()         |      X     |       X      |       X       |          X         |             |
-| baggedETS()   |            |              |               |                    |             |
-| bats()        |      X     |       X      |       X       |          X         |             |
-| tbats()       |      X     |       X      |       X       |          X         |             |
-| nnetar()      |      X     |       X      |       X       |                    |             |
-| stl()         |            |              |               |          X         |             |
-| HoltWinters() |      X     |       X      |       X       |          X         |             |
-| StructTS      |      X     |       X      |       X       |          X         |             |
-| tslm()        |      X     |       X      |       X       |                    |             |
-| decompose()   |            |              |               |          X         |             |
-| adf.test()    |      X     |       X      |               |                    |             |
-| Box.test()    |      X     |       X      |               |                    |             |
-| kpss.test()   |      X     |       X      |               |                    |             |
-| forecast()    |            |              |               |                    |      X      |
+-   `sw_tidy`: Returns model coefficients (single column)
+-   `sw_glance`: Returns accuracy statistics (single row)
+-   `sw_augment`: Returns residuals
+-   `sw_tidy_decomp`: Returns seasonal decompositions
+-   `sw_sweep`: Returns tidy forecast outputs.
+
+The compatibility chart is listed below.
+
+| Object      | sw\_tidy() | sw\_glance() | sw\_augment() | sw\_tidy\_decomp() | sw\_sweep() |
+|:------------|:----------:|:------------:|:-------------:|:------------------:|:-----------:|
+| ar          |            |              |               |                    |             |
+| arima       |      X     |       X      |       X       |                    |             |
+| Arima       |      X     |       X      |       X       |                    |             |
+| ets         |      X     |       X      |       X       |          X         |             |
+| baggedETS   |            |              |               |                    |             |
+| bats        |      X     |       X      |       X       |          X         |             |
+| tbats       |      X     |       X      |       X       |          X         |             |
+| nnetar      |      X     |       X      |       X       |                    |             |
+| stl         |            |              |               |          X         |             |
+| HoltWinters |      X     |       X      |       X       |          X         |             |
+| StructTS    |      X     |       X      |       X       |          X         |             |
+| tslm        |      X     |       X      |       X       |                    |             |
+| decompose   |            |              |               |          X         |             |
+| adf.test    |      X     |       X      |               |                    |             |
+| Box.test    |      X     |       X      |               |                    |             |
+| kpss.test   |      X     |       X      |               |                    |             |
+| forecast    |            |              |               |                    |      X      |
 
 Installation
 ------------
 
-Here's how to install to get started.
+Here's how to get started.
 
 Development version with latest features:
 
