@@ -168,7 +168,7 @@ monthly_qty_by_cat2_fit %>%
 
 ### sw_augment
 
-The augmented fitted and residual values can be achieved in much the same manner. This returns nine groups data. 
+The augmented fitted and residual values can be achieved in much the same manner. This returns nine groups data. Note that we pass `timekit_idx = TRUE` to return the date format times as opposed to the regular (yearmon or numeric) time series.  
 
 ```{r}
 augment_fit_ets <- monthly_qty_by_cat2_fit %>%

@@ -1,4 +1,4 @@
-#' Turn forecast objects into tibbles.
+#' Tidy forecast objects
 #'
 #' @param x A time-series forecast of class `forecast`.
 #' @param fitted Whether or not to return the fitted values (model values) in the results.
@@ -6,18 +6,34 @@
 #' @param rename_index Enables the index column to be renamed.
 #' @param timekit_idx If timekit index (non-regularized index) is present, uses it
 #' to develop forecast. Otherwise uses default index.
-#' @param ... Not used.
+#' @param ... Additional arguments passed to `tk_make_future_timeseries()`
 #'
 #' @return Returns a `tibble` object.
 #'
 #' @details `sw_sweep` is designed
 #' to coerce `forecast` objects from the `forecast` package
-#' to `tibble` objects. The returned object contains both the actual values
+#' into `tibble` objects in a "tidy" format (long).
+#' The returned object contains both the actual values
 #' and the forecasted values including the point forecast and upper and lower
 #' confidence intervals.
-#' A regularized time index is always constructed. If no time index is
-#' detected, a sequential index is returned as a default.
+#'
+#' The `timekit_idx` argument is used to modify the return format of the index.
+#'
+#' * If `timekit_idx = FALSE`, a regularized time index is always constructed.
+#' This may be in the format of numeric values (e.g. 2010.000) or the
+#' higher order `yearmon` and `yearqtr` classes from the `zoo` package.
+#' A higher order class is attempted to be returned.
+#'
+#' * If `timekit_idx = TRUE` and a timekit index is present, an irregular time index
+#' will be returned that combines the original time series (i.e. date or datetime)
+#' along with a computed future time series created using `tk_make_future_timeseries()`
+#' from the `timekit` package. The `...` can be used to pass additional arguments
+#' to `tk_make_future_timeseries()` such as `inspect_weekdays`, `skip_values`, etc
+#' that can be useful in tuning the future time series sequence.
+#'
 #' The index column name can be changed using the `rename_index` argument.
+#'
+#' @seealso [tk_make_future_timeseries()]
 #'
 #' @examples
 #' library(forecast)
@@ -54,9 +70,11 @@ sw_sweep.forecast <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_ind
             ret_fit[, rename_index] <- ret_x[, rename_index]
         }
         # Use tk_make_future_timeseries() to build
+        n <- length(x$mean)
         future_idx <- ret_x %>%
             timekit::tk_index() %>%
-            timekit::tk_make_future_timeseries(n_future = length(x$mean))
+            timekit::tk_make_future_timeseries(n_future = 2*n + 50, ...)
+        future_idx <- future_idx[1:n]
         ret_mean  <- tk_tbl(x$mean, preserve_index = TRUE, rename_index = rename_index, silent = TRUE)
         ret_mean[, rename_index] <- future_idx
 

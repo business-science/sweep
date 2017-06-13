@@ -2,7 +2,7 @@
 % Please edit documentation in R/sw_sweep.R
 \name{sw_sweep}
 \alias{sw_sweep}
-\title{Turn forecast objects into tibbles.}
+\title{Tidy forecast objects}
 \usage{
 sw_sweep(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index",
   ...)
@@ -18,22 +18,36 @@ to develop forecast. Otherwise uses default index.}
 
 \item{rename_index}{Enables the index column to be renamed.}
 
-\item{...}{Not used.}
+\item{...}{Additional arguments passed to \code{tk_make_future_timeseries()}}
 }
 \value{
 Returns a \code{tibble} object.
 }
 \description{
-Turn forecast objects into tibbles.
+Tidy forecast objects
 }
 \details{
 \code{sw_sweep} is designed
 to coerce \code{forecast} objects from the \code{forecast} package
-to \code{tibble} objects. The returned object contains both the actual values
+into \code{tibble} objects in a "tidy" format (long).
+The returned object contains both the actual values
 and the forecasted values including the point forecast and upper and lower
 confidence intervals.
-A regularized time index is always constructed. If no time index is
-detected, a sequential index is returned as a default.
+
+The \code{timekit_idx} argument is used to modify the return format of the index.
+\itemize{
+\item If \code{timekit_idx = FALSE}, a regularized time index is always constructed.
+This may be in the format of numeric values (e.g. 2010.000) or the
+higher order \code{yearmon} and \code{yearqtr} classes from the \code{zoo} package.
+A higher order class is attempted to be returned.
+\item If \code{timekit_idx = TRUE} and a timekit index is present, an irregular time index
+will be returned that combines the original time series (i.e. date or datetime)
+along with a computed future time series created using \code{tk_make_future_timeseries()}
+from the \code{timekit} package. The \code{...} can be used to pass additional arguments
+to \code{tk_make_future_timeseries()} such as \code{inspect_weekdays}, \code{skip_values}, etc
+that can be useful in tuning the future time series sequence.
+}
+
 The index column name can be changed using the \code{rename_index} argument.
 }
 \examples{
@@ -47,4 +61,7 @@ USAccDeaths \%>\%
     sw_sweep()
 
 
+}
+\seealso{
+\code{\link[=tk_make_future_timeseries]{tk_make_future_timeseries()}}
 }
