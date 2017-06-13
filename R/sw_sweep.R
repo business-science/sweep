@@ -161,6 +161,6 @@ sw_sweep.forecast <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_ind
 #' @export
 sw_sweep.default <- function(x, fitted = TRUE, timekit_idx = FALSE, rename_index = "index", ...) {
     warning(paste0("`sw_sweep` function does not support class ", class(x)[[1]],
-                   ". Object must inherit forecast class."))
+                   ". Object must inherit forecast class. Returning `x`."))
     return(x)
 }

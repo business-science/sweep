@@ -66,6 +66,14 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
 
     # timekit index tests -----
 
+    # Check warning if no timekit index exists
+    expect_warning(
+        WWWusage %>%
+            auto.arima() %>%
+            sw_augment(timekit_idx = T)
+    )
+
+    # Test sw_augment
     monthly_bike_sales <- bike_sales %>%
         mutate(month.date = as_date(as.yearmon(order.date))) %>%
         group_by(month.date) %>%
@@ -81,7 +89,7 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
     test <- fit %>% sw_augment(timekit_idx = T)
     expect_equal(class(test$index), "Date")
 
-    # agument ts
+    # agument data = ts
 
     test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = F)
     expect_equal(class(test$index), "yearmon")
@@ -93,7 +101,7 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
     test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = T, rename_index = "date")
     expect_equal(class(test$date), "Date")
 
-    # augment tbl
+    # augment data = tbl
 
     test <- fit %>% sw_augment(data = monthly_bike_sales, timekit_idx = F)
     expect_equal(class(test$month.date), "Date")

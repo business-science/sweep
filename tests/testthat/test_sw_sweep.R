@@ -5,7 +5,7 @@ context("Testing sw_sweep function")
 
 test_that("sw_sweep test returns tibble with correct rows and columns.", {
 
-    # ETS forecasts
+    # ETS forecasts ----
     test_sweep_1 <- USAccDeaths %>%
         ets %>%
         forecast(level = c(80, 95, 99)) %>%
@@ -23,7 +23,7 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
 
     expect_equal(nrow(test_sweep_1a), 168)
 
-    # Automatic ARIMA forecasts
+    # Automatic ARIMA forecasts -----
     expect_equal(
         WWWusage %>%
             auto.arima %>%
@@ -41,7 +41,7 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
         220
     )
 
-    # ARFIMA forecasts
+    # ARFIMA forecasts -----
     x <- fracdiff::fracdiff.sim(100, ma=-.4, d=.3)$series
     expect_equal(
         # Warning: no index
@@ -60,7 +60,7 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
         230
     )
 
-    # STL forecasts
+    # STL forecasts -----
     test_sweep_2 <- USAccDeaths %>%
         stlm(modelfunction=ar) %>%
         forecast(h = 36) %>%
@@ -77,7 +77,7 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
         sw_sweep(fitted = T)
     expect_equal(nrow(test_sweep_2a), 180)
 
-    # STLF
+    # STLF -----
     test_sweep_3 <- AirPassengers %>%
         stlf(lambda=0) %>%
         sw_sweep(fitted = F)
@@ -93,7 +93,7 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
     expect_equal(nrow(test_sweep_3a), 312)
 
 
-    # STL
+    # STL -----
     test_sweep_4 <- USAccDeaths %>%
         stl(s.window='periodic') %>%
         forecast %>%
@@ -110,7 +110,7 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
         sw_sweep(fitted = T)
     expect_equal(nrow(test_sweep_4a), 168)
 
-    # TBATS forecast
+    # TBATS forecast -----
     test_sweep_5 <- USAccDeaths %>%
         tbats %>%
         forecast(level = c(80, 95)) %>%
@@ -127,9 +127,39 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
         sw_sweep(fitted = T)
     expect_equal(nrow(test_sweep_5a), 168)
 
-    # # sweep.default()
-    # expect_warning(sw_sweep(datasets::mtcars)) # Returns original data and warning message
+    # sweep.default() -----
+    expect_warning(sw_sweep(datasets::mtcars)) # Returns original data and warning message
 
+    # timekit index tests -----
+
+    # Check warning if no timekit index exists
+    expect_warning(
+        WWWusage %>%
+            auto.arima() %>%
+            forecast() %>%
+            sw_sweep(timekit_idx = T)
+    )
+
+    # Check integration with tk_make_future_timeseries()
+    monthly_bike_sales <- bike_sales %>%
+        mutate(month.date = as_date(as.yearmon(order.date))) %>%
+        group_by(month.date) %>%
+        summarize(total.daily.sales = sum(price.ext))
+
+    monthly_bike_sales_ts <- tk_ts(monthly_bike_sales, start = 2011, freq = 12, silent = TRUE)
+
+    fit <- auto.arima(monthly_bike_sales_ts)
+
+    fcast <- forecast(fit)
+
+    test <- sw_sweep(fcast)
+    expect_equal(class(test$index), "yearmon")
+
+    test <- sw_sweep(fcast, timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    test <- sw_sweep(fcast, timekit_idx = T, skip_values = ymd("2017-12-01")) %>% tail()
+    expect_equal(test$index[[6]], ymd("2018-01-01"))
 })
 
 

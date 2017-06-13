@@ -46,4 +46,30 @@ test_that("sw_*.HoltWinters test returns tibble with correct rows and columns.",
     expect_equal(nrow(test), 72)
     expect_equal(ncol(test), 5)
 
+
+    # timekit index tests -----
+
+    # Check warning if no timekit index exists
+    expect_warning(
+        USAccDeaths %>%
+            HoltWinters() %>%
+            sw_augment(timekit_idx = T)
+    )
+
+    # Check integration with tk_make_future_timeseries()
+    monthly_bike_sales <- bike_sales %>%
+        mutate(month.date = as_date(as.yearmon(order.date))) %>%
+        group_by(month.date) %>%
+        summarize(total.daily.sales = sum(price.ext))
+
+    monthly_bike_sales_ts <- tk_ts(monthly_bike_sales, start = 2011, freq = 12, silent = TRUE)
+
+    fit <- HoltWinters(monthly_bike_sales_ts)
+
+    test <- fit %>% sw_augment()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_augment(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
 })
