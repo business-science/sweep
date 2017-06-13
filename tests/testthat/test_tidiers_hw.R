@@ -1,5 +1,7 @@
 library(sweep)
 library(forecast)
+library(tidyquant)
+library(timekit)
 context("Testing HoltWinters tidiers")
 
 # FUNCTION: sw_*.HoltWinters -----

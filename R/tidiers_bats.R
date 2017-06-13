@@ -126,7 +126,7 @@ sw_augment.bats <- function(x, data = NULL, rename_index = "index", timekit_idx 
     }
 
     # Convert model to tibble
-    ret <- tk_tbl(cbind(.actual = x$y, .fitted = x$fitted.values, .resid = x$errors),
+    ret <- tk_tbl(cbind(.actual = x$y, .fitted = x$fitted.values, .resid = x$y - x$fitted.values),
                   rename_index = rename_index, silent = TRUE)
 
     # Apply timekit index if selected

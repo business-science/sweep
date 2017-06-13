@@ -5,7 +5,7 @@
 #' @details
 #' The `sweep` package "tidies" up the
 #' modeling workflow of the `forecast` package.
-#' The model and forecast objects are not currently covered by
+#' The model and forecast objects are not covered by
 #' the `broom` package. It includes the [sw_tidy()], [sw_glance()],
 #' and [sw_augment()] functions that work in a similar capacity as `broom` functions.
 #' In addition, it provides [sw_tidy_decomp()] to tidy decompositions, and

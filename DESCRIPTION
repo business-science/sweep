@@ -1,7 +1,7 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.1.0
+Version: 0.0.0.9000
 Date: 2017-06-23
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
@@ -9,9 +9,12 @@ Authors@R: c(
   )
 Maintainer: Matt Dancho <mdancho@business-science.io>
 Description: 
-    "tidy" up the forecasting workflow. 'sweep' extends the 'broom' package 
-    by providing 'tidy', 'glance', and 'augment' functions for various forecasting models,
-    and it provides the 'sw_sweep' function which coerces 'forecast' objects to tibbles.
+    `sweep` tidies up the forecasting modeling and prediction workflow. 
+    It extends the 'broom' package 
+    by providing 'sw_tidy', 'sw_glance', 'sw_augment', and 'sw_tidy_decomp' functions 
+    for various forecasting models,
+    and it provides the 'sw_sweep' function which converts 'forecast' objects to 
+    "tidy" data frames ("tibbles") that can be easily plotted and manipulated.
 URL: https://github.com/business-science/sweep
 BugReports: https://github.com/business-science/sweep/issues
 License: MIT + file LICENSE
@@ -22,7 +25,7 @@ Depends:
 Imports:
     broom (>= 0.4.2),
     devtools (>= 1.12.0),
-    dplyr (>= 0.5.0),
+    dplyr (>= 0.7.0),
     forecast (>= 8.0),
     forcats (>= 0.2.0),
     lazyeval (>= 0.2.0),
