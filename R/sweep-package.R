@@ -3,8 +3,9 @@
 #'
 #'
 #' @details
-#' The `sweep` package "tidies" up various
-#' modeling workflows (e.g. forecasting) that are not currently covered by
+#' The `sweep` package "tidies" up the
+#' modeling workflow of the `forecast` package.
+#' The model and forecast objects are not currently covered by
 #' the `broom` package. It includes the [sw_tidy()], [sw_glance()],
 #' and [sw_augment()] functions that work in a similar capacity as `broom` functions.
 #' In addition, it provides [sw_tidy_decomp()] to tidy decompositions, and
@@ -18,6 +19,6 @@
 #' @name sweep_package
 #'
 #' @importFrom dplyr %>%
-#' @importFrom timekit tk_tbl
+#' @importFrom timekit tk_tbl tk_ts tk_index has_timekit_idx tk_get_timeseries_variables
 
 NULL

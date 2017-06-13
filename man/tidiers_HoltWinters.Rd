@@ -12,7 +12,7 @@
 \method{sw_glance}{HoltWinters}(x, ...)
 
 \method{sw_augment}{HoltWinters}(x, data = NULL, rename_index = "index",
-  ...)
+  timekit_idx = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class "HoltWinters"}
@@ -25,6 +25,9 @@ User can supply the original data, which returns the data + augmented columns.}
 
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
+
+\item{timekit_idx}{Used with \code{sw_augment} only.
+Uses a irregular timekit index if present.}
 }
 \value{
 \strong{\code{sw_tidy()}} returns one row for each model parameter,

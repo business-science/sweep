@@ -9,8 +9,9 @@
 sweep: Extending broom
 }
 \details{
-The \code{sweep} package "tidies" up various
-modeling workflows (e.g. forecasting) that are not currently covered by
+The \code{sweep} package "tidies" up the
+modeling workflow of the \code{forecast} package.
+The model and forecast objects are not currently covered by
 the \code{broom} package. It includes the \code{\link[=sw_tidy]{sw_tidy()}}, \code{\link[=sw_glance]{sw_glance()}},
 and \code{\link[=sw_augment]{sw_augment()}} functions that work in a similar capacity as \code{broom} functions.
 In addition, it provides \code{\link[=sw_tidy_decomp]{sw_tidy_decomp()}} to tidy decompositions, and

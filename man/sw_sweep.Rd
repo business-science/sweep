@@ -4,18 +4,19 @@
 \alias{sw_sweep}
 \title{Turn forecast objects into tibbles.}
 \usage{
-sw_sweep(x, fitted = TRUE, rename_index = "index", timekit_idx = FALSE,
+sw_sweep(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index",
   ...)
 }
 \arguments{
 \item{x}{A time-series forecast of class \code{forecast}.}
 
-\item{fitted}{Whether or not to return the fitted values (model values) in the results}
-
-\item{rename_index}{Enables the index column to be renamed.}
+\item{fitted}{Whether or not to return the fitted values (model values) in the results.
+FALSE by default.}
 
 \item{timekit_idx}{If timekit index (non-regularized index) is present, uses it
 to develop forecast. Otherwise uses default index.}
+
+\item{rename_index}{Enables the index column to be renamed.}
 
 \item{...}{Not used.}
 }

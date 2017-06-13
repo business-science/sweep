@@ -81,7 +81,7 @@ bike_sales_monthly %>%
     theme_tq()
 ```
 
-Suppose Manufacturing wants a more granular forecast because the bike components tend to vary by the secondary category. In the next section we discuss how `sweep` can help to perform a forecast on each sub-category.
+Suppose Manufacturing wants a more granular forecast because the bike components are related to the secondary category. In the next section we discuss how `sweep` can help to perform a forecast on each sub-category.
 
 
 # Performing Forecasts on Groups
@@ -172,7 +172,7 @@ The augmented fitted and residual values can be achieved in much the same manner
 
 ```{r}
 augment_fit_ets <- monthly_qty_by_cat2_fit %>%
-    mutate(augment = map(fit.ets, sw_augment, rename_index = "date")) %>%
+    mutate(augment = map(fit.ets, sw_augment, timekit_idx = TRUE, rename_index = "date")) %>%
     unnest(augment, .drop = TRUE)
 
 augment_fit_ets
@@ -182,7 +182,7 @@ We can plot the residuals for the nine categories like so. Unfortunately we do s
 
 ```{r}
 augment_fit_ets %>%
-    ggplot(aes(x = yearmon(date), y = .resid, group = category.secondary)) +
+    ggplot(aes(x = date, y = .resid, group = category.secondary)) +
     geom_hline(yintercept = 0, color = "grey40") +
     geom_line(color = palette_light()[[2]]) +
     geom_smooth(method = "loess") +
@@ -190,7 +190,7 @@ augment_fit_ets %>%
          subtitle = "ETS Model Residuals", x = "") + 
     theme_tq() +
     facet_wrap(~ category.secondary, scale = "free_y", ncol = 3) +
-    scale_x_yearmon(format = "%Y")
+    scale_x_date(date_labels = "%Y")
 ```
 
 ### sw_tidy_decomp

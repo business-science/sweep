@@ -1,7 +1,8 @@
 #' Turn forecast objects into tibbles.
 #'
 #' @param x A time-series forecast of class `forecast`.
-#' @param fitted Whether or not to return the fitted values (model values) in the results
+#' @param fitted Whether or not to return the fitted values (model values) in the results.
+#' FALSE by default.
 #' @param rename_index Enables the index column to be renamed.
 #' @param timekit_idx If timekit index (non-regularized index) is present, uses it
 #' to develop forecast. Otherwise uses default index.
@@ -30,16 +31,16 @@
 #'
 #'
 #' @export
-sw_sweep <- function(x, fitted = TRUE, rename_index = "index", timekit_idx = FALSE, ...) {
+sw_sweep <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index", ...) {
     UseMethod("sw_sweep", x)
 }
 
 #' @export
-sw_sweep.forecast <- function(x, fitted = TRUE, rename_index = "index", timekit_idx = FALSE, ...) {
+sw_sweep.forecast <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index", ...) {
 
     # Check timekit_idx
     if (timekit_idx)
-        if (!timekit::has_timekit_idx(x)) {
+        if (!has_timekit_idx(x)) {
             warning("Object has no timekit index. Using default index.")
             timekit_idx = FALSE
         }
@@ -140,7 +141,7 @@ sw_sweep.forecast <- function(x, fitted = TRUE, rename_index = "index", timekit_
 }
 
 #' @export
-sw_sweep.default <- function(x, fitted = TRUE, rename_index = "index", timekit_idx = FALSE, ...) {
+sw_sweep.default <- function(x, fitted = TRUE, timekit_idx = FALSE, rename_index = "index", ...) {
     warning(paste0("`sw_sweep` function does not support class ", class(x)[[1]],
                    ". Object must inherit forecast class."))
     return(x)

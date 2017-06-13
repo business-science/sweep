@@ -1,4 +1,6 @@
 library(sweep)
+library(timekit)
+library(tidyquant)
 library(forecast)
 context("Testing arima tidiers")
 
@@ -59,5 +61,44 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
     expect_equal(ncol(test), 2) # stats::arima() returns only one column for residuals
     expect_equal(colnames(test)[[1]], "date")
     expect_warning(sw_augment(fit_arima_stats)) # stats::arima() vs forecast::Arima()
+
+
+
+    # timekit index tests -----
+
+    monthly_bike_sales <- bike_sales %>%
+        mutate(month.date = as_date(as.yearmon(order.date))) %>%
+        group_by(month.date) %>%
+        summarize(total.daily.sales = sum(price.ext))
+
+    monthly_bike_sales_ts <- tk_ts(monthly_bike_sales, start = 2011, freq = 12, silent = TRUE)
+
+    fit <- auto.arima(monthly_bike_sales_ts)
+
+    test <- fit %>% sw_augment()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_augment(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    # agument ts
+
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = F)
+    expect_equal(class(test$index), "yearmon")
+    expect_equal(colnames(test)[[2]], "total.daily.sales")
+
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = T, rename_index = "date")
+    expect_equal(class(test$date), "Date")
+
+    # augment tbl
+
+    test <- fit %>% sw_augment(data = monthly_bike_sales, timekit_idx = F)
+    expect_equal(class(test$month.date), "Date")
+    expect_equal(colnames(test)[[2]], "total.daily.sales")
+
+    expect_warning(fit %>% sw_augment(data = monthly_bike_sales, timekit_idx = T))
 
 })

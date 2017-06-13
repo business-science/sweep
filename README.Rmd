@@ -35,8 +35,9 @@ The `sweep` package extends the `broom` tools (tidy, glance, and augment) for pe
 ## Benefits
 
 * __Designed for modeling and scaling forecasts using the the `tidyverse` tools in [_R for Data Science_](http://r4ds.had.co.nz/)__
-* __Extends `broom` for forecast model analysis__
+* __Extends `broom` for model analysis (ARIMA, ETS, BATS, etc)__
 * __Tidies the `forecast()` output for easy plotting and "tidy" data manipulation__
+* __Integrates `timekit` to enable working with dates and datetimes (irregular time series) as well as numeric time series (regular time series)__
 
 
 ## Tools

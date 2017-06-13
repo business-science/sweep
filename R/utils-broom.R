@@ -6,7 +6,8 @@
 #' @param data Any time series data that is to be augmented
 #' @param rename_index A variable indicating the index name to be used in the
 #' tibble returned
-sw_augment_columns <- function(ret, data, rename_index) {
+#' @param timekit_idx Uses the timekit index (irregular time index) if present.
+sw_augment_columns <- function(ret, data, rename_index, timekit_idx = FALSE) {
 
     ret_1 <- data
     ret_2 <- ret
@@ -25,10 +26,18 @@ sw_augment_columns <- function(ret, data, rename_index) {
         # data supplied, attempt to combine
 
         # Prep ret_1, coerce to tbl, add index
-        ret_1 <- tk_tbl(ret_1, rename_index = rename_index, silent = TRUE)
-        if (!validate_index(ret_1, rename_index)) {
-            # if no index, add index
-            ret_1 <- add_index(ret_1, rename_index)
+        if (is.data.frame(ret_1)) {
+            # ret_1 could already have an index, and augment should not overwrite index name
+            idx <- tk_get_timeseries_variables(ret_1)[[1]]
+            if (length(idx) == 0) {
+                ret_1 <- add_index(ret_1, rename_index)
+            }
+        } else {
+            ret_1 <- tk_tbl(ret_1, rename_index = rename_index, silent = TRUE)
+            if (!validate_index(ret_1, rename_index)) {
+                # if no index, add index
+                ret_1 <- add_index(ret_1, rename_index)
+            }
         }
 
         # Check structure
@@ -50,6 +59,18 @@ sw_augment_columns <- function(ret, data, rename_index) {
         # Combine data
         ret <- dplyr::bind_cols(ret_1, ret_2)
 
+    }
+
+    if (!is.null(data)) {
+        if (timekit_idx) {
+            if (timekit::has_timekit_idx(data)) {
+                idx_name <- timekit::tk_get_timeseries_variables(ret)[[1]]
+                idx <- timekit::tk_index(data, timekit_idx = TRUE)
+                ret[,idx_name] <- idx
+            } else {
+                warning("`data` does not have a timekit index.")
+            }
+        }
     }
 
     return(ret)

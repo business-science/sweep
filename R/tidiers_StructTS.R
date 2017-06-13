@@ -10,6 +10,8 @@
 #' User can supply the original data, which returns the data + augmented columns.
 #' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
+#' @param timekit_idx Used with `sw_augment` only.
+#' Uses a irregular timekit index if present.
 #'
 #'
 #' @seealso [StructTS()]
@@ -106,14 +108,30 @@ sw_glance.StructTS <- function(x, ...) {
 #'   * `.resid`: The residual values from the model
 #'
 #' @export
-sw_augment.StructTS <- function(x, data = NULL, rename_index = "index", ...) {
+sw_augment.StructTS <- function(x, data = NULL, timekit_idx = FALSE, rename_index = "index", ...) {
 
     x <- forecast::forecast(x)
 
-    ret <- tk_tbl(cbind(.actual = x$x, .fitted = x$fitted, .resid = x$residuals),
-               rename_index = rename_index, silent = TRUE)
+    # Check timekit_idx
+    if (timekit_idx) {
+        if (!has_timekit_idx(x)) {
+            warning("Object has no timekit index. Using default index.")
+            timekit_idx = FALSE
+        }
+    }
 
-    ret <- sw_augment_columns(ret, data, rename_index)
+    # Convert model to tibble
+    ret <- tk_tbl(cbind(.actual = x$x, .fitted = x$fitted, .resid = x$residuals),
+                  rename_index = rename_index, silent = TRUE)
+
+    # Apply timekit index if selected
+    if (timekit_idx) {
+        idx <- tk_index(x, timekit_idx = TRUE)
+        ret[, rename_index] <- idx
+    }
+
+    # Augment columns if necessary
+    ret <- sw_augment_columns(ret, data, rename_index, timekit_idx)
 
     return(ret)
 

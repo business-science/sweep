@@ -4,7 +4,7 @@
 \alias{sw_augment_columns}
 \title{Augments data}
 \usage{
-sw_augment_columns(ret, data, rename_index)
+sw_augment_columns(ret, data, rename_index, timekit_idx = FALSE)
 }
 \arguments{
 \item{ret}{An object of class tibble}
@@ -13,6 +13,8 @@ sw_augment_columns(ret, data, rename_index)
 
 \item{rename_index}{A variable indicating the index name to be used in the
 tibble returned}
+
+\item{timekit_idx}{Uses the timekit index (irregular time index) if present.}
 }
 \description{
 Augments data

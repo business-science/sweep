@@ -12,7 +12,8 @@ modeling of time series}
 
 \method{sw_glance}{StructTS}(x, ...)
 
-\method{sw_augment}{StructTS}(x, data = NULL, rename_index = "index", ...)
+\method{sw_augment}{StructTS}(x, data = NULL, timekit_idx = FALSE,
+  rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "StructTS"}
@@ -22,6 +23,9 @@ modeling of time series}
 \item{data}{Used with \code{sw_augment} only.
 \code{NULL} by default which simply returns augmented columns only.
 User can supply the original data, which returns the data + augmented columns.}
+
+\item{timekit_idx}{Used with \code{sw_augment} only.
+Uses a irregular timekit index if present.}
 
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
