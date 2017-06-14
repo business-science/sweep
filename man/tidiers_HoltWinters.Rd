@@ -5,6 +5,7 @@
 \alias{sw_tidy.HoltWinters}
 \alias{sw_glance.HoltWinters}
 \alias{sw_augment.HoltWinters}
+\alias{sw_tidy_decomp.HoltWinters}
 \title{Tidying methods for HoltWinters modeling of time series}
 \usage{
 \method{sw_tidy}{HoltWinters}(x, ...)
@@ -13,6 +14,9 @@
 
 \method{sw_augment}{HoltWinters}(x, data = NULL, rename_index = "index",
   timekit_idx = FALSE, ...)
+
+\method{sw_tidy_decomp}{HoltWinters}(x, timekit_idx = FALSE,
+  rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "HoltWinters"}
@@ -26,8 +30,8 @@ User can supply the original data, which returns the data + augmented columns.}
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
 
-\item{timekit_idx}{Used with \code{sw_augment} only.
-Uses a irregular timekit index if present.}
+\item{timekit_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
 }
 \value{
 \strong{\code{sw_tidy()}} returns one row for each model parameter,
@@ -37,11 +41,9 @@ with two columns:
 \item \code{estimate}: The estimated parameter value
 }
 
-\strong{\code{sw_glance()}} returns one row with the columns
+\strong{\code{sw_glance()}} returns one row with the following columns:
 \itemize{
-\item \code{model.desc}: A description of the model including the
-three integer components (p, d, q) are the AR order,
-the degree of differencing, and the MA order.
+\item \code{model.desc}: A description of the model
 \item \code{sigma}: The square root of the estimated residual variance
 \item \code{logLik}: The data's log-likelihood under the model
 \item \code{AIC}: The Akaike Information Criterion
@@ -63,6 +65,17 @@ a sequential index is created for plotting purposes
 \item \code{.fitted}: The fitted values from the model
 \item \code{.resid}: The residual values from the model
 }
+
+\strong{\code{sw_tidy_decomp()}} returns a tibble with the following time series attributes:
+\itemize{
+\item \code{index}: An index is either attempted to be extracted from the model or
+a sequential index is created for plotting purposes
+\item \code{observed}: The original time series
+\item \code{season}: The seasonal component
+\item \code{trend}: The trend component
+\item \code{remainder}: observed - (season + trend)
+\item \code{seasadj}: observed - season (or trend + remainder)
+}
 }
 \description{
 These methods tidy \code{HoltWinters} models of univariate time
@@ -78,6 +91,7 @@ fit_hw <- USAccDeaths \%>\%
 sw_tidy(fit_hw)
 sw_glance(fit_hw)
 sw_augment(fit_hw)
+sw_tidy_decomp(fit_hw)
 
 }
 \seealso{

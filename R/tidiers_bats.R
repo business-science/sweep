@@ -1,7 +1,5 @@
 #' Tidying methods for BATS and TBATS modeling of time series
 #'
-#' These methods tidy the coefficients of BATS models of univariate time
-#' series.
 #'
 #' @param x An object of class "bats" or "tbats"
 #' @param data Used with `sw_augment` only.
@@ -9,8 +7,9 @@
 #' User can supply the original data, which returns the data + augmented columns.
 #' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
-#' @param timekit_idx Used with `sw_augment` only.
-#' Uses a irregular timekit index if present.
+#' @param timekit_idx Used with `sw_augment` and `sw_tidy_decomp`.
+#' When `TRUE`, uses a timekit index (irregular, typically date or datetime) if present.
+#' @param ... Additional parameters (not used)
 #'
 #'
 #' @seealso [bats()], [tbats()]
@@ -31,8 +30,6 @@ NULL
 
 
 #' @rdname tidiers_bats
-#'
-#' @param ... Additional parameters (not used)
 #'
 #' @return
 #' __`sw_tidy()`__ returns one row for each model parameter,
@@ -140,4 +137,51 @@ sw_augment.bats <- function(x, data = NULL, rename_index = "index", timekit_idx 
 
     return(ret)
 
+}
+
+#' @rdname tidiers_bats
+#'
+#' @return
+#' __`sw_tidy_decomp()`__ returns a tibble with the following time series attributes:
+#'   * `index`: An index is either attempted to be extracted from the model or
+#'   a sequential index is created for plotting purposes
+#'   * `observed`: The original time series
+#'   * `level`: The level component
+#'   * `slope`: The slope component (Not always present)
+#'   * `season`: The seasonal component (Not always present)
+#'
+#' @export
+sw_tidy_decomp.bats <- function(x, timekit_idx = FALSE, rename_index = "index", ...) {
+
+    # Check timekit_idx
+    if (timekit_idx) {
+        if (!has_timekit_idx(x)) {
+            warning("Object has no timekit index. Using default index.")
+            timekit_idx = FALSE
+        }
+    }
+
+    # Extract components
+    ret <- forecast::tbats.components(x)
+
+    # Coerce to tibble
+    ret <- tk_tbl(ret, preserve_index = TRUE, rename_index, silent = TRUE)
+
+    # Add seasadj if season present
+    if ("season" %in% colnames(ret)) {
+        ret <- ret %>%
+            dplyr::mutate(seasadj = observed - season)
+    }
+
+    # Apply timekit index if selected
+    if (timekit_idx) {
+        idx <- tk_index(x, timekit_idx = TRUE)
+        if (nrow(ret) != length(idx)) ret <- ret[(nrow(ret) - length(idx) + 1):nrow(ret),]
+        ret[, rename_index] <- idx
+    }
+
+    # Index using sw_augment_columns() with data = NULL
+    ret <- sw_augment_columns(ret, data = NULL, rename_index = rename_index, timekit_idx = timekit_idx)
+
+    return(ret)
 }

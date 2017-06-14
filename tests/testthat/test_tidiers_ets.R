@@ -58,10 +58,17 @@ test_that("sw_*.ets test returns tibble with correct rows and columns.", {
 
     fit <- ets(monthly_bike_sales_ts)
 
+    # sw_augment ----
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
     test <- fit %>% sw_augment(timekit_idx = T)
     expect_equal(class(test$index), "Date")
 
+    # sw_tidy_decomp -----
+    test <- fit %>% sw_tidy_decomp()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
 })

@@ -1,6 +1,4 @@
-#' sweep: Extending broom
-#'
-#'
+#' sweep: Extending broom to time series forecasting
 #'
 #' @details
 #' The `sweep` package "tidies" up the

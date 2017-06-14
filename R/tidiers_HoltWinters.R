@@ -9,8 +9,9 @@
 #' User can supply the original data, which returns the data + augmented columns.
 #' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
-#' @param timekit_idx Used with `sw_augment` only.
-#' Uses a irregular timekit index if present.
+#' @param timekit_idx Used with `sw_augment` and `sw_tidy_decomp`.
+#' When `TRUE`, uses a timekit index (irregular, typically date or datetime) if present.
+#' @param ... Additional parameters (not used)
 #'
 #'
 #' @seealso [HoltWinters()]
@@ -25,6 +26,7 @@
 #' sw_tidy(fit_hw)
 #' sw_glance(fit_hw)
 #' sw_augment(fit_hw)
+#' sw_tidy_decomp(fit_hw)
 #'
 #' @name tidiers_HoltWinters
 NULL
@@ -32,7 +34,6 @@ NULL
 
 #' @rdname tidiers_HoltWinters
 #'
-#' @param ... Additional parameters (not used)
 #'
 #' @return
 #' __`sw_tidy()`__ returns one row for each model parameter,
@@ -57,10 +58,8 @@ sw_tidy.HoltWinters <- function(x, ...) {
 #' @rdname tidiers_HoltWinters
 #'
 #' @return
-#' __`sw_glance()`__ returns one row with the columns
-#' * `model.desc`: A description of the model including the
-#'   three integer components (p, d, q) are the AR order,
-#'   the degree of differencing, and the MA order.
+#' __`sw_glance()`__ returns one row with the following columns:
+#' * `model.desc`: A description of the model
 #' * `sigma`: The square root of the estimated residual variance
 #' * `logLik`: The data's log-likelihood under the model
 #' * `AIC`: The Akaike Information Criterion
@@ -135,4 +134,52 @@ sw_augment.HoltWinters <- function(x, data = NULL, rename_index = "index", timek
 
     return(ret)
 
+}
+
+#' @rdname tidiers_HoltWinters
+#'
+#' @return
+#' __`sw_tidy_decomp()`__ returns a tibble with the following time series attributes:
+#'   * `index`: An index is either attempted to be extracted from the model or
+#'   a sequential index is created for plotting purposes
+#'   * `observed`: The original time series
+#'   * `season`: The seasonal component
+#'   * `trend`: The trend component
+#'   * `remainder`: observed - (season + trend)
+#'   * `seasadj`: observed - season (or trend + remainder)
+#'
+#' @export
+sw_tidy_decomp.HoltWinters <- function(x, timekit_idx = FALSE, rename_index = "index", ...) {
+
+    # Check timekit_idx
+    if (timekit_idx) {
+        if (!has_timekit_idx(x)) {
+            warning("Object has no timekit index. Using default index.")
+            timekit_idx = FALSE
+        }
+    }
+
+    # Get tibble from HoltWinters model
+    ret <- cbind(observed    = x$x,
+                 season      = x$fitted[,"season"],
+                 trend       = x$fitted[,"trend"])
+
+    # Coerce to tibble
+    ret <- tk_tbl(ret, preserve_index = TRUE, rename_index, silent = TRUE)
+
+    ret <- ret %>%
+        dplyr::mutate(remainder = observed - season - trend,
+                      seasadj   = trend + remainder)
+
+    # Apply timekit index if selected
+    if (timekit_idx) {
+        idx <- tk_index(x, timekit_idx = TRUE)
+        if (nrow(ret) != length(idx)) ret <- ret[(nrow(ret) - length(idx) + 1):nrow(ret),]
+        ret[, rename_index] <- idx
+    }
+
+    # Index using sw_augment_columns() with data = NULL
+    ret <- sw_augment_columns(ret, data = NULL, rename_index = rename_index, timekit_idx = timekit_idx)
+
+    return(ret)
 }

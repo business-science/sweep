@@ -5,30 +5,34 @@
 \alias{sw_tidy.ets}
 \alias{sw_glance.ets}
 \alias{sw_augment.ets}
-\title{Tidying methods for ETS (Error, Trend, Seasonal) / exponential smoothing
+\alias{sw_tidy_decomp.ets}
+\title{Tidying methods for ETS (Error, Trend, Seasonal) exponential smoothing
 modeling of time series}
 \usage{
 \method{sw_tidy}{ets}(x, ...)
 
 \method{sw_glance}{ets}(x, ...)
 
-\method{sw_augment}{ets}(x, data = NULL, rename_index = "index",
-  timekit_idx = FALSE, ...)
+\method{sw_augment}{ets}(x, data = NULL, timekit_idx = FALSE,
+  rename_index = "index", ...)
+
+\method{sw_tidy_decomp}{ets}(x, timekit_idx = FALSE, rename_index = "index",
+  ...)
 }
 \arguments{
 \item{x}{An object of class "ets"}
 
-\item{...}{Additional parameters (not used)}
+\item{...}{Not used.}
 
 \item{data}{Used with \code{sw_augment} only.
 \code{NULL} by default which simply returns augmented columns only.
 User can supply the original data, which returns the data + augmented columns.}
 
-\item{rename_index}{Used with \code{sw_augment} only.
-A string representing the name of the index generated.}
+\item{timekit_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
 
-\item{timekit_idx}{Used with \code{sw_augment} only.
-Uses a irregular timekit index if present.}
+\item{rename_index}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+A string representing the name of the index generated.}
 }
 \value{
 \strong{\code{sw_tidy()}} returns one row for each model parameter,
@@ -65,10 +69,20 @@ a sequential index is created for plotting purposes
 \item \code{.fitted}: The fitted values from the model
 \item \code{.resid}: The residual values from the model
 }
+
+\strong{\code{sw_tidy_decomp()}} returns a tibble with the following time series attributes:
+\itemize{
+\item \code{index}: An index is either attempted to be extracted from the model or
+a sequential index is created for plotting purposes
+\item \code{observed}: The original time series
+\item \code{level}: The level component
+\item \code{slope}: The slope component (Not always present)
+\item \code{season}: The seasonal component (Not always present)
+}
 }
 \description{
-These methods tidy the coefficients of ETS models of univariate time
-series.
+Tidying methods for ETS (Error, Trend, Seasonal) exponential smoothing
+modeling of time series
 }
 \examples{
 library(forecast)
@@ -80,6 +94,7 @@ fit_ets <- WWWusage \%>\%
 sw_tidy(fit_ets)
 sw_glance(fit_ets)
 sw_augment(fit_ets)
+sw_tidy_decomp(fit_ets)
 
 }
 \seealso{

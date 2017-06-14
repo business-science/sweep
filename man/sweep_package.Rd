@@ -4,9 +4,9 @@
 \name{sweep_package}
 \alias{sweep_package}
 \alias{sweep_package-package}
-\title{sweep: Extending broom}
+\title{sweep: Extending broom to time series forecasting}
 \description{
-sweep: Extending broom
+sweep: Extending broom to time series forecasting
 }
 \details{
 The \code{sweep} package "tidies" up the

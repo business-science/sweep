@@ -199,7 +199,7 @@ We can create decompositions using the same procedure with `sw_tidy_decomp()` an
 
 ```{r}
 monthly_qty_by_cat2_fit %>%
-    mutate(decomp = map(fit.ets, sw_tidy_decomp, rename_index = "date")) %>%
+    mutate(decomp = map(fit.ets, sw_tidy_decomp, timekit_idx = TRUE, rename_index = "date")) %>%
     unnest(decomp)
 ```
 

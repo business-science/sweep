@@ -5,6 +5,7 @@
 \alias{sw_tidy.bats}
 \alias{sw_glance.bats}
 \alias{sw_augment.bats}
+\alias{sw_tidy_decomp.bats}
 \title{Tidying methods for BATS and TBATS modeling of time series}
 \usage{
 \method{sw_tidy}{bats}(x, ...)
@@ -13,6 +14,9 @@
 
 \method{sw_augment}{bats}(x, data = NULL, rename_index = "index",
   timekit_idx = FALSE, ...)
+
+\method{sw_tidy_decomp}{bats}(x, timekit_idx = FALSE,
+  rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "bats" or "tbats"}
@@ -26,8 +30,8 @@ User can supply the original data, which returns the data + augmented columns.}
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
 
-\item{timekit_idx}{Used with \code{sw_augment} only.
-Uses a irregular timekit index if present.}
+\item{timekit_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
 }
 \value{
 \strong{\code{sw_tidy()}} returns one row for each model parameter,
@@ -63,10 +67,19 @@ a sequential index is created for plotting purposes
 \item \code{.fitted}: The fitted values from the model
 \item \code{.resid}: The residual values from the model
 }
+
+\strong{\code{sw_tidy_decomp()}} returns a tibble with the following time series attributes:
+\itemize{
+\item \code{index}: An index is either attempted to be extracted from the model or
+a sequential index is created for plotting purposes
+\item \code{observed}: The original time series
+\item \code{level}: The level component
+\item \code{slope}: The slope component (Not always present)
+\item \code{season}: The seasonal component (Not always present)
+}
 }
 \description{
-These methods tidy the coefficients of BATS models of univariate time
-series.
+Tidying methods for BATS and TBATS modeling of time series
 }
 \examples{
 library(forecast)

@@ -46,7 +46,7 @@ test_that("sw_*.HoltWinters test returns tibble with correct rows and columns.",
     test <- sw_tidy_decomp(fit_hw)
     expect_is(test, "tbl")
     expect_equal(nrow(test), 72)
-    expect_equal(ncol(test), 5)
+    expect_equal(ncol(test), 6)
 
 
     # timekit index tests -----
@@ -68,10 +68,18 @@ test_that("sw_*.HoltWinters test returns tibble with correct rows and columns.",
 
     fit <- HoltWinters(monthly_bike_sales_ts)
 
+    # timekit_idx sw_augment ----
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
     test <- fit %>% sw_augment(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    # timekit_idx sw_tidy_decomp -----
+    test <- fit %>% sw_tidy_decomp()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
     expect_equal(class(test$index), "Date")
 
 })

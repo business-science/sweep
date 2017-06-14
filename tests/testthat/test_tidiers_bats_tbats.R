@@ -76,7 +76,6 @@ test_that("sw_*.bats test returns tibble with correct rows and columns.", {
             sw_augment(timekit_idx = T)
     )
 
-    # Check integration with tk_make_future_timeseries()
     monthly_bike_sales <- bike_sales %>%
         mutate(month.date = as_date(as.yearmon(order.date))) %>%
         group_by(month.date) %>%
@@ -84,12 +83,45 @@ test_that("sw_*.bats test returns tibble with correct rows and columns.", {
 
     monthly_bike_sales_ts <- tk_ts(monthly_bike_sales, start = 2011, freq = 12, silent = TRUE)
 
+    # BATS timekit index ----
+
     fit <- bats(monthly_bike_sales_ts)
 
+    # timekit_idx sw_augment ----
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
     test <- fit %>% sw_augment(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    # timekit_idx sw_tidy_decomp -----
+    test <- fit %>% sw_tidy_decomp()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    # TBATS timekit index ----
+
+    data_ts <- USAccDeaths %>%
+        tk_tbl() %>%
+        mutate(index = as_date(index)) %>%
+        tk_ts(start = 1973, freq = 12, silent = TRUE)
+
+    fit <- tbats(data_ts)
+
+    # timekit_idx sw_augment ----
+    test <- fit %>% sw_augment()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_augment(timekit_idx = T)
+    expect_equal(class(test$index), "Date")
+
+    # timekit_idx sw_tidy_decomp -----
+    test <- fit %>% sw_tidy_decomp()
+    expect_equal(class(test$index), "yearmon")
+
+    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
     expect_equal(class(test$index), "Date")
 
 })
