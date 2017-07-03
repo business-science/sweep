@@ -31,21 +31,21 @@ Making forecasts in the tidyverse
 
 `sweep` enables converting a `forecast` object to `tibble`. The result is ability to use `dplyr`, `tidyr`, and `ggplot` natively to manipulate, analyze and visualize forecasts.
 
-<img src="img/forecast.png" width="100%" />
+<img src="tools/forecast.png" width="100%" />
 
 Forecasting multiple time series groups at scale
 ------------------------------------------------
 
 Often forecasts are required on grouped data to analyse trends in sub-categories. The good news is scaling from one time series to many is easy with the various `sw_` functions in combination with `dplyr` and `purrr`.
 
-<img src="img/time_series_groups.png" width="100%" />
+<img src="tools/time_series_groups.png" width="100%" />
 
 Forecasting multiple models for accuracy
 ----------------------------------------
 
 A common goal in forecasting is to compare different forecast models against each other. `sweep` helps in this area as well.
 
-<img src="img/multiple_models.png" width="100%" />
+<img src="tools/multiple_models.png" width="100%" />
 
 broom extensions for forecasting
 --------------------------------

@@ -54,7 +54,7 @@ The package contains the following elements:
 `sweep` enables converting a `forecast` object to `tibble`. The result is ability to use `dplyr`, `tidyr`, and `ggplot` natively to manipulate, analyze and visualize forecasts.
 
 ```{r echo=FALSE, out.width='100%'}
-knitr::include_graphics("img/forecast.png")
+knitr::include_graphics("tools/forecast.png")
 ```
 
 ## Forecasting multiple time series groups at scale
@@ -62,7 +62,7 @@ knitr::include_graphics("img/forecast.png")
 Often forecasts are required on grouped data to analyse trends in sub-categories. The good news is scaling from one time series to many is easy with the various `sw_` functions in combination with `dplyr` and `purrr`.
 
 ```{r echo=FALSE, out.width='100%'}
-knitr::include_graphics("img/time_series_groups.png")
+knitr::include_graphics("tools/time_series_groups.png")
 ```
 
 ## Forecasting multiple models for accuracy
@@ -70,7 +70,7 @@ knitr::include_graphics("img/time_series_groups.png")
 A common goal in forecasting is to compare different forecast models against each other. `sweep` helps in this area as well.
 
 ```{r echo=FALSE, out.width='100%'}
-knitr::include_graphics("img/multiple_models.png")
+knitr::include_graphics("tools/multiple_models.png")
 ```
 
 ## broom extensions for forecasting

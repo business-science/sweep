@@ -9,12 +9,12 @@ Authors@R: c(
   )
 Maintainer: Matt Dancho <mdancho@business-science.io>
 Description: 
-    Tidies up the forecasting modeling and prediction workflow, 
+    Tidies up the forecasting modeling and prediction work flow, 
     extends the 'broom' package 
     with 'sw_tidy', 'sw_glance', 'sw_augment', and 'sw_tidy_decomp' functions 
     for various forecasting models,
     and enables converting 'forecast' objects to 
-    "tidy" data frames ("tibbles") with 'sw_sweep'.
+    "tidy" data frames with 'sw_sweep'.
 URL: https://github.com/business-science/sweep
 BugReports: https://github.com/business-science/sweep/issues
 License: GPL (>= 3)
