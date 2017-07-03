@@ -1,7 +1,7 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.0.0.9000
+Version: 0.1.0
 Date: 2017-06-23
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
@@ -9,15 +9,15 @@ Authors@R: c(
   )
 Maintainer: Matt Dancho <mdancho@business-science.io>
 Description: 
-    `sweep` tidies up the forecasting modeling and prediction workflow. 
-    It extends the 'broom' package 
-    by providing 'sw_tidy', 'sw_glance', 'sw_augment', and 'sw_tidy_decomp' functions 
+    Tidies up the forecasting modeling and prediction workflow, 
+    extends the 'broom' package 
+    with 'sw_tidy', 'sw_glance', 'sw_augment', and 'sw_tidy_decomp' functions 
     for various forecasting models,
-    and it provides the 'sw_sweep' function which converts 'forecast' objects to 
-    "tidy" data frames ("tibbles") that can be easily plotted and manipulated.
+    and enables converting 'forecast' objects to 
+    "tidy" data frames ("tibbles") with 'sw_sweep'.
 URL: https://github.com/business-science/sweep
 BugReports: https://github.com/business-science/sweep/issues
-License: MIT + file LICENSE
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 Depends:
@@ -27,21 +27,21 @@ Imports:
     devtools (>= 1.12.0),
     dplyr (>= 0.7.0),
     forecast (>= 8.0),
-    forcats (>= 0.2.0),
     lazyeval (>= 0.2.0),
     lubridate (>= 1.6.0),
-    purrr (>= 0.2.2),
-    readr (>= 1.0.0),
-    scales (<= 0.4.1),
     tibble (>= 1.2),
-    tidyquant (>= 0.5.1),
     tidyr (>= 0.6.1),
     timekit (>= 0.3.0)
 Suggests:
+    forcats,
     knitr,
     rmarkdown,
     testthat,
+    purrr,
+    readr,
     stringr,
+    scales,
+    tidyquant,
     tidyverse
 RoxygenNote: 6.0.1
 Roxygen: list(markdown = TRUE)
