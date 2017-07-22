@@ -39,7 +39,7 @@ Suggests:
     testthat,
     purrr,
     readr,
-    robest,
+    robets,
     stringr,
     scales,
     tidyquant,
