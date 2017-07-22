@@ -39,6 +39,7 @@ Suggests:
     testthat,
     purrr,
     readr,
+    robest,
     stringr,
     scales,
     tidyquant,
