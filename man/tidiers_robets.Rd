@@ -98,5 +98,5 @@ sw_tidy_decomp(fit_robets)
 
 }
 \seealso{
-\code{\link[=robets]{robets()}}
+\code{\link[robets:robets]{robets::robets()}}
 }

@@ -13,7 +13,7 @@
 #' @param ... Not used.
 #'
 #'
-#' @seealso [robets()]
+#' @seealso [robets::robets()]
 #'
 #' @examples
 #' library(robets)
