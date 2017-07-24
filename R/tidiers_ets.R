@@ -47,8 +47,17 @@ sw_tidy.ets <- function(x, ...) {
 
     coefs <- stats::coef(x)
 
-    ret <- tibble::tibble(term      = names(coefs),
-                          estimate  = coefs)
+    if (length(coefs > 0)) {
+        ret <- tibble::tibble(
+            term      = names(coefs),
+            estimate  = coefs
+        )
+    } else {
+        ret <- tibble::tibble(
+            term      = NA,
+            estimate  = NA
+        )
+    }
 
     return(ret)
 }
