@@ -8,8 +8,8 @@
 #' User can supply the original data, which returns the data + augmented columns.
 #' @param rename_index Used with `sw_augment` and `sw_tidy_decomp`.
 #' A string representing the name of the index generated.
-#' @param timekit_idx Used with `sw_augment` and `sw_tidy_decomp`.
-#' When `TRUE`, uses a timekit index (irregular, typically date or datetime) if present.
+#' @param timetk_idx Used with `sw_augment` and `sw_tidy_decomp`.
+#' When `TRUE`, uses a timetk index (irregular, typically date or datetime) if present.
 #' @param ... Not used.
 #'
 #'
@@ -47,8 +47,17 @@ sw_tidy.robets <- function(x, ...) {
 
     coefs <- stats::coef(x)
 
-    ret <- tibble::tibble(term      = names(coefs),
-                          estimate  = coefs)
+    if (length(coefs > 0)) {
+        ret <- tibble::tibble(
+            term      = names(coefs),
+            estimate  = coefs
+        )
+    } else {
+        ret <- tibble::tibble(
+            term      = NA,
+            estimate  = NA
+        )
+    }
 
     return(ret)
 }
@@ -105,13 +114,13 @@ sw_glance.robets <- function(x, ...) {
 #'   * `.resid`: The residual values from the model
 #'
 #' @export
-sw_augment.robets <- function(x, data = NULL, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_augment.robets <- function(x, data = NULL, timetk_idx = FALSE, rename_index = "index", ...) {
 
-    # Check timekit_idx
-    if (timekit_idx) {
-        if (!has_timekit_idx(x)) {
-            warning("Object has no timekit index. Using default index.")
-            timekit_idx = FALSE
+    # Check timetk_idx
+    if (timetk_idx) {
+        if (!has_timetk_idx(x)) {
+            warning("Object has no timetk index. Using default index.")
+            timetk_idx = FALSE
         }
     }
 
@@ -119,14 +128,14 @@ sw_augment.robets <- function(x, data = NULL, timekit_idx = FALSE, rename_index 
     ret <- tk_tbl(cbind(.actual = x$x, .fitted = x$fitted, .resid = x$residuals),
                   rename_index = rename_index, silent = TRUE)
 
-    # Apply timekit index if selected
-    if (timekit_idx) {
-        idx <- tk_index(x, timekit_idx = TRUE)
+    # Apply timetk index if selected
+    if (timetk_idx) {
+        idx <- tk_index(x, timetk_idx = TRUE)
         ret[, rename_index] <- idx
     }
 
     # Augment columns if necessary
-    ret <- sw_augment_columns(ret, data, rename_index, timekit_idx)
+    ret <- sw_augment_columns(ret, data, rename_index, timetk_idx)
 
     return(ret)
 
@@ -145,13 +154,13 @@ sw_augment.robets <- function(x, data = NULL, timekit_idx = FALSE, rename_index 
 #'   * `season`: The seasonal component (Not always present)
 #'
 #' @export
-sw_tidy_decomp.robets <- function(x, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_tidy_decomp.robets <- function(x, timetk_idx = FALSE, rename_index = "index", ...) {
 
-    # Check timekit_idx
-    if (timekit_idx) {
-        if (!has_timekit_idx(x)) {
-            warning("Object has no timekit index. Using default index.")
-            timekit_idx = FALSE
+    # Check timetk_idx
+    if (timetk_idx) {
+        if (!has_timetk_idx(x)) {
+            warning("Object has no timetk index. Using default index.")
+            timetk_idx = FALSE
         }
     }
 
@@ -183,15 +192,15 @@ sw_tidy_decomp.robets <- function(x, timekit_idx = FALSE, rename_index = "index"
     # Coerce to tibble
     ret <- tk_tbl(ret, preserve_index = TRUE, rename_index = rename_index, silent = TRUE)
 
-    # Apply timekit index if selected
-    if (timekit_idx) {
-        idx <- tk_index(x, timekit_idx = TRUE)
+    # Apply timetk index if selected
+    if (timetk_idx) {
+        idx <- tk_index(x, timetk_idx = TRUE)
         if (nrow(ret) != length(idx)) ret <- ret[(nrow(ret) - length(idx) + 1):nrow(ret),]
         ret[, rename_index] <- idx
     }
 
     # Index using sw_augment_columns() with data = NULL
-    ret <- sw_augment_columns(ret, data = NULL, rename_index = rename_index, timekit_idx = timekit_idx)
+    ret <- sw_augment_columns(ret, data = NULL, rename_index = rename_index, timetk_idx = timetk_idx)
 
     return(ret)
 }
