@@ -66,6 +66,7 @@ The compatibility chart is listed below.
 | arima       |      X     |       X      |       X       |                    |             |
 | Arima       |      X     |       X      |       X       |                    |             |
 | ets         |      X     |       X      |       X       |          X         |             |
+| robets      |      X     |       X      |       X       |          X         |             |
 | baggedETS   |            |              |               |                    |             |
 | bats        |      X     |       X      |       X       |          X         |             |
 | tbats       |      X     |       X      |       X       |          X         |             |

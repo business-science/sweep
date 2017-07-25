@@ -106,3 +106,6 @@ add_index <- function(ret, rename_index) {
     return(ret)
 
 }
+
+#' @export
+dplyr::`%>%`
