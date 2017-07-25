@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 )
 library(tidyquant)
 library(sweep)
-library(timekit)
+library(timetk)
 library(forecast)
 # devtools::load_all() # Travis CI fails on load_all()
 ```
@@ -45,7 +45,7 @@ Before we get started, load the following packages.
 ```{r, eval = F}
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 library(sweep)
 ```
 
@@ -168,11 +168,11 @@ monthly_qty_by_cat2_fit %>%
 
 ### sw_augment
 
-The augmented fitted and residual values can be achieved in much the same manner. This returns nine groups data. Note that we pass `timekit_idx = TRUE` to return the date format times as opposed to the regular (yearmon or numeric) time series.  
+The augmented fitted and residual values can be achieved in much the same manner. This returns nine groups data. Note that we pass `timetk_idx = TRUE` to return the date format times as opposed to the regular (yearmon or numeric) time series.  
 
 ```{r}
 augment_fit_ets <- monthly_qty_by_cat2_fit %>%
-    mutate(augment = map(fit.ets, sw_augment, timekit_idx = TRUE, rename_index = "date")) %>%
+    mutate(augment = map(fit.ets, sw_augment, timetk_idx = TRUE, rename_index = "date")) %>%
     unnest(augment, .drop = TRUE)
 
 augment_fit_ets
@@ -199,7 +199,7 @@ We can create decompositions using the same procedure with `sw_tidy_decomp()` an
 
 ```{r}
 monthly_qty_by_cat2_fit %>%
-    mutate(decomp = map(fit.ets, sw_tidy_decomp, timekit_idx = TRUE, rename_index = "date")) %>%
+    mutate(decomp = map(fit.ets, sw_tidy_decomp, timetk_idx = TRUE, rename_index = "date")) %>%
     unnest(decomp)
 ```
 
@@ -217,11 +217,11 @@ monthly_qty_by_cat2_fcast
 
 ## Step 4: Tidy the forecast
 
-Next, we can apply `sw_sweep` to get the forecast in a nice "tidy" data frame. We use the argument `fitted = FALSE` to remove the fitted values from the forecast (leave off if fitted values are desired). We set `timekit_idx = TRUE` to use dates instead of numeric values for the index. We'll use `unnest()` to drop the left over list-columns and return an unnested data frame.
+Next, we can apply `sw_sweep` to get the forecast in a nice "tidy" data frame. We use the argument `fitted = FALSE` to remove the fitted values from the forecast (leave off if fitted values are desired). We set `timetk_idx = TRUE` to use dates instead of numeric values for the index. We'll use `unnest()` to drop the left over list-columns and return an unnested data frame.
 
 ```{r}
 monthly_qty_by_cat2_fcast_tidy <- monthly_qty_by_cat2_fcast %>%
-    mutate(sweep = map(fcast.ets, sw_sweep, fitted = FALSE, timekit_idx = TRUE)) %>%
+    mutate(sweep = map(fcast.ets, sw_sweep, fitted = FALSE, timetk_idx = TRUE)) %>%
     unnest(sweep)
 monthly_qty_by_cat2_fcast_tidy
 ```

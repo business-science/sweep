@@ -5,14 +5,14 @@
 \alias{sw_tidy_decomp.decomposed.ts}
 \title{Tidying methods for decomposed time series}
 \usage{
-\method{sw_tidy_decomp}{decomposed.ts}(x, timekit_idx = FALSE,
+\method{sw_tidy_decomp}{decomposed.ts}(x, timetk_idx = FALSE,
   rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "decomposed.ts"}
 
-\item{timekit_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
-When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
+\item{timetk_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+When \code{TRUE}, uses a timetk index (irregular, typically date or datetime) if present.}
 
 \item{rename_index}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
 A string representing the name of the index generated.}

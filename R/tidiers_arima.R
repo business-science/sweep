@@ -9,8 +9,8 @@
 #' User can supply the original data, which returns the data + augmented columns.
 #' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
-#' @param timekit_idx Used with `sw_augment` only.
-#' Uses a irregular timekit index if present.
+#' @param timetk_idx Used with `sw_augment` only.
+#' Uses a irregular timetk index if present.
 #'
 #'
 #' @seealso [arima()], [Arima()]
@@ -114,13 +114,13 @@ sw_glance.Arima <- function(x, ...) {
 #'   * `.resid`: The residual values from the model
 #'
 #' @export
-sw_augment.Arima <- function(x, data = NULL, rename_index = "index", timekit_idx = FALSE, ...) {
+sw_augment.Arima <- function(x, data = NULL, rename_index = "index", timetk_idx = FALSE, ...) {
 
-    # Check timekit_idx
-    if (timekit_idx) {
-        if (!has_timekit_idx(x)) {
-            warning("Object has no timekit index. Using default index.")
-            timekit_idx = FALSE
+    # Check timetk_idx
+    if (timetk_idx) {
+        if (!has_timetk_idx(x)) {
+            warning("Object has no timetk index. Using default index.")
+            timetk_idx = FALSE
         }
     }
 
@@ -138,14 +138,14 @@ sw_augment.Arima <- function(x, data = NULL, rename_index = "index", timekit_idx
 
     }
 
-    # Apply timekit index if selected
-    if (timekit_idx) {
-        idx <- tk_index(x, timekit_idx = TRUE)
+    # Apply timetk index if selected
+    if (timetk_idx) {
+        idx <- tk_index(x, timetk_idx = TRUE)
         ret[, rename_index] <- idx
     }
 
     # Augment columns if necessary
-    ret <- sw_augment_columns(ret, data, rename_index, timekit_idx)
+    ret <- sw_augment_columns(ret, data, rename_index, timetk_idx)
 
     return(ret)
 

@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing ets tidiers")
 
 
@@ -39,13 +39,13 @@ test_that("sw_*.ets test returns tibble with correct rows and columns.", {
     expect_equal(nrow(test), 101)
     expect_equal(ncol(test), 4)
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         USAccDeaths %>%
             ets() %>%
-            sw_augment(timekit_idx = T)
+            sw_augment(timetk_idx = T)
     )
 
     # Check integration with tk_make_future_timeseries()
@@ -62,13 +62,13 @@ test_that("sw_*.ets test returns tibble with correct rows and columns.", {
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
     # sw_tidy_decomp -----
     test <- fit %>% sw_tidy_decomp()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    test <- fit %>% sw_tidy_decomp(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 })

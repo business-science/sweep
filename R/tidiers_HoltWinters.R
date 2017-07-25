@@ -9,8 +9,8 @@
 #' User can supply the original data, which returns the data + augmented columns.
 #' @param rename_index Used with `sw_augment` only.
 #' A string representing the name of the index generated.
-#' @param timekit_idx Used with `sw_augment` and `sw_tidy_decomp`.
-#' When `TRUE`, uses a timekit index (irregular, typically date or datetime) if present.
+#' @param timetk_idx Used with `sw_augment` and `sw_tidy_decomp`.
+#' When `TRUE`, uses a timetk index (irregular, typically date or datetime) if present.
 #' @param ... Additional parameters (not used)
 #'
 #'
@@ -107,13 +107,13 @@ sw_glance.HoltWinters <- function(x, ...) {
 #'   * `.resid`: The residual values from the model
 #'
 #' @export
-sw_augment.HoltWinters <- function(x, data = NULL, rename_index = "index", timekit_idx = FALSE, ...) {
+sw_augment.HoltWinters <- function(x, data = NULL, rename_index = "index", timetk_idx = FALSE, ...) {
 
-    # Check timekit_idx
-    if (timekit_idx) {
-        if (!has_timekit_idx(x)) {
-            warning("Object has no timekit index. Using default index.")
-            timekit_idx = FALSE
+    # Check timetk_idx
+    if (timetk_idx) {
+        if (!has_timetk_idx(x)) {
+            warning("Object has no timetk index. Using default index.")
+            timetk_idx = FALSE
         }
     }
 
@@ -123,14 +123,14 @@ sw_augment.HoltWinters <- function(x, data = NULL, rename_index = "index", timek
     ret <- ret %>%
         dplyr::mutate(.resid = .actual - .fitted)
 
-    # Apply timekit index if selected
-    if (timekit_idx) {
-        idx <- tk_index(x, timekit_idx = TRUE)
+    # Apply timetk index if selected
+    if (timetk_idx) {
+        idx <- tk_index(x, timetk_idx = TRUE)
         ret[, rename_index] <- idx
     }
 
     # Augment columns if necessary
-    ret <- sw_augment_columns(ret, data, rename_index, timekit_idx)
+    ret <- sw_augment_columns(ret, data, rename_index, timetk_idx)
 
     return(ret)
 
@@ -149,13 +149,13 @@ sw_augment.HoltWinters <- function(x, data = NULL, rename_index = "index", timek
 #'   * `seasadj`: observed - season (or trend + remainder)
 #'
 #' @export
-sw_tidy_decomp.HoltWinters <- function(x, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_tidy_decomp.HoltWinters <- function(x, timetk_idx = FALSE, rename_index = "index", ...) {
 
-    # Check timekit_idx
-    if (timekit_idx) {
-        if (!has_timekit_idx(x)) {
-            warning("Object has no timekit index. Using default index.")
-            timekit_idx = FALSE
+    # Check timetk_idx
+    if (timetk_idx) {
+        if (!has_timetk_idx(x)) {
+            warning("Object has no timetk index. Using default index.")
+            timetk_idx = FALSE
         }
     }
 
@@ -171,15 +171,15 @@ sw_tidy_decomp.HoltWinters <- function(x, timekit_idx = FALSE, rename_index = "i
         dplyr::mutate(remainder = observed - season - trend,
                       seasadj   = trend + remainder)
 
-    # Apply timekit index if selected
-    if (timekit_idx) {
-        idx <- tk_index(x, timekit_idx = TRUE)
+    # Apply timetk index if selected
+    if (timetk_idx) {
+        idx <- tk_index(x, timetk_idx = TRUE)
         if (nrow(ret) != length(idx)) ret <- ret[(nrow(ret) - length(idx) + 1):nrow(ret),]
         ret[, rename_index] <- idx
     }
 
     # Index using sw_augment_columns() with data = NULL
-    ret <- sw_augment_columns(ret, data = NULL, rename_index = rename_index, timekit_idx = timekit_idx)
+    ret <- sw_augment_columns(ret, data = NULL, rename_index = rename_index, timetk_idx = timetk_idx)
 
     return(ret)
 }

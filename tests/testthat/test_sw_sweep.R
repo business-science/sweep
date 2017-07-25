@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing sw_sweep function")
 
 
@@ -132,14 +132,14 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
     # sweep.default() -----
     expect_warning(sw_sweep(datasets::mtcars)) # Returns original data and warning message
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         WWWusage %>%
             auto.arima() %>%
             forecast() %>%
-            sw_sweep(timekit_idx = T)
+            sw_sweep(timetk_idx = T)
     )
 
     # Check integration with tk_make_future_timeseries()
@@ -157,13 +157,13 @@ test_that("sw_sweep test returns tibble with correct rows and columns.", {
     test <- sw_sweep(fcast)
     expect_equal(class(test$index), "yearmon")
 
-    test <- sw_sweep(fcast, timekit_idx = T)
+    test <- sw_sweep(fcast, timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
-    test <- sw_sweep(fcast, timekit_idx = T, skip_values = ymd("2017-12-01")) %>% tail()
+    test <- sw_sweep(fcast, timetk_idx = T, skip_values = ymd("2017-12-01")) %>% tail()
     expect_equal(test$index[[6]], ymd("2018-01-01"))
 
-    test <- sw_sweep(fcast, fitted = T, timekit_idx = T, skip_values = ymd("2017-12-01"))
+    test <- sw_sweep(fcast, fitted = T, timetk_idx = T, skip_values = ymd("2017-12-01"))
     expect_equal(test$index[[nrow(test)]], ymd("2018-01-01"))
 })
 

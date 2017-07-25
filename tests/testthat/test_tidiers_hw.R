@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing HoltWinters tidiers")
 
 # FUNCTION: sw_*.HoltWinters -----
@@ -38,7 +38,7 @@ test_that("sw_*.HoltWinters test returns tibble with correct rows and columns.",
 
     # Test passing incorrect data
     expect_warning(sw_augment(fit_hw,
-                              data = timekit::tk_ts(USAccDeaths[1:50], freq = 12, start = 1973),
+                              data = timetk::tk_ts(USAccDeaths[1:50], freq = 12, start = 1973),
                               rename_index = "date")
     )
 
@@ -49,13 +49,13 @@ test_that("sw_*.HoltWinters test returns tibble with correct rows and columns.",
     expect_equal(ncol(test), 6)
 
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         USAccDeaths %>%
             HoltWinters() %>%
-            sw_augment(timekit_idx = T)
+            sw_augment(timetk_idx = T)
     )
 
     # Check integration with tk_make_future_timeseries()
@@ -68,18 +68,18 @@ test_that("sw_*.HoltWinters test returns tibble with correct rows and columns.",
 
     fit <- HoltWinters(monthly_bike_sales_ts)
 
-    # timekit_idx sw_augment ----
+    # timetk_idx sw_augment ----
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
-    # timekit_idx sw_tidy_decomp -----
+    # timetk_idx sw_tidy_decomp -----
     test <- fit %>% sw_tidy_decomp()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    test <- fit %>% sw_tidy_decomp(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
 })

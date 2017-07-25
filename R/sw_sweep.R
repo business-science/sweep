@@ -4,7 +4,7 @@
 #' @param fitted Whether or not to return the fitted values (model values) in the results.
 #' FALSE by default.
 #' @param rename_index Enables the index column to be renamed.
-#' @param timekit_idx If timekit index (non-regularized index) is present, uses it
+#' @param timetk_idx If timetk index (non-regularized index) is present, uses it
 #' to develop forecast. Otherwise uses default index.
 #' @param ... Additional arguments passed to `tk_make_future_timeseries()`
 #'
@@ -17,17 +17,17 @@
 #' and the forecasted values including the point forecast and upper and lower
 #' confidence intervals.
 #'
-#' The `timekit_idx` argument is used to modify the return format of the index.
+#' The `timetk_idx` argument is used to modify the return format of the index.
 #'
-#' * If `timekit_idx = FALSE`, a regularized time index is always constructed.
+#' * If `timetk_idx = FALSE`, a regularized time index is always constructed.
 #' This may be in the format of numeric values (e.g. 2010.000) or the
 #' higher order `yearmon` and `yearqtr` classes from the `zoo` package.
 #' A higher order class is attempted to be returned.
 #'
-#' * If `timekit_idx = TRUE` and a timekit index is present, an irregular time index
+#' * If `timetk_idx = TRUE` and a timetk index is present, an irregular time index
 #' will be returned that combines the original time series (i.e. date or datetime)
 #' along with a computed future time series created using `tk_make_future_timeseries()`
-#' from the `timekit` package. The `...` can be used to pass additional arguments
+#' from the `timetk` package. The `...` can be used to pass additional arguments
 #' to `tk_make_future_timeseries()` such as `inspect_weekdays`, `skip_values`, etc
 #' that can be useful in tuning the future time series sequence.
 #'
@@ -47,24 +47,24 @@
 #'
 #'
 #' @export
-sw_sweep <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_sweep <- function(x, fitted = FALSE, timetk_idx = FALSE, rename_index = "index", ...) {
     UseMethod("sw_sweep", x)
 }
 
 #' @export
-sw_sweep.forecast <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_sweep.forecast <- function(x, fitted = FALSE, timetk_idx = FALSE, rename_index = "index", ...) {
 
-    # Check timekit_idx
-    if (timekit_idx)
-        if (!has_timekit_idx(x)) {
-            warning("Object has no timekit index. Using default index.")
-            timekit_idx = FALSE
+    # Check timetk_idx
+    if (timetk_idx)
+        if (!has_timetk_idx(x)) {
+            warning("Object has no timetk index. Using default index.")
+            timetk_idx = FALSE
         }
 
     # Get tibbles from forecast model
-    if (timekit_idx) {
-        # If timekit index desired
-        ret_x     <- tk_tbl(x$x, preserve_index = TRUE, rename_index = rename_index, timekit_idx = timekit_idx, silent = TRUE)
+    if (timetk_idx) {
+        # If timetk index desired
+        ret_x     <- tk_tbl(x$x, preserve_index = TRUE, rename_index = rename_index, timetk_idx = timetk_idx, silent = TRUE)
         if (fitted) {
             ret_fit   <- tk_tbl(x$fitted, preserve_index = TRUE, rename_index = rename_index, silent = TRUE)
             ret_fit[, rename_index] <- ret_x[, rename_index]
@@ -72,8 +72,8 @@ sw_sweep.forecast <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_ind
         # Use tk_make_future_timeseries() to build
         n <- length(x$mean)
         future_idx <- ret_x %>%
-            timekit::tk_index() %>%
-            timekit::tk_make_future_timeseries(n_future = 2*n + 50, ...)
+            timetk::tk_index() %>%
+            timetk::tk_make_future_timeseries(n_future = 2*n + 50, ...)
         future_idx <- future_idx[1:n]
         ret_mean  <- tk_tbl(x$mean, preserve_index = TRUE, rename_index = rename_index, silent = TRUE)
         ret_mean[, rename_index] <- future_idx
@@ -159,7 +159,7 @@ sw_sweep.forecast <- function(x, fitted = FALSE, timekit_idx = FALSE, rename_ind
 }
 
 #' @export
-sw_sweep.default <- function(x, fitted = TRUE, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_sweep.default <- function(x, fitted = TRUE, timetk_idx = FALSE, rename_index = "index", ...) {
     warning(paste0("`sw_sweep` function does not support class ", class(x)[[1]],
                    ". Object must inherit forecast class. Returning `x`."))
     return(x)

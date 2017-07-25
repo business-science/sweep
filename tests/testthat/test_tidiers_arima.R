@@ -1,5 +1,5 @@
 library(sweep)
-library(timekit)
+library(timetk)
 library(tidyquant)
 library(forecast)
 context("Testing arima tidiers")
@@ -64,13 +64,13 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
 
 
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         WWWusage %>%
             auto.arima() %>%
-            sw_augment(timekit_idx = T)
+            sw_augment(timetk_idx = T)
     )
 
     # Test sw_augment
@@ -86,27 +86,27 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
     # agument data = ts
 
-    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = F)
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = F)
     expect_equal(class(test$index), "yearmon")
     expect_equal(colnames(test)[[2]], "total.daily.sales")
 
-    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = T)
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
-    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timekit_idx = T, rename_index = "date")
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = T, rename_index = "date")
     expect_equal(class(test$date), "Date")
 
     # augment data = tbl
 
-    test <- fit %>% sw_augment(data = monthly_bike_sales, timekit_idx = F)
+    test <- fit %>% sw_augment(data = monthly_bike_sales, timetk_idx = F)
     expect_equal(class(test$month.date), "Date")
     expect_equal(colnames(test)[[2]], "total.daily.sales")
 
-    expect_warning(fit %>% sw_augment(data = monthly_bike_sales, timekit_idx = T))
+    expect_warning(fit %>% sw_augment(data = monthly_bike_sales, timetk_idx = T))
 
 })

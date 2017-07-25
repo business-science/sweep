@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing StructTS tidiers")
 
 
@@ -34,13 +34,13 @@ test_that("sw_*.StructTS test returns tibble with correct rows and columns.", {
     expect_equal(nrow(test), 100)
     expect_equal(ncol(test), 4)
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         USAccDeaths %>%
             StructTS() %>%
-            sw_augment(timekit_idx = T)
+            sw_augment(timetk_idx = T)
     )
 
     # Check integration with tk_make_future_timeseries()
@@ -56,7 +56,7 @@ test_that("sw_*.StructTS test returns tibble with correct rows and columns.", {
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
 })

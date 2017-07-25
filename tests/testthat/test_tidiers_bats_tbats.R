@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing bats and tbats tidiers")
 
 
@@ -67,13 +67,13 @@ test_that("sw_*.bats test returns tibble with correct rows and columns.", {
     expect_equal(nrow(test), 72)
     expect_equal(ncol(test), 5)
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         WWWusage %>%
             bats() %>%
-            sw_augment(timekit_idx = T)
+            sw_augment(timetk_idx = T)
     )
 
     monthly_bike_sales <- bike_sales %>%
@@ -83,25 +83,25 @@ test_that("sw_*.bats test returns tibble with correct rows and columns.", {
 
     monthly_bike_sales_ts <- tk_ts(monthly_bike_sales, start = 2011, freq = 12, silent = TRUE)
 
-    # BATS timekit index ----
+    # BATS timetk index ----
 
     fit <- bats(monthly_bike_sales_ts)
 
-    # timekit_idx sw_augment ----
+    # timetk_idx sw_augment ----
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
-    # timekit_idx sw_tidy_decomp -----
+    # timetk_idx sw_tidy_decomp -----
     test <- fit %>% sw_tidy_decomp()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    test <- fit %>% sw_tidy_decomp(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
-    # TBATS timekit index ----
+    # TBATS timetk index ----
 
     data_ts <- USAccDeaths %>%
         tk_tbl() %>%
@@ -110,18 +110,18 @@ test_that("sw_*.bats test returns tibble with correct rows and columns.", {
 
     fit <- tbats(data_ts)
 
-    # timekit_idx sw_augment ----
+    # timetk_idx sw_augment ----
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
-    # timekit_idx sw_tidy_decomp -----
+    # timetk_idx sw_tidy_decomp -----
     test <- fit %>% sw_tidy_decomp()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    test <- fit %>% sw_tidy_decomp(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
 })

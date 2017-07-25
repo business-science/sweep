@@ -4,7 +4,7 @@
 \alias{sw_sweep}
 \title{Tidy forecast objects}
 \usage{
-sw_sweep(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index",
+sw_sweep(x, fitted = FALSE, timetk_idx = FALSE, rename_index = "index",
   ...)
 }
 \arguments{
@@ -13,7 +13,7 @@ sw_sweep(x, fitted = FALSE, timekit_idx = FALSE, rename_index = "index",
 \item{fitted}{Whether or not to return the fitted values (model values) in the results.
 FALSE by default.}
 
-\item{timekit_idx}{If timekit index (non-regularized index) is present, uses it
+\item{timetk_idx}{If timetk index (non-regularized index) is present, uses it
 to develop forecast. Otherwise uses default index.}
 
 \item{rename_index}{Enables the index column to be renamed.}
@@ -34,16 +34,16 @@ The returned object contains both the actual values
 and the forecasted values including the point forecast and upper and lower
 confidence intervals.
 
-The \code{timekit_idx} argument is used to modify the return format of the index.
+The \code{timetk_idx} argument is used to modify the return format of the index.
 \itemize{
-\item If \code{timekit_idx = FALSE}, a regularized time index is always constructed.
+\item If \code{timetk_idx = FALSE}, a regularized time index is always constructed.
 This may be in the format of numeric values (e.g. 2010.000) or the
 higher order \code{yearmon} and \code{yearqtr} classes from the \code{zoo} package.
 A higher order class is attempted to be returned.
-\item If \code{timekit_idx = TRUE} and a timekit index is present, an irregular time index
+\item If \code{timetk_idx = TRUE} and a timetk index is present, an irregular time index
 will be returned that combines the original time series (i.e. date or datetime)
 along with a computed future time series created using \code{tk_make_future_timeseries()}
-from the \code{timekit} package. The \code{...} can be used to pass additional arguments
+from the \code{timetk} package. The \code{...} can be used to pass additional arguments
 to \code{tk_make_future_timeseries()} such as \code{inspect_weekdays}, \code{skip_values}, etc
 that can be useful in tuning the future time series sequence.
 }

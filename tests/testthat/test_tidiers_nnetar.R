@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing nnetar tidiers")
 
 
@@ -43,17 +43,17 @@ test_that("sw_*.nnetar test returns tibble with correct rows and columns.", {
 
     # Test passing incorrect data
     expect_warning(sw_augment(fit_nnetar,
-                              data = timekit::tk_ts(USAccDeaths[1:50], freq = 12, start = 1973),
+                              data = timetk::tk_ts(USAccDeaths[1:50], freq = 12, start = 1973),
                               rename_index = "date")
     )
 
-    # timekit index tests -----
+    # timetk index tests -----
 
-    # Check warning if no timekit index exists
+    # Check warning if no timetk index exists
     expect_warning(
         WWWusage %>%
             nnetar() %>%
-            sw_augment(timekit_idx = T)
+            sw_augment(timetk_idx = T)
     )
 
     # Check integration with tk_make_future_timeseries()
@@ -69,7 +69,7 @@ test_that("sw_*.nnetar test returns tibble with correct rows and columns.", {
     test <- fit %>% sw_augment()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_augment(timekit_idx = T)
+    test <- fit %>% sw_augment(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
 })

@@ -1,5 +1,5 @@
 ## Release Summary
-This is the first release of `sweep` for CRAN review. 
+This is the second release of `sweep` for CRAN review. The major change is to switch from `timekit` to `timetk`.
 
 
 ## Test environments

@@ -13,10 +13,10 @@
 \method{sw_glance}{bats}(x, ...)
 
 \method{sw_augment}{bats}(x, data = NULL, rename_index = "index",
-  timekit_idx = FALSE, ...)
+  timetk_idx = FALSE, ...)
 
-\method{sw_tidy_decomp}{bats}(x, timekit_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_tidy_decomp}{bats}(x, timetk_idx = FALSE, rename_index = "index",
+  ...)
 }
 \arguments{
 \item{x}{An object of class "bats" or "tbats"}
@@ -30,8 +30,8 @@ User can supply the original data, which returns the data + augmented columns.}
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
 
-\item{timekit_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
-When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
+\item{timetk_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+When \code{TRUE}, uses a timetk index (irregular, typically date or datetime) if present.}
 }
 \value{
 \strong{\code{sw_tidy()}} returns one row for each model parameter,

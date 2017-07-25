@@ -6,8 +6,8 @@
 #' @param data Any time series data that is to be augmented
 #' @param rename_index A variable indicating the index name to be used in the
 #' tibble returned
-#' @param timekit_idx Uses the timekit index (irregular time index) if present.
-sw_augment_columns <- function(ret, data, rename_index, timekit_idx = FALSE) {
+#' @param timetk_idx Uses the timetk index (irregular time index) if present.
+sw_augment_columns <- function(ret, data, rename_index, timetk_idx = FALSE) {
 
     ret_1 <- data
     ret_2 <- ret
@@ -62,13 +62,13 @@ sw_augment_columns <- function(ret, data, rename_index, timekit_idx = FALSE) {
     }
 
     if (!is.null(data)) {
-        if (timekit_idx) {
-            if (timekit::has_timekit_idx(data)) {
-                idx_name <- timekit::tk_get_timeseries_variables(ret)[[1]]
-                idx <- timekit::tk_index(data, timekit_idx = TRUE)
+        if (timetk_idx) {
+            if (timetk::has_timetk_idx(data)) {
+                idx_name <- timetk::tk_get_timeseries_variables(ret)[[1]]
+                idx <- timetk::tk_index(data, timetk_idx = TRUE)
                 ret[,idx_name] <- idx
             } else {
-                warning("`data` does not have a timekit index.")
+                warning("`data` does not have a timetk index.")
             }
         }
     }

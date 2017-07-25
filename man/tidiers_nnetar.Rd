@@ -11,7 +11,7 @@
 
 \method{sw_glance}{nnetar}(x, ...)
 
-\method{sw_augment}{nnetar}(x, data = NULL, timekit_idx = FALSE,
+\method{sw_augment}{nnetar}(x, data = NULL, timetk_idx = FALSE,
   rename_index = "index", ...)
 }
 \arguments{
@@ -23,8 +23,8 @@
 \code{NULL} by default which simply returns augmented columns only.
 User can supply the original data, which returns the data + augmented columns.}
 
-\item{timekit_idx}{Used with \code{sw_augment} only.
-Uses a irregular timekit index if present.}
+\item{timetk_idx}{Used with \code{sw_augment} only.
+Uses a irregular timetk index if present.}
 
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}

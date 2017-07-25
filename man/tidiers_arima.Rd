@@ -12,7 +12,7 @@
 \method{sw_glance}{Arima}(x, ...)
 
 \method{sw_augment}{Arima}(x, data = NULL, rename_index = "index",
-  timekit_idx = FALSE, ...)
+  timetk_idx = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class "Arima"}
@@ -26,8 +26,8 @@ User can supply the original data, which returns the data + augmented columns.}
 \item{rename_index}{Used with \code{sw_augment} only.
 A string representing the name of the index generated.}
 
-\item{timekit_idx}{Used with \code{sw_augment} only.
-Uses a irregular timekit index if present.}
+\item{timetk_idx}{Used with \code{sw_augment} only.
+Uses a irregular timetk index if present.}
 }
 \value{
 \strong{\code{sw_tidy()}} returns one row for each coefficient in the model,

@@ -13,10 +13,10 @@ modeling of time series}
 
 \method{sw_glance}{ets}(x, ...)
 
-\method{sw_augment}{ets}(x, data = NULL, timekit_idx = FALSE,
+\method{sw_augment}{ets}(x, data = NULL, timetk_idx = FALSE,
   rename_index = "index", ...)
 
-\method{sw_tidy_decomp}{ets}(x, timekit_idx = FALSE, rename_index = "index",
+\method{sw_tidy_decomp}{ets}(x, timetk_idx = FALSE, rename_index = "index",
   ...)
 }
 \arguments{
@@ -28,8 +28,8 @@ modeling of time series}
 \code{NULL} by default which simply returns augmented columns only.
 User can supply the original data, which returns the data + augmented columns.}
 
-\item{timekit_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
-When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
+\item{timetk_idx}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
+When \code{TRUE}, uses a timetk index (irregular, typically date or datetime) if present.}
 
 \item{rename_index}{Used with \code{sw_augment} and \code{sw_tidy_decomp}.
 A string representing the name of the index generated.}

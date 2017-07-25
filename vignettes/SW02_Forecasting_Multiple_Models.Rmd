@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 library(tidyquant)
 library(sweep)
 library(forecast)
-library(timekit)
+library(timetk)
 # devtools::load_all() # Travis CI fails on load_all()
 ```
 
@@ -45,7 +45,7 @@ Before we get started, load the following packages.
 ```{r, eval = F}
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 library(sweep)
 ```
 
@@ -263,11 +263,11 @@ models_tbl_fcast
 
 # Tidying the forecast
 
-Next, we map `sw_sweep`, which coerces the forecast into the "tidy" tibble format. We set `fitted = FALSE` to remove the model fitted values from the output. We set `timekit_idx = TRUE` to use dates instead of numeric values for the index.
+Next, we map `sw_sweep`, which coerces the forecast into the "tidy" tibble format. We set `fitted = FALSE` to remove the model fitted values from the output. We set `timetk_idx = TRUE` to use dates instead of numeric values for the index.
 
 ```{r}
 models_tbl_fcast_tidy <- models_tbl_fcast %>%
-    mutate(sweep = map(fcast, sw_sweep, fitted = FALSE, timekit_idx = TRUE, rename_index = "date"))
+    mutate(sweep = map(fcast, sw_sweep, fitted = FALSE, timetk_idx = TRUE, rename_index = "date"))
 models_tbl_fcast_tidy
 ```
 

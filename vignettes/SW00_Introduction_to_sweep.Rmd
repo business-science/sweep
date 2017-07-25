@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 library(tidyquant)
 library(sweep)
 library(forecast)
-library(timekit)
+library(timetk)
 # devtools::load_all() # Travis CI fails on load_all()
 ```
 
@@ -46,7 +46,7 @@ Before we get started, load the following packages.
 ```{r, eval = F}
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 library(sweep)
 ```
 
@@ -89,7 +89,7 @@ _Note that we purposely omit other steps such as testing the series for stationa
 
 ## Step 1: Coerce to a `ts` object class
 
-The `forecast` package uses the `ts` data structure, which is quite a bit different than tibbles that we are currently using. Fortunately, it's easy to get to the correct structure with `tk_ts()` from the `timekit` package. The `start` and `freq` variables are required for the regularized time series (`ts`) class, and these specify how to treat the time series. For monthly, the frequency should be specified as 12. This results in a nice calendar view. The `silent = TRUE` tells the `tk_ts()` function to skip the warning notifying us that the "date" column is being dropped. Non-numeric columns must be dropped for `ts` class, which is matrix based and a homogeneous data class.
+The `forecast` package uses the `ts` data structure, which is quite a bit different than tibbles that we are currently using. Fortunately, it's easy to get to the correct structure with `tk_ts()` from the `timetk` package. The `start` and `freq` variables are required for the regularized time series (`ts`) class, and these specify how to treat the time series. For monthly, the frequency should be specified as 12. This results in a nice calendar view. The `silent = TRUE` tells the `tk_ts()` function to skip the warning notifying us that the "date" column is being dropped. Non-numeric columns must be dropped for `ts` class, which is matrix based and a homogeneous data class.
 
 
 ```{r}
@@ -97,10 +97,10 @@ alcohol_sales_ts <- tk_ts(alcohol_sales_tbl, start = 2007, freq = 12, silent = T
 alcohol_sales_ts
 ```
 
-A significant benefit is that the resulting `ts` object maintains a "timekit index", which will help with forecasting dates later. We can verify this using `has_timekit_idx()` from the `timekit` package.
+A significant benefit is that the resulting `ts` object maintains a "timetk index", which will help with forecasting dates later. We can verify this using `has_timetk_idx()` from the `timetk` package.
 
 ```{r}
-has_timekit_idx(alcohol_sales_ts)
+has_timetk_idx(alcohol_sales_ts)
 ```
 
 
@@ -263,22 +263,22 @@ sw_sweep(fcast_ets) %>%
     theme_tq() 
 ```
 
-Because the `ts` object was created with the `tk_ts()` function, it contained a timekit index that was carried with it throughout the forecasting workflow. As a result, we can use the `timekit_idx` argument, which maps the original irregular index (dates) and a generated future index to the regularized time series (yearmon). This results in the ability to return an index of date and datetime, which is not currently possible with the `forecast` objects. Notice that the index is returned as `date` class.
+Because the `ts` object was created with the `tk_ts()` function, it contained a timetk index that was carried with it throughout the forecasting workflow. As a result, we can use the `timetk_idx` argument, which maps the original irregular index (dates) and a generated future index to the regularized time series (yearmon). This results in the ability to return an index of date and datetime, which is not currently possible with the `forecast` objects. Notice that the index is returned as `date` class.
 
 ```{r}
-sw_sweep(fcast_ets, timekit_idx = TRUE) %>%
+sw_sweep(fcast_ets, timetk_idx = TRUE) %>%
     head()
 ```
 
 ```{r}
-sw_sweep(fcast_ets, timekit_idx = TRUE) %>%
+sw_sweep(fcast_ets, timetk_idx = TRUE) %>%
     tail()
 ```
 
 We can build the same plot with dates in the x-axis now. 
 
 ```{r}
-sw_sweep(fcast_ets, timekit_idx = TRUE) %>%
+sw_sweep(fcast_ets, timetk_idx = TRUE) %>%
     ggplot(aes(x = index, y = price, color = key)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
                 fill = "#D5DBFF", color = NA, size = 0) +

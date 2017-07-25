@@ -1,8 +1,8 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.1.0
-Date: 2017-07-03
+Version: 0.2.0
+Date: 2017-07-25
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
@@ -31,7 +31,7 @@ Imports:
     lubridate (>= 1.6.0),
     tibble (>= 1.2),
     tidyr (>= 0.6.1),
-    timekit (>= 0.3.0)
+    timetk (>= 0.1.0)
 Suggests:
     forcats,
     knitr,

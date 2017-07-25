@@ -2,8 +2,8 @@
 #'
 #' @param x A time-series object of class `stl`, `ets`, `decomposed.ts`, `HoltWinters`,
 #'  `bats` or `tbats`.
-#' @param timekit_idx
-#' When `TRUE`, uses a timekit index (irregular, typically date or datetime) if present.
+#' @param timetk_idx
+#' When `TRUE`, uses a timetk index (irregular, typically date or datetime) if present.
 #' @param rename_index Enables the index column to be renamed.
 #' @param ... Not used.
 #'
@@ -32,14 +32,14 @@
 #'
 #'
 #' @export
-sw_tidy_decomp <- function(x, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_tidy_decomp <- function(x, timetk_idx = FALSE, rename_index = "index", ...) {
     UseMethod("sw_tidy_decomp", x)
 }
 
 
 
 #' @export
-sw_tidy_decomp.default <- function(x, timekit_idx = FALSE, rename_index = "index", ...) {
+sw_tidy_decomp.default <- function(x, timetk_idx = FALSE, rename_index = "index", ...) {
     warning(paste0("`sw_tidy_decomp` function does not support class ", class(x)[[1]], ". Returning `x`."))
     return(x)
 }

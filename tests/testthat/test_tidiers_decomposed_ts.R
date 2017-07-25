@@ -1,7 +1,7 @@
 library(sweep)
 library(forecast)
 library(tidyquant)
-library(timekit)
+library(timetk)
 context("Testing decomposed.ts tidiers")
 
 
@@ -18,7 +18,7 @@ test_that("sw_*.decomposed.ts test returns tibble with correct rows and columns.
     expect_equal(nrow(test), 72)
     expect_equal(ncol(test), 6)
 
-    # timekit index ----
+    # timetk index ----
 
     data_ts <- USAccDeaths %>%
         tk_tbl() %>%
@@ -27,11 +27,11 @@ test_that("sw_*.decomposed.ts test returns tibble with correct rows and columns.
 
     fit <- decompose(data_ts)
 
-    # timekit_idx sw_tidy_decomp -----
+    # timetk_idx sw_tidy_decomp -----
     test <- fit %>% sw_tidy_decomp()
     expect_equal(class(test$index), "yearmon")
 
-    test <- fit %>% sw_tidy_decomp(timekit_idx = T)
+    test <- fit %>% sw_tidy_decomp(timetk_idx = T)
     expect_equal(class(test$index), "Date")
 
 })

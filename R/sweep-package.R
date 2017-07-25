@@ -17,6 +17,6 @@
 #' @name sweep_package
 #'
 #' @importFrom dplyr %>%
-#' @importFrom timekit tk_tbl tk_ts tk_index has_timekit_idx tk_get_timeseries_variables
+#' @importFrom timetk tk_tbl tk_ts tk_index has_timetk_idx tk_get_timeseries_variables
 
 NULL

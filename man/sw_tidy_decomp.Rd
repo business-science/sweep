@@ -4,13 +4,13 @@
 \alias{sw_tidy_decomp}
 \title{Coerces decomposed time-series objects to tibble format.}
 \usage{
-sw_tidy_decomp(x, timekit_idx = FALSE, rename_index = "index", ...)
+sw_tidy_decomp(x, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{A time-series object of class \code{stl}, \code{ets}, \code{decomposed.ts}, \code{HoltWinters},
 \code{bats} or \code{tbats}.}
 
-\item{timekit_idx}{When \code{TRUE}, uses a timekit index (irregular, typically date or datetime) if present.}
+\item{timetk_idx}{When \code{TRUE}, uses a timetk index (irregular, typically date or datetime) if present.}
 
 \item{rename_index}{Enables the index column to be renamed.}
 
