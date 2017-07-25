@@ -1,6 +1,6 @@
 library(sweep)
 library(robets)
-library(tidyquant)
+library(dplyr)
 library(timetk)
 context("Testing robets tidiers")
 
