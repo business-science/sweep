@@ -5,6 +5,8 @@ sweep
 
 [![Travis-CI Build Status](https://travis-ci.org/business-science/sweep.svg?branch=master)](https://travis-ci.org/business-science/sweep.svg?branch=master) [![codecov](https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/sweep) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/sweep)](https://cran.r-project.org/package=sweep) ![](http://cranlogs.r-pkg.org/badges/sweep?color=brightgreen) ![](http://cranlogs.r-pkg.org/badges/grand-total/sweep?color=brightgreen)
 
+<img src="tools/sweep-logo.png" width="147" height="170" align="right" />
+
 > Extending `broom` to time series forecasting
 
 The `sweep` package extends the `broom` tools (tidy, glance, and augment) for performing forecasts and time series analysis in the "tidyverse". The package is geared towards "tidying" the forecast workflow used with Rob Hyndman's `forecast` package.
