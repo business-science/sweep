@@ -28,7 +28,7 @@ library(sweep)
 ![](http://cranlogs.r-pkg.org/badges/sweep?color=brightgreen)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/sweep?color=brightgreen)
 
-<img src="tools/logo.png" width="147" height="170" align="right" />
+<img src="tools/sweep-logo.png" width="147" height="170" align="right" />
 
 > Extending `broom` to time series forecasting
 
