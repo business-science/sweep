@@ -1,0 +1,27 @@
+template:
+  params:
+    bootswatch: flatly
+    ganalytics: UA-76139189-1
+
+navbar:
+  title: "sweep"
+  left:
+    - text: "Home"
+      href: index.html
+    - text: "Function Reference"
+      href: reference/index.html
+    - text: "Vignettes"
+      href: articles/index.html
+      menu:
+        - text: "Introduction to sweep"
+          href: articles/SW00_Introduction_to_sweep.html
+        - text: "Forecasting time series groups"
+          href: articles/SW01_Forecasting_Time_Series_Groups.html
+        - text: "Forecasting multiple models"
+          href: articles/SW02_Forecasting_Multiple_Models.html
+    - text: "News"
+      href: news/index.html
+
+  right:
+    - icon: fa-github
+      href: https://github.com/business-science/sweep
