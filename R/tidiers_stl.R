@@ -58,10 +58,10 @@ sw_tidy_decomp.stl <- function(x, timetk_idx = FALSE, rename_index = "index", ..
     }
 
     # Extract from model
-    ret <- cbind(observed    = forecast::seasadj(x) + x$time.series[,1],
-                 season      = x$time.series[,1],
-                 trend       = x$time.series[,2],
-                 remainder   = x$time.series[,3],
+    ret <- cbind(observed    = forecast::seasadj(x) + forecast::seasonal(x),
+                 season      = forecast::seasonal(x),
+                 trend       = forecast::trendcycle(x),
+                 remainder   = forecast::remainder(x),
                  seasadj     = forecast::seasadj(x))
 
     # Coerce to tibble
@@ -86,7 +86,7 @@ sw_tidy_decomp.stl <- function(x, timetk_idx = FALSE, rename_index = "index", ..
 #' @export
 sw_tidy_decomp.stlm <- function(x, timetk_idx = FALSE, rename_index = "index", ...) {
 
-    ret <- sw_tidy_decomp(x$stl, timetk_idx = timetk_idx, rename_index = rename_index, ...)
+    ret <- sw_tidy_decomp.stl(x$stl, timetk_idx = timetk_idx, rename_index = rename_index, ...)
 
     return(ret)
 }
