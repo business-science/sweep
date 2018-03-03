@@ -1,3 +1,6 @@
+# sweep 0.2.1
+* Fixes for `forecast::mstl`
+
 # sweep 0.2.0
 * Change to `timetk` from `timekit`.
 * Fix Issue #2 - `sw_tidy` fails when `auto.arima()` returns no terms (coefficients).
