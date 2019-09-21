@@ -85,6 +85,7 @@ Tidying methods for ETS (Error, Trend, Seasonal) exponential smoothing
 modeling of time series
 }
 \examples{
+library(dplyr)
 library(forecast)
 library(sweep)
 

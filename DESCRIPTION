@@ -29,7 +29,7 @@ Imports:
     lazyeval (>= 0.2.0),
     lubridate (>= 1.6.0),
     tibble (>= 1.2),
-    tidyr (>= 0.6.1),
+    tidyr (>= 1.0.0),
     timetk (>= 0.1.0)
 Suggests:
     forcats,
@@ -42,7 +42,8 @@ Suggests:
     stringr,
     scales,
     tidyquant,
-    tidyverse
+    tidyverse,
+    fracdiff
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

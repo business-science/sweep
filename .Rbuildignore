@@ -11,3 +11,5 @@ img
 ^_pkgdown\.yml$
 ^index\.Rmd$
 ^docs$
+^doc$
+^Meta$

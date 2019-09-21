@@ -6,5 +6,6 @@ library(tidyverse)
 library(robets)
 library(lubridate)
 library(tidyquant)
+library(fracdiff)
 
 test_check("sweep")

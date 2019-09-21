@@ -30,7 +30,10 @@ therefore suited for further manipulation by packages like dplyr and
 ggplot2.
 }
 \examples{
+library(dplyr)
 library(forecast)
+library(sweep)
+
 WWWusage \%>\%
     auto.arima() \%>\%
     sw_tidy(conf.int = TRUE)

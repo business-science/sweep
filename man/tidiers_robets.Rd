@@ -85,6 +85,7 @@ Tidying methods for robets (Robust Error, Trend, Seasonal) exponential smoothing
 modeling of time series
 }
 \examples{
+library(dplyr)
 library(robets)
 library(sweep)
 

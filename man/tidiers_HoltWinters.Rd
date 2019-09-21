@@ -82,6 +82,7 @@ These methods tidy \code{HoltWinters} models of univariate time
 series.
 }
 \examples{
+library(dplyr)
 library(forecast)
 library(sweep)
 

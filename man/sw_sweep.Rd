@@ -53,6 +53,7 @@ The index column name can be changed using the \code{rename_index} argument.
 \examples{
 library(forecast)
 library(sweep)
+library(dplyr)
 
 # ETS forecasts
 USAccDeaths \%>\%

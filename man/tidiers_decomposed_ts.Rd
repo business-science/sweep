@@ -34,6 +34,7 @@ a sequential index is created for plotting purposes
 Tidying methods for decomposed time series
 }
 \examples{
+library(dplyr)
 library(forecast)
 library(sweep)
 

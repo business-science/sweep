@@ -70,6 +70,7 @@ These methods tidy the coefficients of NNETAR models of univariate time
 series.
 }
 \examples{
+library(dplyr)
 library(forecast)
 library(sweep)
 

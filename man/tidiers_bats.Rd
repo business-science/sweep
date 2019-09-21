@@ -82,6 +82,7 @@ a sequential index is created for plotting purposes
 Tidying methods for BATS and TBATS modeling of time series
 }
 \examples{
+library(dplyr)
 library(forecast)
 library(sweep)
 

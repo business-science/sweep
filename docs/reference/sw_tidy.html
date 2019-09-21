@@ -176,7 +176,10 @@ ggplot2.</p>
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/broom/man/reexports.html'>broom::tidy()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>forecast</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>forecast</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>sweep</span>)
+
 <span class='no'>WWWusage</span> <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='https://rdrr.io/pkg/forecast/man/auto.arima.html'>auto.arima</a></span>() <span class='kw'>%&gt;%</span>
     <span class='fu'>sw_tidy</span>(<span class='kw'>conf.int</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 2 x 2</span><span>

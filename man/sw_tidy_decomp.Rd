@@ -31,6 +31,7 @@ detected, a sequential index is returned as a default.
 The index column name can be changed using the \code{rename_index} argument.
 }
 \examples{
+library(dplyr)
 library(forecast)
 library(sweep)
 
