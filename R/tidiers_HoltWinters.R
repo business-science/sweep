@@ -17,6 +17,7 @@
 #' @seealso [HoltWinters()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'

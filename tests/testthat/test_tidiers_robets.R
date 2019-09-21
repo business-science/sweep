@@ -1,8 +1,3 @@
-library(sweep)
-library(forecast)
-library(tidyquant)
-library(timetk)
-library(robets)
 context("Testing robets tidiers")
 
 

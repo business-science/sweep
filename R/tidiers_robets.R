@@ -16,6 +16,7 @@
 #' @seealso [robets::robets()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(robets)
 #' library(sweep)
 #'

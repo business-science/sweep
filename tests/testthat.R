@@ -1,4 +1,10 @@
 library(testthat)
 library(sweep)
+library(timetk)
+library(forecast)
+library(tidyverse)
+library(robets)
+library(lubridate)
+library(tidyquant)
 
 test_check("sweep")

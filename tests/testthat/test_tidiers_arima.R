@@ -1,7 +1,3 @@
-library(sweep)
-library(timetk)
-library(tidyquant)
-library(forecast)
 context("Testing arima tidiers")
 
 

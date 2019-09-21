@@ -22,10 +22,7 @@ knitr::opts_chunk$set(
     out.width='95%', 
     dpi = 200
 )
-library(tidyquant)
-library(sweep)
-library(forecast)
-library(timetk)
+
 # devtools::load_all() # Travis CI fails on load_all()
 ```
 
@@ -43,11 +40,12 @@ To illustrate, let's take a basic forecasting workflow starting from data collec
 
 Before we get started, load the following packages.
 
-```{r, eval = F}
-library(forecast)
+```{r, message = F}
+library(tidyverse)
 library(tidyquant)
 library(timetk)
 library(sweep)
+library(forecast)
 ```
 
 # Forecasting Sales of Beer, Wine, and Distilled Alcohol Beverages

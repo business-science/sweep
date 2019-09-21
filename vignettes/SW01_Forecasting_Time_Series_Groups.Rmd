@@ -22,10 +22,7 @@ knitr::opts_chunk$set(
     out.width='95%', 
     dpi = 200
 )
-library(tidyquant)
-library(sweep)
-library(timetk)
-library(forecast)
+
 # devtools::load_all() # Travis CI fails on load_all()
 ```
 
@@ -42,11 +39,12 @@ In this vignette we'll review how `sweep` can help the __first situation__: _App
 
 Before we get started, load the following packages.
 
-```{r, eval = F}
-library(forecast)
+```{r, message = F}
+library(tidyverse)
 library(tidyquant)
 library(timetk)
 library(sweep)
+library(forecast)
 ```
 
 # Bike Sales
@@ -101,7 +99,7 @@ Next, we use the `nest()` function from the `tidyr` package to consolidate each 
 ```{r}
 monthly_qty_by_cat2_nest <- monthly_qty_by_cat2 %>%
     group_by(category.secondary) %>%
-    nest(.key = "data.tbl")
+    nest()
 monthly_qty_by_cat2_nest
 ```
 
@@ -124,7 +122,7 @@ The `mutate()` function adds a column, and the `map()` function maps the content
 
 ```{r}
 monthly_qty_by_cat2_ts <- monthly_qty_by_cat2_nest %>%
-    mutate(data.ts = map(.x       = data.tbl, 
+    mutate(data.ts = map(.x       = data, 
                          .f       = tk_ts, 
                          select   = -order.month, 
                          start    = 2011,
@@ -152,7 +150,7 @@ To get the model parameters for each nested list, we can combine `sw_tidy` withi
 ```{r}
 monthly_qty_by_cat2_fit %>%
     mutate(tidy = map(fit.ets, sw_tidy)) %>%
-    unnest(tidy, .drop = TRUE) %>%
+    unnest(tidy) %>%
     spread(key = category.secondary, value = estimate)
 ```
 
@@ -163,7 +161,7 @@ We can view the model accuracies also by mapping `sw_glance` within the `mutate`
 ```{r}
 monthly_qty_by_cat2_fit %>%
     mutate(glance = map(fit.ets, sw_glance)) %>%
-    unnest(glance, .drop = TRUE)
+    unnest(glance)
 ```
 
 ### sw_augment
@@ -173,7 +171,7 @@ The augmented fitted and residual values can be achieved in much the same manner
 ```{r}
 augment_fit_ets <- monthly_qty_by_cat2_fit %>%
     mutate(augment = map(fit.ets, sw_augment, timetk_idx = TRUE, rename_index = "date")) %>%
-    unnest(augment, .drop = TRUE)
+    unnest(augment)
 
 augment_fit_ets
 ```

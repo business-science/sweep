@@ -1,7 +1,3 @@
-library(sweep)
-library(forecast)
-library(tidyquant)
-library(timetk)
 context("Testing nnetar tidiers")
 
 

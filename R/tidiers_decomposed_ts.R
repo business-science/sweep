@@ -12,6 +12,7 @@
 #' @seealso [decompose()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'

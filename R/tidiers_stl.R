@@ -12,6 +12,7 @@
 #' @seealso [stl()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'

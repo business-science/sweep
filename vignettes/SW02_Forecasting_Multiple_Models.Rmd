@@ -22,10 +22,7 @@ knitr::opts_chunk$set(
     out.width='95%', 
     dpi = 200
 )
-library(tidyquant)
-library(sweep)
-library(forecast)
-library(timetk)
+
 # devtools::load_all() # Travis CI fails on load_all()
 ```
 
@@ -42,11 +39,12 @@ In this vignette we'll review how `sweep` can help the __second situation__: _Ap
 
 Before we get started, load the following packages.
 
-```{r, eval = F}
-library(forecast)
+```{r, message = F}
+library(tidyverse)
 library(tidyquant)
 library(timetk)
 library(sweep)
+library(forecast)
 ```
 
 # Forecasting Gasoline Prices
@@ -82,7 +80,6 @@ We can now visualize the data.
 gas_prices_monthly %>%
     ggplot(aes(x = date, y = price)) +
     geom_line(color = palette_light()[[1]]) +
-    geom_point(color = palette_light()[[1]]) +
     labs(title = "Gasoline Prices, Monthly", x = "", y = "USD") +
     scale_y_continuous(labels = scales::dollar) +
     theme_tq()
@@ -102,7 +99,6 @@ Another quick visualization to show the reduction in granularity.
 gas_prices_quarterly %>%
     ggplot(aes(x = date, y = price)) +
     geom_line(color = palette_light()[[1]], size = 1) +
-    geom_point(color = palette_light()[[1]]) +
     labs(title = "Gasoline Prices, Quarterly", x = "", y = "USD") +
     scale_y_continuous(labels = scales::dollar) +
     scale_x_date(date_breaks = "5 years", date_labels = "%Y") +

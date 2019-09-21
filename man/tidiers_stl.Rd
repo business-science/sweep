@@ -9,11 +9,11 @@
 \usage{
 \method{sw_tidy}{stl}(x, ...)
 
-\method{sw_tidy_decomp}{stl}(x, timetk_idx = FALSE, rename_index = "index",
-  ...)
+\method{sw_tidy_decomp}{stl}(x, timetk_idx = FALSE,
+  rename_index = "index", ...)
 
-\method{sw_tidy_decomp}{stlm}(x, timetk_idx = FALSE, rename_index = "index",
-  ...)
+\method{sw_tidy_decomp}{stlm}(x, timetk_idx = FALSE,
+  rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "stl" or "stlm"}

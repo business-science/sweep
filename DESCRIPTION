@@ -1,8 +1,8 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.2.1
-Date: 2018-03-03
+Version: 0.2.1.9999
+Date: 2018-09-20
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
@@ -24,7 +24,6 @@ Depends:
     R (>= 3.3.0)
 Imports:
     broom (>= 0.4.2),
-    devtools (>= 1.12.0),
     dplyr (>= 0.7.0),
     forecast (>= 8.0),
     lazyeval (>= 0.2.0),
@@ -44,6 +43,6 @@ Suggests:
     scales,
     tidyquant,
     tidyverse
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

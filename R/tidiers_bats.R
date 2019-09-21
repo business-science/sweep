@@ -15,6 +15,7 @@
 #' @seealso [bats()], [tbats()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'

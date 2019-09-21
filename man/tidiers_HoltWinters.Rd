@@ -12,8 +12,8 @@
 
 \method{sw_glance}{HoltWinters}(x, ...)
 
-\method{sw_augment}{HoltWinters}(x, data = NULL, rename_index = "index",
-  timetk_idx = FALSE, ...)
+\method{sw_augment}{HoltWinters}(x, data = NULL,
+  rename_index = "index", timetk_idx = FALSE, ...)
 
 \method{sw_tidy_decomp}{HoltWinters}(x, timetk_idx = FALSE,
   rename_index = "index", ...)

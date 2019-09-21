@@ -17,6 +17,7 @@
 #' The index column name can be changed using the `rename_index` argument.
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'

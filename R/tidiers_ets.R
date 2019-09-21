@@ -16,6 +16,7 @@
 #' @seealso [ets()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'

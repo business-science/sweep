@@ -16,6 +16,7 @@
 #' @seealso [nnetar()]
 #'
 #' @examples
+#' library(dplyr)
 #' library(forecast)
 #' library(sweep)
 #'
