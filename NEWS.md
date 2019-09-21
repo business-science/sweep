@@ -1,3 +1,6 @@
+# sweep 0.2.1.9999
+* Fixes for compatability with `tidyquant` v0.5.7
+
 # sweep 0.2.1
 * Fixes for `forecast::mstl`
 
