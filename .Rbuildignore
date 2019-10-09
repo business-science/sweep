@@ -13,3 +13,4 @@ img
 ^docs$
 ^doc$
 ^Meta$
+^CRAN-RELEASE$
