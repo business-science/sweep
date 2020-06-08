@@ -5,6 +5,8 @@
 \alias{sw_tidy.stl}
 \alias{sw_tidy_decomp.stl}
 \alias{sw_tidy_decomp.stlm}
+\alias{sw_glance.stlm}
+\alias{sw_augment.stlm}
 \title{Tidying methods for STL (Seasonal, Trend, Level) decomposition of time series}
 \usage{
 \method{sw_tidy}{stl}(x, ...)
@@ -12,9 +14,13 @@
 \method{sw_tidy_decomp}{stl}(x, timetk_idx = FALSE, rename_index = "index", ...)
 
 \method{sw_tidy_decomp}{stlm}(x, timetk_idx = FALSE, rename_index = "index", ...)
+
+\method{sw_glance}{stlm}(x, ...)
+
+\method{sw_augment}{stlm}(x, data = NULL, rename_index = "index", timetk_idx = FALSE, ...)
 }
 \arguments{
-\item{x}{An object of class "stl" or "stlm"}
+\item{x}{An object of class "stl"}
 
 \item{...}{Not used.}
 
@@ -23,6 +29,8 @@ When \code{TRUE}, uses a timetk index (irregular, typically date or datetime) if
 
 \item{rename_index}{Used with \code{sw_tidy_decomp}.
 A string representing the name of the index generated.}
+
+\item{data}{Used with \code{sw_augment} only.}
 }
 \value{
 \strong{\code{sw_tidy()}} wraps \code{sw_tidy_decomp()}
@@ -35,6 +43,33 @@ a sequential index is created for plotting purposes
 \item \code{trend}: The trend component
 \item \code{remainder}: observed - (season + trend)
 \item \code{seasadj}: observed - season (or trend + remainder)
+}
+
+\strong{\code{sw_glance()}} returns the underlying ETS or ARIMA model's \code{sw_glance()} results one row with the columns
+\itemize{
+\item \code{model.desc}: A description of the model including the
+three integer components (p, d, q) are the AR order,
+the degree of differencing, and the MA order.
+\item \code{sigma}: The square root of the estimated residual variance
+\item \code{logLik}: The data's log-likelihood under the model
+\item \code{AIC}: The Akaike Information Criterion
+\item \code{BIC}: The Bayesian Information Criterion
+\item \code{ME}: Mean error
+\item \code{RMSE}: Root mean squared error
+\item \code{MAE}: Mean absolute error
+\item \code{MPE}: Mean percentage error
+\item \code{MAPE}: Mean absolute percentage error
+\item \code{MASE}: Mean absolute scaled error
+\item \code{ACF1}: Autocorrelation of errors at lag 1
+}
+
+\strong{\code{sw_augment()}} returns a tibble with the following time series attributes:
+\itemize{
+\item \code{index}: An index is either attempted to be extracted from the model or
+a sequential index is created for plotting purposes
+\item \code{.actual}: The original time series
+\item \code{.fitted}: The fitted values from the model
+\item \code{.resid}: The residual values from the model
 }
 }
 \description{

@@ -1,13 +1,18 @@
 # sweep 0.2.3
+
 * Fixes for compatability with `broom` v0.7.0
+* Add tidiers for `stlm()` models
 
 # sweep 0.2.2
+
 * Fixes for compatability with `tidyquant` v0.5.7
 
 # sweep 0.2.1
+
 * Fixes for `forecast::mstl`
 
 # sweep 0.2.0
+
 * Change to `timetk` from `timekit`.
 * Fix Issue #2 - `sw_tidy` fails when `auto.arima()` returns no terms (coefficients).
 
