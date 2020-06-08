@@ -91,7 +91,7 @@ sw_glance.robets <- function(x, ...) {
 
     # Summary statistics
     ret_2 <- tibble::tibble(sigma = sqrt(x$sigma2))
-    ret_2 <- broom::finish_glance(ret_2, x) %>%
+    ret_2 <- finish_glance(ret_2, x) %>%
         tibble::as_tibble()
 
     # # forecast accuracy

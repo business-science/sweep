@@ -12,8 +12,7 @@ modeling of time series}
 
 \method{sw_glance}{StructTS}(x, ...)
 
-\method{sw_augment}{StructTS}(x, data = NULL, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_augment}{StructTS}(x, data = NULL, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "StructTS"}

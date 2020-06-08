@@ -5,8 +5,7 @@
 \alias{sw_tidy_decomp.decomposed.ts}
 \title{Tidying methods for decomposed time series}
 \usage{
-\method{sw_tidy_decomp}{decomposed.ts}(x, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_tidy_decomp}{decomposed.ts}(x, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "decomposed.ts"}

@@ -1,8 +1,10 @@
 #' sweep: Extending broom to time series forecasting
 #'
-#' @details
+#' @description
 #' The `sweep` package "tidies" up the
 #' modeling workflow of the `forecast` package.
+#'
+#' @details
 #' The model and forecast objects are not covered by
 #' the `broom` package. It includes the [sw_tidy()], [sw_glance()],
 #' and [sw_augment()] functions that work in a similar capacity as `broom` functions.

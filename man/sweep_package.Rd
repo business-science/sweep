@@ -3,14 +3,12 @@
 \docType{package}
 \name{sweep_package}
 \alias{sweep_package}
-\alias{sweep_package-package}
 \title{sweep: Extending broom to time series forecasting}
 \description{
-sweep: Extending broom to time series forecasting
-}
-\details{
 The \code{sweep} package "tidies" up the
 modeling workflow of the \code{forecast} package.
+}
+\details{
 The model and forecast objects are not covered by
 the \code{broom} package. It includes the \code{\link[=sw_tidy]{sw_tidy()}}, \code{\link[=sw_glance]{sw_glance()}},
 and \code{\link[=sw_augment]{sw_augment()}} functions that work in a similar capacity as \code{broom} functions.

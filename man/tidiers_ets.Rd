@@ -13,11 +13,9 @@ modeling of time series}
 
 \method{sw_glance}{ets}(x, ...)
 
-\method{sw_augment}{ets}(x, data = NULL, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_augment}{ets}(x, data = NULL, timetk_idx = FALSE, rename_index = "index", ...)
 
-\method{sw_tidy_decomp}{ets}(x, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_tidy_decomp}{ets}(x, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "ets"}

@@ -13,5 +13,5 @@ arima_string(object, padding = FALSE)
 }
 \description{
 Refer to forecast:::arima.string.
-\href{https://github.com/robjhyndman/forecast/blob/master/R/arima.R}{forecast arima.R}
+\href{https://github.com/robjhyndman/forecast/blob/master/R/arima.R}{\code{forecast} arima.R}
 }

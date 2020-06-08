@@ -13,11 +13,9 @@ modeling of time series}
 
 \method{sw_glance}{robets}(x, ...)
 
-\method{sw_augment}{robets}(x, data = NULL, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_augment}{robets}(x, data = NULL, timetk_idx = FALSE, rename_index = "index", ...)
 
-\method{sw_tidy_decomp}{robets}(x, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_tidy_decomp}{robets}(x, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "robets"}

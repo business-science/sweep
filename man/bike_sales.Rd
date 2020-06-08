@@ -4,7 +4,8 @@
 \name{bike_sales}
 \alias{bike_sales}
 \title{Fictional sales data for bike shops purchasing Cannondale bikes}
-\format{A data frame with 15644 rows and 17 variables:
+\format{
+A data frame with 15644 rows and 17 variables:
 \describe{
 \item{order.date}{Date the order was placed}
 \item{order.id}{A unique order identification number}
@@ -23,7 +24,8 @@
 \item{category.primary}{The main bicycle category, either "Mountain" or "Road"}
 \item{category.secondary}{One of nine more specific bicycle categories}
 \item{frame}{The bicycle frame material, either "Carbon" or "Aluminum"}
-}}
+}
+}
 \source{
 The 2016 bicycle model names and prices originated from \url{http://www.cannondale.com/en/USA}
 }

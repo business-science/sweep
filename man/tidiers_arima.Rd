@@ -11,8 +11,7 @@
 
 \method{sw_glance}{Arima}(x, ...)
 
-\method{sw_augment}{Arima}(x, data = NULL, rename_index = "index",
-  timetk_idx = FALSE, ...)
+\method{sw_augment}{Arima}(x, data = NULL, rename_index = "index", timetk_idx = FALSE, ...)
 }
 \arguments{
 \item{x}{An object of class "Arima"}

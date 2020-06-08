@@ -109,3 +109,24 @@ add_index <- function(ret, rename_index) {
 
 #' @export
 dplyr::`%>%`
+
+
+# The old broom::finish_glance() function
+# https://github.com/tidymodels/broom/pull/597
+finish_glance <- function(ret, x) {
+    ret$logLik <- tryCatch(as.numeric(stats::logLik(x)), error = function(e) NULL)
+    ret$AIC    <- tryCatch(stats::AIC(x), error = function(e) NULL)
+    ret$BIC    <- tryCatch(stats::BIC(x), error = function(e) NULL)
+
+    # special case for REML objects (better way?)
+    if (inherits(x, "lmerMod")) {
+        ret$deviance <- tryCatch(stats::deviance(x, REML = FALSE),
+                                 error = function(e) NULL
+        )
+    } else {
+        ret$deviance <- tryCatch(stats::deviance(x), error = function(e) NULL)
+    }
+    ret$df.residual <- tryCatch(stats::df.residual(x), error = function(e) NULL)
+
+    tibble::as_tibble(ret, rownames = NULL)
+}

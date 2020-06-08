@@ -1,4 +1,7 @@
-# sweep 0.2.1.9999
+# sweep 0.2.3
+* Fixes for compatability with `broom` v0.7.0
+
+# sweep 0.2.2
 * Fixes for compatability with `tidyquant` v0.5.7
 
 # sweep 0.2.1

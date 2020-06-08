@@ -11,5 +11,5 @@ bats_string(object)
 }
 \description{
 Refer to forecast:::makeText.
-\href{https://github.com/robjhyndman/forecast/blob/master/R/bats.R}{forecast bats.R}
+\href{https://github.com/robjhyndman/forecast/blob/master/R/bats.R}{\code{forecast} bats.R}
 }

@@ -1,7 +1,7 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.2.2.9000
+Version: 0.2.3
 Date: 2019-10-08
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
@@ -26,11 +26,11 @@ Imports:
     broom (>= 0.4.2),
     dplyr (>= 0.7.0),
     forecast (>= 8.0),
-    lazyeval (>= 0.2.0),
     lubridate (>= 1.6.0),
     tibble (>= 1.2),
     tidyr (>= 1.0.0),
-    timetk (>= 0.1.0)
+    timetk (>= 2.0.0),
+    rlang
 Suggests:
     forcats,
     knitr,
@@ -44,6 +44,6 @@ Suggests:
     tidyquant,
     tidyverse,
     fracdiff
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

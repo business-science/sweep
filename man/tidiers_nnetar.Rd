@@ -11,8 +11,7 @@
 
 \method{sw_glance}{nnetar}(x, ...)
 
-\method{sw_augment}{nnetar}(x, data = NULL, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_augment}{nnetar}(x, data = NULL, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "nnetar"}

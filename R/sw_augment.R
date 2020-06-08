@@ -13,7 +13,7 @@
 #'
 #' Note that by convention the first argument is almost always \code{data},
 #' which specifies the original data object. This is not part of the S3
-#' signature, partly because it prevents \link{rowwise_df_tidiers} from
+#' signature, partly because it prevents rowwise_df_tidiers from
 #' taking a column name as the first argument.
 #'
 #' @seealso [broom::augment()]

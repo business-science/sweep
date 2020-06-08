@@ -4,8 +4,7 @@
 \alias{sw_sweep}
 \title{Tidy forecast objects}
 \usage{
-sw_sweep(x, fitted = FALSE, timetk_idx = FALSE,
-  rename_index = "index", ...)
+sw_sweep(x, fitted = FALSE, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{A time-series forecast of class \code{forecast}.}

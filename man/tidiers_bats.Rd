@@ -12,11 +12,9 @@
 
 \method{sw_glance}{bats}(x, ...)
 
-\method{sw_augment}{bats}(x, data = NULL, rename_index = "index",
-  timetk_idx = FALSE, ...)
+\method{sw_augment}{bats}(x, data = NULL, rename_index = "index", timetk_idx = FALSE, ...)
 
-\method{sw_tidy_decomp}{bats}(x, timetk_idx = FALSE,
-  rename_index = "index", ...)
+\method{sw_tidy_decomp}{bats}(x, timetk_idx = FALSE, rename_index = "index", ...)
 }
 \arguments{
 \item{x}{An object of class "bats" or "tbats"}

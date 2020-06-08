@@ -19,7 +19,7 @@ test_that("sw_*.default test returns tibble with correct rows and columns.", {
     expect_is(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 1)
-    expect_equal(ncol(test), 11)
+    expect_equal(ncol(test), 12)
 
     # sw_augment ----
     test <-
@@ -29,6 +29,6 @@ test_that("sw_*.default test returns tibble with correct rows and columns.", {
     expect_is(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 32)
-    expect_equal(ncol(test), 9)
+    expect_equal(ncol(test), 8)
 
 })

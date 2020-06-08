@@ -74,7 +74,7 @@ sw_sweep.forecast <- function(x, fitted = FALSE, timetk_idx = FALSE, rename_inde
         n <- length(x$mean)
         future_idx <- ret_x %>%
             timetk::tk_index() %>%
-            timetk::tk_make_future_timeseries(n_future = 2*n + 50, ...)
+            timetk::tk_make_future_timeseries(length_out = n, ...)
         future_idx <- future_idx[1:n]
         ret_mean  <- tk_tbl(x$mean, preserve_index = TRUE, rename_index = rename_index, silent = TRUE)
         ret_mean[, rename_index] <- future_idx
@@ -147,14 +147,14 @@ sw_sweep.forecast <- function(x, fitted = FALSE, timetk_idx = FALSE, rename_inde
     ret <- ret_x
     if (fitted) {
         ret <- rbind(ret_x, ret_fit) %>%
-            dplyr::select_(rename_index, "key", "dplyr::everything()")
+            dplyr::select(!! rlang::sym(rename_index), key, dplyr::everything())
     }
     if (ncol(ret) != ncol(ret_fcast)) {
         colnames_to_add <- colnames(ret_fcast)[!(colnames(ret_fcast) %in% colnames(ret))]
         for (i in seq_along(colnames_to_add)) ret[,colnames_to_add[i]] <- NA
     }
     ret <- rbind(ret, ret_fcast) %>%
-        dplyr::select_(rename_index, "key", "dplyr::everything()")
+        dplyr::select(!! rlang::sym(rename_index), key, dplyr::everything())
 
     return(ret)
 }
