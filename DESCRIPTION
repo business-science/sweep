@@ -23,8 +23,8 @@ LazyData: true
 Depends:
     R (>= 3.3.0)
 Imports:
-    broom (>= 0.4.2),
-    dplyr (>= 0.7.0),
+    broom (>= 0.5.6),
+    dplyr (>= 1.0.0),
     forecast (>= 8.0),
     lubridate (>= 1.6.0),
     tibble (>= 1.2),

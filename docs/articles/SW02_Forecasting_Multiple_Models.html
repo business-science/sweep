@@ -6,13 +6,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forecasting Using Multiple Models • sweep</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Forecasting Using Multiple Models">
-<meta property="og:description" content="">
-<meta name="twitter:card" content="summary">
+<meta property="og:description" content="sweep">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -24,7 +24,7 @@
   gtag('config', 'UA-76139189-1');
 </script>
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
       </span>
     </div>
 
@@ -88,13 +88,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="SW02_Forecasting_Multiple_Models_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Forecasting Using Multiple Models</h1>
+      <h1 data-toc-skip>Forecasting Using Multiple Models</h1>
                         <h4 class="author">Matt Dancho</h4>
             
-            <h4 class="date">2019-10-09</h4>
+            <h4 class="date">2020-06-08</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/master/vignettes/SW02_Forecasting_Multiple_Models.Rmd"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
       <div class="hidden name"><code>SW02_Forecasting_Multiple_Models.Rmd</code></div>
@@ -116,56 +116,63 @@
 <h1 class="hasAnchor">
 <a href="#prerequisites" class="anchor"></a>Prerequisites</h1>
 <p>Before we get started, load the following packages.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyverse)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyquant)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(timetk)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(sweep)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(forecast)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)</pre></body></html></div>
+<pre><code>## Warning: package 'ggplot2' was built under R version 3.6.2</code></pre>
+<pre><code>## Warning: package 'tibble' was built under R version 3.6.2</code></pre>
+<pre><code>## Warning: package 'tidyr' was built under R version 3.6.2</code></pre>
+<pre><code>## Warning: package 'purrr' was built under R version 3.6.2</code></pre>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyquant</span>)</pre></body></html></div>
+<pre><code>## Warning: package 'lubridate' was built under R version 3.6.2</code></pre>
+<pre><code>## Warning: package 'zoo' was built under R version 3.6.2</code></pre>
+<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">timetk</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sweep</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">forecast</span>)</pre></body></html></div>
+<pre><code>## Warning: package 'forecast' was built under R version 3.6.2</code></pre>
 </div>
 <div id="forecasting-gasoline-prices" class="section level1">
 <h1 class="hasAnchor">
 <a href="#forecasting-gasoline-prices" class="anchor"></a>Forecasting Gasoline Prices</h1>
-<p>To start, let’s get some data from the FRED data base using <code>tidyquant</code>. We’ll use <code><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html">tq_get()</a></code> to retrieve the Gasoline Prices from 1990 through today (2019-10-09).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">gas_prices_monthly_raw &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html">tq_get</a></span>(</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="dt">x    =</span> <span class="st">"GASREGCOVM"</span>, </a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">    <span class="dt">get  =</span> <span class="st">"economic.data"</span>, </a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="dt">from =</span> <span class="st">"1990-01-01"</span>, </a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="dt">to   =</span> <span class="st">"2016-12-31"</span>) </a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">gas_prices_monthly_raw</a></code></pre></div>
-<pre><code>## # A tibble: 316 x 2
-##    date       price
-##    &lt;date&gt;     &lt;dbl&gt;
-##  1 1990-09-01  1.26
-##  2 1990-10-01  1.34
-##  3 1990-11-01  1.32
-##  4 1990-12-01 NA   
-##  5 1991-01-01 NA   
-##  6 1991-02-01  1.09
-##  7 1991-03-01  1.04
-##  8 1991-04-01  1.08
-##  9 1991-05-01  1.13
-## 10 1991-06-01  1.13
+<p>To start, let’s get some data from the FRED data base using <code>tidyquant</code>. We’ll use <code><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html">tq_get()</a></code> to retrieve the Gasoline Prices from 1990 through today (2020-06-08).</p>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">gas_prices_monthly_raw</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html">tq_get</a></span>(
+    <span class="kw">x</span>    <span class="kw">=</span> <span class="st">"GASREGCOVM"</span>,
+    <span class="kw">get</span>  <span class="kw">=</span> <span class="st">"economic.data"</span>,
+    <span class="kw">from</span> <span class="kw">=</span> <span class="st">"1990-01-01"</span>,
+    <span class="kw">to</span>   <span class="kw">=</span> <span class="st">"2016-12-31"</span>)
+<span class="no">gas_prices_monthly_raw</span></pre></body></html></div>
+<pre><code>## # A tibble: 316 x 3
+##    symbol     date       price
+##    &lt;chr&gt;      &lt;date&gt;     &lt;dbl&gt;
+##  1 GASREGCOVM 1990-09-01  1.26
+##  2 GASREGCOVM 1990-10-01  1.34
+##  3 GASREGCOVM 1990-11-01  1.32
+##  4 GASREGCOVM 1990-12-01 NA   
+##  5 GASREGCOVM 1991-01-01 NA   
+##  6 GASREGCOVM 1991-02-01  1.09
+##  7 GASREGCOVM 1991-03-01  1.04
+##  8 GASREGCOVM 1991-04-01  1.08
+##  9 GASREGCOVM 1991-05-01  1.13
+## 10 GASREGCOVM 1991-06-01  1.13
 ## # … with 306 more rows</code></pre>
 <p>Upon a brief inspection, the data contains 2 <code>NA</code> values that will need to be dealt with.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(gas_prices_monthly_raw<span class="op">$</span>price)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">gas_prices_monthly_raw</span>$<span class="no">price</span>)</pre></body></html></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
 ##   0.900   1.138   1.615   1.974   2.697   4.002       2</code></pre>
 <p>We can use the <code>fill()</code> from the <code>tidyr</code> package to help deal with these data. We first fill down and then fill up to use the previous and then post days prices to fill in the missing data.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">gas_prices_monthly &lt;-<span class="st"> </span>gas_prices_monthly_raw <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">    </span><span class="kw">fill</span>(price, <span class="dt">.direction =</span> <span class="st">"down"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">    </span><span class="kw">fill</span>(price, <span class="dt">.direction =</span> <span class="st">"up"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">gas_prices_monthly</span> <span class="kw">&lt;-</span> <span class="no">gas_prices_monthly_raw</span> <span class="kw">%&gt;%</span>
+    <span class="fu">fill</span>(<span class="no">price</span>, <span class="kw">.direction</span> <span class="kw">=</span> <span class="st">"down"</span>) <span class="kw">%&gt;%</span>
+    <span class="fu">fill</span>(<span class="no">price</span>, <span class="kw">.direction</span> <span class="kw">=</span> <span class="st">"up"</span>)</pre></body></html></div>
 <p>We can now visualize the data.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">gas_prices_monthly <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> price)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()[[<span class="dv">1</span>]]) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Gasoline Prices, Monthly"</span>, <span class="dt">x =</span> <span class="st">""</span>, <span class="dt">y =</span> <span class="st">"USD"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">gas_prices_monthly</span> <span class="kw">%&gt;%</span>
+    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">price</span>)) +
+    <span class="fu">geom_line</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]) +
+    <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Gasoline Prices, Monthly"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"USD"</span>) +
+    <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_dollar.html">dollar</a></span>) +
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>()</pre></body></html></div>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-6-1.png" width="95%" style="display: block; margin: auto;"></p>
 <p>Monthly periodicity might be a bit granular for model fitting. We can easily switch periodicity to quarterly using <code><a href="https://rdrr.io/pkg/tidyquant/man/tq_mutate.html">tq_transmute()</a></code> from the <code>tidyquant</code> package along with the periodicity aggregation function <code>to.period</code> from the <code>xts</code> package. We’ll convert the date to <code>yearqtr</code> class which is regularized.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">gas_prices_quarterly &lt;-<span class="st"> </span>gas_prices_monthly <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/tq_mutate.html">tq_transmute</a></span>(<span class="dt">mutate_fun =</span> to.period, <span class="dt">period =</span> <span class="st">"quarters"</span>) </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">gas_prices_quarterly</a></code></pre></div>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">gas_prices_quarterly</span> <span class="kw">&lt;-</span> <span class="no">gas_prices_monthly</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/tq_mutate.html">tq_transmute</a></span>(<span class="kw">mutate_fun</span> <span class="kw">=</span> <span class="no">to.period</span>, <span class="kw">period</span> <span class="kw">=</span> <span class="st">"quarters"</span>)
+<span class="no">gas_prices_quarterly</span></pre></body></html></div>
 <pre><code>## # A tibble: 106 x 2
 ##    date       price
 ##    &lt;date&gt;     &lt;dbl&gt;
@@ -181,13 +188,13 @@
 ## 10 1992-12-01  1.08
 ## # … with 96 more rows</code></pre>
 <p>Another quick visualization to show the reduction in granularity.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">gas_prices_quarterly <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> price)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()[[<span class="dv">1</span>]], <span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Gasoline Prices, Quarterly"</span>, <span class="dt">x =</span> <span class="st">""</span>, <span class="dt">y =</span> <span class="st">"USD"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">date_breaks =</span> <span class="st">"5 years"</span>, <span class="dt">date_labels =</span> <span class="st">"%Y"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">gas_prices_quarterly</span> <span class="kw">%&gt;%</span>
+    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">price</span>)) +
+    <span class="fu">geom_line</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()<span class="kw">[[</span><span class="fl">1</span>]], <span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>) +
+    <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Gasoline Prices, Quarterly"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"USD"</span>) +
+    <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_dollar.html">dollar</a></span>) +
+    <span class="fu">scale_x_date</span>(<span class="kw">date_breaks</span> <span class="kw">=</span> <span class="st">"5 years"</span>, <span class="kw">date_labels</span> <span class="kw">=</span> <span class="st">"%Y"</span>) +
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>()</pre></body></html></div>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-8-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
 <div id="performing-forecasts-using-multiple-models" class="section level1">
@@ -203,15 +210,15 @@
 <h2 class="hasAnchor">
 <a href="#multiple-models-concept" class="anchor"></a>Multiple Models Concept</h2>
 <p>Before we jump into modeling, let’s take a look at the multiple model process from <a href="http://r4ds.had.co.nz/many-models.html#from-a-named-list">R for Data Science, Chapter 25 Many Models</a>. We first create a data frame from a named list. The example below has two columns: “f” the functions as text, and “params” a nested list of parameters we will pass to the respective function in column “f”.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2">  <span class="dt">f =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"runif"</span>, <span class="st">"rpois"</span>, <span class="st">"rnorm"</span>),</a>
-<a class="sourceLine" id="cb11-3" data-line-number="3">  <span class="dt">params =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb11-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">n =</span> <span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">    <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">n =</span> <span class="dv">5</span>, <span class="dt">lambda =</span> <span class="dv">10</span>),</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6">    <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">n =</span> <span class="dv">10</span>, <span class="dt">mean =</span> <span class="dv">-3</span>, <span class="dt">sd =</span> <span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb11-7" data-line-number="7">  )</a>
-<a class="sourceLine" id="cb11-8" data-line-number="8">)</a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">df</a></code></pre></div>
+<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">df</span> <span class="kw">&lt;-</span> <span class="fu">tibble</span>(
+  <span class="kw">f</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"runif"</span>, <span class="st">"rpois"</span>, <span class="st">"rnorm"</span>),
+  <span class="kw">params</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fl">10</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>, <span class="kw">lambda</span> <span class="kw">=</span> <span class="fl">10</span>),
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">n</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">mean</span> <span class="kw">=</span> -<span class="fl">3</span>, <span class="kw">sd</span> <span class="kw">=</span> <span class="fl">10</span>)
+  )
+)
+<span class="no">df</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 2
 ##   f     params          
 ##   &lt;chr&gt; &lt;list&gt;          
@@ -219,7 +226,7 @@
 ## 2 rpois &lt;named list [2]&gt;
 ## 3 rnorm &lt;named list [3]&gt;</code></pre>
 <p>We can also view the contents of the <code>df$params</code> column to understand the underlying structure. Notice that there are three primary levels and then secondary levels containing the name-value pairs of parameters. This format is important.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">df<span class="op">$</span>params</a></code></pre></div>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">df</span>$<span class="no">params</span></pre></body></html></div>
 <pre><code>## [[1]]
 ## [[1]]$n
 ## [1] 10
@@ -243,9 +250,9 @@
 ## [[3]]$sd
 ## [1] 10</code></pre>
 <p>Next we apply the functions to the parameters using a special function, <code>invoke_map()</code>. The parameter lists in the “params” column are passed to the function in the “f” column. The output is in a nested list-column named “out”.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">df_out &lt;-<span class="st"> </span>df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">out =</span> <span class="kw">invoke_map</span>(f, params))</a>
-<a class="sourceLine" id="cb15-3" data-line-number="3">df_out</a></code></pre></div>
+<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">df_out</span> <span class="kw">&lt;-</span> <span class="no">df</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">out</span> <span class="kw">=</span> <span class="fu">invoke_map</span>(<span class="no">f</span>, <span class="no">params</span>))
+<span class="no">df_out</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 3
 ##   f     params           out       
 ##   &lt;chr&gt; &lt;list&gt;           &lt;list&gt;    
@@ -253,17 +260,17 @@
 ## 2 rpois &lt;named list [2]&gt; &lt;int [5]&gt; 
 ## 3 rnorm &lt;named list [3]&gt; &lt;dbl [10]&gt;</code></pre>
 <p>And, here’s the contents of “out”, which is the result of mapping a list of functions to a list of parameters. Pretty powerful!</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">df_out<span class="op">$</span>out</a></code></pre></div>
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">df_out</span>$<span class="no">out</span></pre></body></html></div>
 <pre><code>## [[1]]
-##  [1] 0.05242687 0.76870487 0.19924121 0.20675432 0.82526286 0.82780425
-##  [7] 0.33987675 0.25796440 0.46065536 0.97034319
+##  [1] 0.69998062 0.93774760 0.57566979 0.98619236 0.89496761 0.66577274
+##  [7] 0.15551103 0.05008511 0.65038336 0.43699235
 ## 
 ## [[2]]
-## [1]  7 18  8 11 13
+## [1] 11  9 13  8 14
 ## 
 ## [[3]]
-##  [1]  -9.3488295  -9.5608966  -5.2857543 -13.9731025   4.1042530
-##  [6]   2.6270035  -0.1667477 -21.1824655  19.3794484  -4.0893574</code></pre>
+##  [1]  -4.568485  -7.875667  -1.854668 -13.960653   3.402761   1.306453
+##  [7]  28.359521  -3.245520 -10.126021  -2.800633</code></pre>
 <p>Take a minute to understand the conceptual process of the <code>invoke_map</code> function and specifically the parameter setup. Once you are comfortable, we can move on to model implementation.</p>
 </div>
 <div id="multiple-model-implementation" class="section level2">
@@ -277,9 +284,13 @@
 <li>Invoke a function map</li>
 </ol>
 <p>This is easier than it sounds. Let’s start by coercing the univariate time series with <code><a href="https://rdrr.io/pkg/timetk/man/tk_ts.html">tk_ts()</a></code>.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">gas_prices_quarterly_ts &lt;-<span class="st"> </span>gas_prices_quarterly <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/timetk/man/tk_ts.html">tk_ts</a></span>(<span class="dt">select =</span> <span class="op">-</span>date, <span class="dt">start =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1990</span>, <span class="dv">3</span>), <span class="dt">freq =</span> <span class="dv">4</span>)</a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">gas_prices_quarterly_ts</a></code></pre></div>
+<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">gas_prices_quarterly_ts</span> <span class="kw">&lt;-</span> <span class="no">gas_prices_quarterly</span> <span class="kw">%&gt;%</span>
+    <span class="fu"><a href="https://rdrr.io/pkg/timetk/man/tk_ts.html">tk_ts</a></span>(<span class="kw">select</span> <span class="kw">=</span> -<span class="no">date</span>, <span class="kw">start</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1990</span>, <span class="fl">3</span>), <span class="kw">freq</span> <span class="kw">=</span> <span class="fl">4</span>)</pre></body></html></div>
+<pre><code>## Warning: `select_()` is deprecated as of dplyr 0.7.0.
+## Please use `select()` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
+<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">gas_prices_quarterly_ts</span></pre></body></html></div>
 <pre><code>##       Qtr1  Qtr2  Qtr3  Qtr4
 ## 1990             1.258 1.324
 ## 1991 1.040 1.128 1.109 1.076
@@ -309,21 +320,21 @@
 ## 2015 2.352 2.700 2.275 1.946
 ## 2016 1.895 2.303 2.161 2.192</code></pre>
 <p>Next, create a nested list using the function names as the first-level keys (this is important as you’ll see in the next step). Pass the model parameters as name-value pairs in the second level.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">models_list &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">    <span class="dt">auto.arima =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb21-3" data-line-number="3">        <span class="dt">y =</span> gas_prices_quarterly_ts</a>
-<a class="sourceLine" id="cb21-4" data-line-number="4">        ),</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">    <span class="dt">ets =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb21-6" data-line-number="6">        <span class="dt">y =</span> gas_prices_quarterly_ts,</a>
-<a class="sourceLine" id="cb21-7" data-line-number="7">        <span class="dt">damped =</span> <span class="ot">TRUE</span></a>
-<a class="sourceLine" id="cb21-8" data-line-number="8">    ),</a>
-<a class="sourceLine" id="cb21-9" data-line-number="9">    <span class="dt">bats =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(</a>
-<a class="sourceLine" id="cb21-10" data-line-number="10">        <span class="dt">y =</span> gas_prices_quarterly_ts</a>
-<a class="sourceLine" id="cb21-11" data-line-number="11">    )</a>
-<a class="sourceLine" id="cb21-12" data-line-number="12">)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">models_list</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+    <span class="kw">auto.arima</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+        <span class="kw">y</span> <span class="kw">=</span> <span class="no">gas_prices_quarterly_ts</span>
+        ),
+    <span class="kw">ets</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+        <span class="kw">y</span> <span class="kw">=</span> <span class="no">gas_prices_quarterly_ts</span>,
+        <span class="kw">damped</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+    ),
+    <span class="kw">bats</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(
+        <span class="kw">y</span> <span class="kw">=</span> <span class="no">gas_prices_quarterly_ts</span>
+    )
+)</pre></body></html></div>
 <p>Now, convert to a data frame using the function, <code>enframe()</code> that turns lists into tibbles. Set the arguments <code>name = "f"</code> and <code>value = "params"</code>. In doing so we get a bonus: the model names are the now convieniently located in column “f”.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">models_tbl &lt;-<span class="st"> </span><span class="kw">enframe</span>(models_list, <span class="dt">name =</span> <span class="st">"f"</span>, <span class="dt">value =</span> <span class="st">"params"</span>)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">models_tbl</a></code></pre></div>
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">models_tbl</span> <span class="kw">&lt;-</span> <span class="fu">enframe</span>(<span class="no">models_list</span>, <span class="kw">name</span> <span class="kw">=</span> <span class="st">"f"</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="st">"params"</span>)
+<span class="no">models_tbl</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 2
 ##   f          params          
 ##   &lt;chr&gt;      &lt;list&gt;          
@@ -331,9 +342,9 @@
 ## 2 ets        &lt;named list [2]&gt;
 ## 3 bats       &lt;named list [1]&gt;</code></pre>
 <p>We are ready to invoke the map. Combine <code>mutate()</code> with <code>invoke_map()</code> as follows. Bada bing, bada boom, we now have models fitted using the parameters we defined previously.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">models_tbl_fit &lt;-<span class="st"> </span>models_tbl <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb24-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">fit =</span> <span class="kw">invoke_map</span>(f, params))</a>
-<a class="sourceLine" id="cb24-3" data-line-number="3">models_tbl_fit</a></code></pre></div>
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">models_tbl_fit</span> <span class="kw">&lt;-</span> <span class="no">models_tbl</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">fit</span> <span class="kw">=</span> <span class="fu">invoke_map</span>(<span class="no">f</span>, <span class="no">params</span>))
+<span class="no">models_tbl_fit</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 3
 ##   f          params           fit       
 ##   &lt;chr&gt;      &lt;list&gt;           &lt;list&gt;    
@@ -350,44 +361,44 @@
 <h2 class="hasAnchor">
 <a href="#sw_tidy" class="anchor"></a>sw_tidy</h2>
 <p>The tidying function returns the model parameters and estimates. We use the combination of <code>mutate</code> and <code>map</code> to iteratively apply the <code><a href="../reference/sw_tidy.html">sw_tidy()</a></code> function as a new column named “tidy”. Then we unnest and spread to review the terms by model function.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">models_tbl_fit <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">tidy =</span> <span class="kw">map</span>(fit, sw_tidy)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="st">    </span><span class="kw">unnest</span>(tidy) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="st">    </span><span class="kw">spread</span>(<span class="dt">key =</span> f, <span class="dt">value =</span> estimate)</a></code></pre></div>
+<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">models_tbl_fit</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">tidy</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit</span>, <span class="no">sw_tidy</span>)) <span class="kw">%&gt;%</span>
+    <span class="fu">unnest</span>(<span class="no">tidy</span>) <span class="kw">%&gt;%</span>
+    <span class="fu">spread</span>(<span class="kw">key</span> <span class="kw">=</span> <span class="no">f</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">estimate</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 20 x 6
-##    params          fit        term            auto.arima      bats      ets
-##    &lt;list&gt;          &lt;list&gt;     &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-##  1 &lt;named list [1… &lt;fr_ARIMA&gt; ar1                  0.834  NA       NA      
-##  2 &lt;named list [1… &lt;fr_ARIMA&gt; ma1                 -0.964  NA       NA      
-##  3 &lt;named list [1… &lt;fr_ARIMA&gt; sar1                 0.939  NA       NA      
-##  4 &lt;named list [1… &lt;fr_ARIMA&gt; sma1                -0.776  NA       NA      
-##  5 &lt;named list [1… &lt;bats&gt;     alpha               NA       5.88e-1 NA      
-##  6 &lt;named list [1… &lt;bats&gt;     ar.coefficients     NA      NA       NA      
-##  7 &lt;named list [1… &lt;bats&gt;     beta                NA      NA       NA      
-##  8 &lt;named list [1… &lt;bats&gt;     damping.parame…     NA      NA       NA      
-##  9 &lt;named list [1… &lt;bats&gt;     gamma.values        NA      -2.62e-2 NA      
-## 10 &lt;named list [1… &lt;bats&gt;     lambda              NA       6.05e-5 NA      
-## 11 &lt;named list [1… &lt;bats&gt;     ma.coefficients     NA       2.56e-1 NA      
-## 12 &lt;named list [2… &lt;ets&gt;      alpha               NA      NA        8.31e-1
-## 13 &lt;named list [2… &lt;ets&gt;      b                   NA      NA       -5.24e-2
-## 14 &lt;named list [2… &lt;ets&gt;      beta                NA      NA        1.00e-4
-## 15 &lt;named list [2… &lt;ets&gt;      gamma               NA      NA        5.21e-2
-## 16 &lt;named list [2… &lt;ets&gt;      l                   NA      NA        1.29e+0
-## 17 &lt;named list [2… &lt;ets&gt;      phi                 NA      NA        8.37e-1
-## 18 &lt;named list [2… &lt;ets&gt;      s0                  NA      NA        4.69e-2
-## 19 &lt;named list [2… &lt;ets&gt;      s1                  NA      NA       -2.09e-2
-## 20 &lt;named list [2… &lt;ets&gt;      s2                  NA      NA       -4.07e-2</code></pre>
+##    params           fit        term              auto.arima       bats       ets
+##    &lt;list&gt;           &lt;list&gt;     &lt;chr&gt;                  &lt;dbl&gt;      &lt;dbl&gt;     &lt;dbl&gt;
+##  1 &lt;named list [1]&gt; &lt;fr_ARIMA&gt; ar1                    0.834 NA         NA       
+##  2 &lt;named list [1]&gt; &lt;fr_ARIMA&gt; ma1                   -0.964 NA         NA       
+##  3 &lt;named list [1]&gt; &lt;fr_ARIMA&gt; sar1                   0.939 NA         NA       
+##  4 &lt;named list [1]&gt; &lt;fr_ARIMA&gt; sma1                  -0.776 NA         NA       
+##  5 &lt;named list [1]&gt; &lt;bats&gt;     alpha                 NA      0.588     NA       
+##  6 &lt;named list [1]&gt; &lt;bats&gt;     ar.coefficients       NA     NA         NA       
+##  7 &lt;named list [1]&gt; &lt;bats&gt;     beta                  NA     NA         NA       
+##  8 &lt;named list [1]&gt; &lt;bats&gt;     damping.parameter     NA     NA         NA       
+##  9 &lt;named list [1]&gt; &lt;bats&gt;     gamma.values          NA     -0.0262    NA       
+## 10 &lt;named list [1]&gt; &lt;bats&gt;     lambda                NA      0.0000605 NA       
+## 11 &lt;named list [1]&gt; &lt;bats&gt;     ma.coefficients       NA      0.256     NA       
+## 12 &lt;named list [2]&gt; &lt;ets&gt;      alpha                 NA     NA          0.831   
+## 13 &lt;named list [2]&gt; &lt;ets&gt;      b                     NA     NA         -0.0524  
+## 14 &lt;named list [2]&gt; &lt;ets&gt;      beta                  NA     NA          0.000100
+## 15 &lt;named list [2]&gt; &lt;ets&gt;      gamma                 NA     NA          0.0521  
+## 16 &lt;named list [2]&gt; &lt;ets&gt;      l                     NA     NA          1.29    
+## 17 &lt;named list [2]&gt; &lt;ets&gt;      phi                   NA     NA          0.837   
+## 18 &lt;named list [2]&gt; &lt;ets&gt;      s0                    NA     NA          0.0469  
+## 19 &lt;named list [2]&gt; &lt;ets&gt;      s1                    NA     NA         -0.0209  
+## 20 &lt;named list [2]&gt; &lt;ets&gt;      s2                    NA     NA         -0.0407</code></pre>
 </div>
 <div id="sw_glance" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sw_glance" class="anchor"></a>sw_glance</h2>
 <p>Glance is one of the most powerful tools because it yields the model accuracies enabling direct comparisons between the fit of each model. We use the same process for used for tidy, except theres no need to spread to perform the comparison. We can see that the ARIMA model has the lowest AIC by far.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">models_tbl_fit <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">glance =</span> <span class="kw">map</span>(fit, sw_glance)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="st">    </span><span class="kw">unnest</span>(glance, <span class="dt">.drop =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">models_tbl_fit</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">glance</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit</span>, <span class="no">sw_glance</span>)) <span class="kw">%&gt;%</span>
+    <span class="fu">unnest</span>(<span class="no">glance</span>, <span class="kw">.drop</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>## Warning: The `.drop` argument of `unnest()` is deprecated as of tidyr 1.0.0.
 ## All list-columns are now preserved.
-## This warning is displayed once per session.
+## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
 <pre><code>## # A tibble: 3 x 15
 ##   f     params fit   model.desc sigma logLik   AIC   BIC     ME  RMSE   MAE
@@ -401,17 +412,17 @@
 <h2 class="hasAnchor">
 <a href="#sw_augment" class="anchor"></a>sw_augment</h2>
 <p>We can augment the models to get the residuals following the same procedure. We can pipe (<code><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></code>) the results right into <code>ggplot()</code> for plotting. Notice the ARIMA model has the largest residuals especially as the model index increases whereas the bats model has relatively low residuals.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">models_tbl_fit <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">augment =</span> <span class="kw">map</span>(fit, sw_augment, <span class="dt">rename_index =</span> <span class="st">"date"</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="st">    </span><span class="kw">unnest</span>(augment) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> .resid, <span class="dt">group =</span> f)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()[[<span class="dv">2</span>]]) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">color =</span> <span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()[[<span class="dv">1</span>]]) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">method =</span> <span class="st">"loess"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-8" data-line-number="8"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span><span class="st"> </span>f, <span class="dt">nrow =</span> <span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-9" data-line-number="9"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Residuals Plot"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb31-10" data-line-number="10"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>()</a></code></pre></div>
-<pre><code>## Don't know how to automatically pick scale for object of type yearqtr. Defaulting to continuous.</code></pre>
+<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="no">models_tbl_fit</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">augment</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit</span>, <span class="no">sw_augment</span>, <span class="kw">rename_index</span> <span class="kw">=</span> <span class="st">"date"</span>)) <span class="kw">%&gt;%</span>
+    <span class="fu">unnest</span>(<span class="no">augment</span>) <span class="kw">%&gt;%</span>
+    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">.resid</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">f</span>)) +
+    <span class="fu">geom_line</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()<span class="kw">[[</span><span class="fl">2</span>]]) +
+    <span class="fu">geom_point</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()<span class="kw">[[</span><span class="fl">1</span>]]) +
+    <span class="fu">geom_smooth</span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"loess"</span>) +
+    <span class="fu">facet_wrap</span>(~ <span class="no">f</span>, <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">3</span>) +
+    <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Residuals Plot"</span>) +
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>()</pre></body></html></div>
+<pre><code>## `geom_smooth()` using formula 'y ~ x'</code></pre>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-19-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -419,9 +430,9 @@
 <h1 class="hasAnchor">
 <a href="#forecasting-the-model" class="anchor"></a>Forecasting the model</h1>
 <p>Creating the forecast for the models is accomplished by mapping the <code>forecast</code> function. The next six quarters are forecasted withe the argument <code>h = 6</code>.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">models_tbl_fcast &lt;-<span class="st"> </span>models_tbl_fit <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">fcast =</span> <span class="kw">map</span>(fit, forecast, <span class="dt">h =</span> <span class="dv">6</span>))</a>
-<a class="sourceLine" id="cb33-3" data-line-number="3">models_tbl_fcast</a></code></pre></div>
+<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">models_tbl_fcast</span> <span class="kw">&lt;-</span> <span class="no">models_tbl_fit</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">fcast</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit</span>, <span class="no">forecast</span>, <span class="kw">h</span> <span class="kw">=</span> <span class="fl">6</span>))
+<span class="no">models_tbl_fcast</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 4
 ##   f          params           fit        fcast     
 ##   &lt;chr&gt;      &lt;list&gt;           &lt;list&gt;     &lt;list&gt;    
@@ -433,9 +444,9 @@
 <h1 class="hasAnchor">
 <a href="#tidying-the-forecast" class="anchor"></a>Tidying the forecast</h1>
 <p>Next, we map <code>sw_sweep</code>, which coerces the forecast into the “tidy” tibble format. We set <code>fitted = FALSE</code> to remove the model fitted values from the output. We set <code>timetk_idx = TRUE</code> to use dates instead of numeric values for the index.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">models_tbl_fcast_tidy &lt;-<span class="st"> </span>models_tbl_fcast <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">sweep =</span> <span class="kw">map</span>(fcast, sw_sweep, <span class="dt">fitted =</span> <span class="ot">FALSE</span>, <span class="dt">timetk_idx =</span> <span class="ot">TRUE</span>, <span class="dt">rename_index =</span> <span class="st">"date"</span>))</a>
-<a class="sourceLine" id="cb35-3" data-line-number="3">models_tbl_fcast_tidy</a></code></pre></div>
+<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="no">models_tbl_fcast_tidy</span> <span class="kw">&lt;-</span> <span class="no">models_tbl_fcast</span> <span class="kw">%&gt;%</span>
+    <span class="fu">mutate</span>(<span class="kw">sweep</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fcast</span>, <span class="no">sw_sweep</span>, <span class="kw">fitted</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">timetk_idx</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">rename_index</span> <span class="kw">=</span> <span class="st">"date"</span>))
+<span class="no">models_tbl_fcast_tidy</span></pre></body></html></div>
 <pre><code>## # A tibble: 3 x 5
 ##   f          params           fit        fcast      sweep             
 ##   &lt;chr&gt;      &lt;list&gt;           &lt;list&gt;     &lt;list&gt;     &lt;list&gt;            
@@ -443,39 +454,39 @@
 ## 2 ets        &lt;named list [2]&gt; &lt;ets&gt;      &lt;forecast&gt; &lt;tibble [112 × 7]&gt;
 ## 3 bats       &lt;named list [1]&gt; &lt;bats&gt;     &lt;forecast&gt; &lt;tibble [112 × 7]&gt;</code></pre>
 <p>We can unnest the “sweep” column to get the results of all three models.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">models_tbl_fcast_tidy <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="st">    </span><span class="kw">unnest</span>(sweep)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><html><body><pre class="r"><span class="no">models_tbl_fcast_tidy</span> <span class="kw">%&gt;%</span>
+    <span class="fu">unnest</span>(<span class="no">sweep</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 336 x 11
-##    f      params fit   fcast date       key   price lo.80 lo.95 hi.80 hi.95
-##    &lt;chr&gt;  &lt;list&gt; &lt;lis&gt; &lt;lis&gt; &lt;date&gt;     &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-##  1 auto.… &lt;name… &lt;fr_… &lt;for… 1990-09-01 actu…  1.26    NA    NA    NA    NA
-##  2 auto.… &lt;name… &lt;fr_… &lt;for… 1990-12-01 actu…  1.32    NA    NA    NA    NA
-##  3 auto.… &lt;name… &lt;fr_… &lt;for… 1991-03-01 actu…  1.04    NA    NA    NA    NA
-##  4 auto.… &lt;name… &lt;fr_… &lt;for… 1991-06-01 actu…  1.13    NA    NA    NA    NA
-##  5 auto.… &lt;name… &lt;fr_… &lt;for… 1991-09-01 actu…  1.11    NA    NA    NA    NA
-##  6 auto.… &lt;name… &lt;fr_… &lt;for… 1991-12-01 actu…  1.08    NA    NA    NA    NA
-##  7 auto.… &lt;name… &lt;fr_… &lt;for… 1992-03-01 actu…  1.01    NA    NA    NA    NA
-##  8 auto.… &lt;name… &lt;fr_… &lt;for… 1992-06-01 actu…  1.14    NA    NA    NA    NA
-##  9 auto.… &lt;name… &lt;fr_… &lt;for… 1992-09-01 actu…  1.12    NA    NA    NA    NA
-## 10 auto.… &lt;name… &lt;fr_… &lt;for… 1992-12-01 actu…  1.08    NA    NA    NA    NA
+##    f       params   fit    fcast  date       key   price lo.80 lo.95 hi.80 hi.95
+##    &lt;chr&gt;   &lt;list&gt;   &lt;list&gt; &lt;list&gt; &lt;date&gt;     &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1990-09-01 actu…  1.26    NA    NA    NA    NA
+##  2 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1990-12-01 actu…  1.32    NA    NA    NA    NA
+##  3 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1991-03-01 actu…  1.04    NA    NA    NA    NA
+##  4 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1991-06-01 actu…  1.13    NA    NA    NA    NA
+##  5 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1991-09-01 actu…  1.11    NA    NA    NA    NA
+##  6 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1991-12-01 actu…  1.08    NA    NA    NA    NA
+##  7 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1992-03-01 actu…  1.01    NA    NA    NA    NA
+##  8 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1992-06-01 actu…  1.14    NA    NA    NA    NA
+##  9 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1992-09-01 actu…  1.12    NA    NA    NA    NA
+## 10 auto.a… &lt;named … &lt;fr_A… &lt;fore… 1992-12-01 actu…  1.08    NA    NA    NA    NA
 ## # … with 326 more rows</code></pre>
 <p>Finally, we can plot the forecasts by unnesting the “sweep” column and piping to <code>ggplot()</code>.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">models_tbl_fcast_tidy <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="st">    </span><span class="kw">unnest</span>(sweep) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="st">    </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> date, <span class="dt">y =</span> price, <span class="dt">color =</span> key, <span class="dt">group =</span> f)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">    </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lo<span class="fl">.95</span>, <span class="dt">ymax =</span> hi<span class="fl">.95</span>), </a>
-<a class="sourceLine" id="cb39-5" data-line-number="5">                <span class="dt">fill =</span> <span class="st">"#D5DBFF"</span>, <span class="dt">color =</span> <span class="ot">NA</span>, <span class="dt">size =</span> <span class="dv">0</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="st">    </span><span class="kw">geom_ribbon</span>(<span class="kw">aes</span>(<span class="dt">ymin =</span> lo<span class="fl">.80</span>, <span class="dt">ymax =</span> hi<span class="fl">.80</span>, <span class="dt">fill =</span> key), </a>
-<a class="sourceLine" id="cb39-7" data-line-number="7">                <span class="dt">fill =</span> <span class="st">"#596DD5"</span>, <span class="dt">color =</span> <span class="ot">NA</span>, <span class="dt">size =</span> <span class="dv">0</span>, <span class="dt">alpha =</span> <span class="fl">0.8</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="st">    </span><span class="kw">geom_line</span>(<span class="dt">size =</span> <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-9" data-line-number="9"><span class="st">    </span><span class="kw">facet_wrap</span>(<span class="op">~</span>f, <span class="dt">nrow =</span> <span class="dv">3</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-10" data-line-number="10"><span class="st">    </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">"Gasoline Price Forecasts"</span>,</a>
-<a class="sourceLine" id="cb39-11" data-line-number="11">         <span class="dt">subtitle =</span> <span class="st">"Forecasting multiple models with sweep: ARIMA, BATS, ETS"</span>,</a>
-<a class="sourceLine" id="cb39-12" data-line-number="12">         <span class="dt">x =</span> <span class="st">""</span>, <span class="dt">y =</span> <span class="st">"Price"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-13" data-line-number="13"><span class="st">    </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-14" data-line-number="14"><span class="st">    </span><span class="kw">scale_x_date</span>(<span class="dt">date_breaks =</span> <span class="st">"5 years"</span>, <span class="dt">date_labels =</span> <span class="st">"%Y"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-15" data-line-number="15"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb39-16" data-line-number="16"><span class="st">    </span><span class="kw"><a href="https://rdrr.io/pkg/tidyquant/man/scale_manual.html">scale_color_tq</a></span>()</a></code></pre></div>
+<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="no">models_tbl_fcast_tidy</span> <span class="kw">%&gt;%</span>
+    <span class="fu">unnest</span>(<span class="no">sweep</span>) <span class="kw">%&gt;%</span>
+    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">price</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">key</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">f</span>)) +
+    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">lo.95</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">hi.95</span>),
+                <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"#D5DBFF"</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">0</span>) +
+    <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">lo.80</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">hi.80</span>, <span class="kw">fill</span> <span class="kw">=</span> <span class="no">key</span>),
+                <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"#596DD5"</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">alpha</span> <span class="kw">=</span> <span class="fl">0.8</span>) +
+    <span class="fu">geom_line</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">1</span>) +
+    <span class="fu">facet_wrap</span>(~<span class="no">f</span>, <span class="kw">nrow</span> <span class="kw">=</span> <span class="fl">3</span>) +
+    <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Gasoline Price Forecasts"</span>,
+         <span class="kw">subtitle</span> <span class="kw">=</span> <span class="st">"Forecasting multiple models with sweep: ARIMA, BATS, ETS"</span>,
+         <span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Price"</span>) +
+    <span class="fu">scale_y_continuous</span>(<span class="kw">labels</span> <span class="kw">=</span> <span class="kw pkg">scales</span><span class="kw ns">::</span><span class="no"><a href="https://scales.r-lib.org//reference/label_dollar.html">dollar</a></span>) +
+    <span class="fu">scale_x_date</span>(<span class="kw">date_breaks</span> <span class="kw">=</span> <span class="st">"5 years"</span>, <span class="kw">date_labels</span> <span class="kw">=</span> <span class="st">"%Y"</span>) +
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html">theme_tq</a></span>() +
+    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/scale_manual.html">scale_color_tq</a></span>()</pre></body></html></div>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-23-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
 <div id="recap" class="section level1">
@@ -485,33 +496,11 @@
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-        <div id="tocnav">
-      <h2 class="hasAnchor">
-<a href="#tocnav" class="anchor"></a>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-<li><a href="#prerequisites">Prerequisites</a></li>
-      <li><a href="#forecasting-gasoline-prices">Forecasting Gasoline Prices</a></li>
-      <li>
-<a href="#performing-forecasts-using-multiple-models">Performing Forecasts Using Multiple Models</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#multiple-models-concept">Multiple Models Concept</a></li>
-      <li><a href="#multiple-model-implementation">Multiple Model Implementation</a></li>
-      </ul>
-</li>
-      <li>
-<a href="#inspecting-the-model-fit">Inspecting the Model Fit</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#sw_tidy">sw_tidy</a></li>
-      <li><a href="#sw_glance">sw_glance</a></li>
-      <li><a href="#sw_augment">sw_augment</a></li>
-      </ul>
-</li>
-      <li><a href="#forecasting-the-model">Forecasting the model</a></li>
-      <li><a href="#tidying-the-forecast">Tidying the forecast</a></li>
-      <li><a href="#recap">Recap</a></li>
-      </ul>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
 </div>
-      </div>
 
 </div>
 
@@ -522,7 +511,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
