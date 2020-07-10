@@ -1,5 +1,5 @@
 ## Release Summary
-This is the second release of `sweep` for CRAN review. The major change is to switch from `timekit` to `timetk`.
+This is to upgrade to `broom` 0.7.0
 
 
 ## Test environments

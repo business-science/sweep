@@ -2,7 +2,6 @@ Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
 Version: 0.2.3
-Date: 2019-10-08
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
@@ -23,13 +22,13 @@ LazyData: true
 Depends:
     R (>= 3.3.0)
 Imports:
-    broom (>= 0.7.0),
+    broom (>= 0.5.6),
     dplyr (>= 1.0.0),
     forecast (>= 8.0),
     lubridate (>= 1.6.0),
     tibble (>= 1.2),
     tidyr (>= 1.0.0),
-    timetk (>= 2.0.0),
+    timetk (>= 2.1.0),
     rlang
 Suggests:
     forcats,
