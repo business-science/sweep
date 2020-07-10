@@ -88,13 +88,13 @@
 
       
 
-      </header><script src="SW01_Forecasting_Time_Series_Groups_files/header-attrs-2.1/header-attrs.js"></script><div class="row">
+      </header><script src="SW01_Forecasting_Time_Series_Groups_files/header-attrs-2.3/header-attrs.js"></script><script src="SW01_Forecasting_Time_Series_Groups_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Forecasting Time Series Groups in the tidyverse</h1>
                         <h4 class="author">Matt Dancho</h4>
             
-            <h4 class="date">2020-06-08</h4>
+            <h4 class="date">2020-07-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/master/vignettes/SW01_Forecasting_Time_Series_Groups.Rmd"><code>vignettes/SW01_Forecasting_Time_Series_Groups.Rmd</code></a></small>
       <div class="hidden name"><code>SW01_Forecasting_Time_Series_Groups.Rmd</code></div>
@@ -118,13 +118,12 @@
 <p>Before we get started, load the following packages.</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyverse</span>)</pre></body></html></div>
 <pre><code>## Warning: package 'ggplot2' was built under R version 3.6.2</code></pre>
-<pre><code>## Warning: package 'tibble' was built under R version 3.6.2</code></pre>
 <pre><code>## Warning: package 'tidyr' was built under R version 3.6.2</code></pre>
 <pre><code>## Warning: package 'purrr' was built under R version 3.6.2</code></pre>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyquant</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tidyquant</span>)</pre></body></html></div>
 <pre><code>## Warning: package 'lubridate' was built under R version 3.6.2</code></pre>
 <pre><code>## Warning: package 'zoo' was built under R version 3.6.2</code></pre>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">timetk</span>)
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">timetk</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">sweep</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">forecast</span>)</pre></body></html></div>
 <pre><code>## Warning: package 'forecast' was built under R version 3.6.2</code></pre>
@@ -133,7 +132,7 @@
 <h1 class="hasAnchor">
 <a href="#bike-sales" class="anchor"></a>Bike Sales</h1>
 <p>We’ll use the bike sales data set, <code>bike_sales</code>, provided with the <code>sweep</code> package for this tutorial. The <code>bike_sales</code> data set is a <em>fictional</em> daily order history that spans 2011 through 2015. It simulates a sales database that is typical of a business. The customers are the “bike shops” and the products are the “models”.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">bike_sales</span></pre></body></html></div>
+<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">bike_sales</span></pre></body></html></div>
 <pre><code>## # A tibble: 15,644 x 17
 ##    order.date order.id order.line quantity price price.ext customer.id
 ##    &lt;date&gt;        &lt;dbl&gt;      &lt;int&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
@@ -152,13 +151,13 @@
 ## #   product.id &lt;dbl&gt;, model &lt;chr&gt;, category.primary &lt;chr&gt;,
 ## #   category.secondary &lt;chr&gt;, frame &lt;chr&gt;</code></pre>
 <p>We’ll analyse the monthly sales trends for the bicycle manufacturer. Let’s transform the data set by aggregating by month.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">bike_sales_monthly</span> <span class="kw">&lt;-</span> <span class="no">bike_sales</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="no">bike_sales_monthly</span> <span class="kw">&lt;-</span> <span class="no">bike_sales</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">month</span> <span class="kw">=</span> <span class="fu">month</span>(<span class="no">order.date</span>, <span class="kw">label</span> <span class="kw">=</span> <span class="fl">TRUE</span>),
            <span class="kw">year</span>  <span class="kw">=</span> <span class="fu">year</span>(<span class="no">order.date</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">year</span>, <span class="no">month</span>) <span class="kw">%&gt;%</span>
     <span class="fu">summarise</span>(<span class="kw">total.qty</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">quantity</span>))</pre></body></html></div>
 <pre><code>## `summarise()` regrouping output by 'year' (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">bike_sales_monthly</span></pre></body></html></div>
+<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="no">bike_sales_monthly</span></pre></body></html></div>
 <pre><code>## # A tibble: 60 x 3
 ## # Groups:   year [5]
 ##     year month total.qty
@@ -175,7 +174,7 @@
 ## 10  2011 Oct         697
 ## # … with 50 more rows</code></pre>
 <p>We can visualize package with a month plot using the <code>ggplot2</code> .</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">bike_sales_monthly</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="no">bike_sales_monthly</span> <span class="kw">%&gt;%</span>
     <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">month</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">total.qty</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">year</span>)) +
     <span class="fu">geom_area</span>(<span class="fu">aes</span>(<span class="kw">fill</span> <span class="kw">=</span> <span class="no">year</span>), <span class="kw">position</span> <span class="kw">=</span> <span class="st">"stack"</span>) +
     <span class="fu">labs</span>(<span class="kw">title</span> <span class="kw">=</span> <span class="st">"Quantity Sold: Month Plot"</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="st">""</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"Sales"</span>,
@@ -189,12 +188,12 @@
 <h1 class="hasAnchor">
 <a href="#performing-forecasts-on-groups" class="anchor"></a>Performing Forecasts on Groups</h1>
 <p>First, we need to get the data organized into groups by month of the year. We’ll create a new “order.month” date using <code><a href="https://rdrr.io/pkg/zoo/man/yearmon.html">zoo::as.yearmon()</a></code> that captures the year and month information from the “order.date” and then passing this to <code><a href="http://lubridate.tidyverse.org/reference/as_date.html">lubridate::as_date()</a></code> to convert to date format.</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2</span> <span class="kw">&lt;-</span> <span class="no">bike_sales</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2</span> <span class="kw">&lt;-</span> <span class="no">bike_sales</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">order.month</span> <span class="kw">=</span> <span class="fu">as_date</span>(<span class="fu">as.yearmon</span>(<span class="no">order.date</span>))) <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">category.secondary</span>, <span class="no">order.month</span>) <span class="kw">%&gt;%</span>
     <span class="fu">summarise</span>(<span class="kw">total.qty</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(<span class="no">quantity</span>))</pre></body></html></div>
 <pre><code>## `summarise()` regrouping output by 'category.secondary' (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2</span></pre></body></html></div>
+<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2</span></pre></body></html></div>
 <pre><code>## # A tibble: 538 x 3
 ## # Groups:   category.secondary [9]
 ##    category.secondary order.month total.qty
@@ -211,7 +210,7 @@
 ## 10 Cross Country Race 2011-10-01        189
 ## # … with 528 more rows</code></pre>
 <p>Next, we use the <code>nest()</code> function from the <code>tidyr</code> package to consolidate each time series by group. The newly created list-column, “data.tbl”, contains the “order.month” and “total.qty” columns by group from the previous step. The <code>nest()</code> function just bundles the data together which is very useful for iterative functional programming.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_nest</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_nest</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2</span> <span class="kw">%&gt;%</span>
     <span class="fu">group_by</span>(<span class="no">category.secondary</span>) <span class="kw">%&gt;%</span>
     <span class="fu">nest</span>()
 <span class="no">monthly_qty_by_cat2_nest</span></pre></body></html></div>
@@ -247,7 +246,7 @@
 <h3 class="hasAnchor">
 <a href="#mutate-and-map" class="anchor"></a>mutate and map</h3>
 <p>The <code>mutate()</code> function adds a column, and the <code>map()</code> function maps the contents of a list-column (<code>.x</code>) to a function (<code>.f</code>). In our case, <code>.x = data.tbl</code> and <code>.f = tk_ts</code>. The arguments <code>select = -order.month</code>, <code>start = 2011</code>, and <code>freq = 12</code> are passed to the <code>...</code> parameters in map, which are passed through to the function. The <code>select</code> statement is used to drop the “order.month” from the final output so we don’t get a bunch of warning messages. We specify <code>start = 2011</code> and <code>freq = 12</code> to return a monthly frequency.</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_ts</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_nest</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_ts</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_nest</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">data.ts</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="kw">.x</span>       <span class="kw">=</span> <span class="no">data</span>,
                          <span class="kw">.f</span>       <span class="kw">=</span> <span class="no">tk_ts</span>,
                          <span class="kw">select</span>   <span class="kw">=</span> -<span class="no">order.month</span>,
@@ -257,7 +256,7 @@
 ## Please use `select()` instead.
 ## This warning is displayed once every 8 hours.
 ## Call `lifecycle::last_warnings()` to see where this warning was generated.</code></pre>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_ts</span></pre></body></html></div>
+<div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_ts</span></pre></body></html></div>
 <pre><code>## # A tibble: 9 x 3
 ## # Groups:   category.secondary [9]
 ##   category.secondary data              data.ts      
@@ -277,7 +276,7 @@
 <h2 class="hasAnchor">
 <a href="#step-2-modeling-a-time-series" class="anchor"></a>Step 2: Modeling a time series</h2>
 <p>Next, we map the Exponential Smoothing ETS (Error, Trend, Seasonal) model function, <code>ets</code>, from the <code>forecast</code> package. Use the combination of <code>mutate</code> to add a column and <code>map</code> to interatively apply a function rowwise to a list-column. In this instance, the function to map the <code>ets</code> function and the list-column is “data.ts”. We rename the resultant column “fit.ets” indicating an ETS model was fit to the time series data.</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_ts</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_ts</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">fit.ets</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">data.ts</span>, <span class="no">ets</span>))
 <span class="no">monthly_qty_by_cat2_fit</span></pre></body></html></div>
 <pre><code>## # A tibble: 9 x 4
@@ -298,7 +297,7 @@
 <h3 class="hasAnchor">
 <a href="#sw_tidy" class="anchor"></a>sw_tidy</h3>
 <p>To get the model parameters for each nested list, we can combine <code>sw_tidy</code> within the <code>mutate</code> and <code>map</code> combo. The only real difference is now we <code>unnest</code> the generated column (named “tidy”). Last, because it’s easier to compare the model parameters side by side, we add one additional call to <code>spread()</code> from the <code>tidyr</code> package.</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">tidy</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit.ets</span>, <span class="no">sw_tidy</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">unnest</span>(<span class="no">tidy</span>) <span class="kw">%&gt;%</span>
     <span class="fu">spread</span>(<span class="kw">key</span> <span class="kw">=</span> <span class="no">category.secondary</span>, <span class="kw">value</span> <span class="kw">=</span> <span class="no">estimate</span>)</pre></body></html></div>
@@ -323,7 +322,7 @@
 <h3 class="hasAnchor">
 <a href="#sw_glance" class="anchor"></a>sw_glance</h3>
 <p>We can view the model accuracies also by mapping <code>sw_glance</code> within the <code>mutate</code> and <code>map</code> combo.</p>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">glance</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit.ets</span>, <span class="no">sw_glance</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">unnest</span>(<span class="no">glance</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 9 x 16
@@ -346,7 +345,7 @@
 <h3 class="hasAnchor">
 <a href="#sw_augment" class="anchor"></a>sw_augment</h3>
 <p>The augmented fitted and residual values can be achieved in much the same manner. This returns nine groups data. Note that we pass <code>timetk_idx = TRUE</code> to return the date format times as opposed to the regular (yearmon or numeric) time series.</p>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">augment_fit_ets</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">augment_fit_ets</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">augment</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit.ets</span>, <span class="no">sw_augment</span>, <span class="kw">timetk_idx</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">rename_index</span> <span class="kw">=</span> <span class="st">"date"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">unnest</span>(<span class="no">augment</span>)
 
@@ -367,7 +366,7 @@
 ## 10 Cross Country Ra… &lt;tibbl… &lt;ts [60… &lt;ets&gt;   2011-10-01     189    123.  0.534 
 ## # … with 528 more rows</code></pre>
 <p>We can plot the residuals for the nine categories like so. Unfortunately we do see some very high residuals (especially with “Fat Bike”). This is often the case with realworld data.</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="no">augment_fit_ets</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">augment_fit_ets</span> <span class="kw">%&gt;%</span>
     <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">date</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">.resid</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">category.secondary</span>)) +
     <span class="fu">geom_hline</span>(<span class="kw">yintercept</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="st">"grey40"</span>) +
     <span class="fu">geom_line</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html">palette_light</a></span>()<span class="kw">[[</span><span class="fl">2</span>]]) +
@@ -384,7 +383,7 @@
 <h3 class="hasAnchor">
 <a href="#sw_tidy_decomp" class="anchor"></a>sw_tidy_decomp</h3>
 <p>We can create decompositions using the same procedure with <code><a href="../reference/sw_tidy_decomp.html">sw_tidy_decomp()</a></code> and the <code>mutate</code> and <code>map</code> combo.</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">decomp</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit.ets</span>, <span class="no">sw_tidy_decomp</span>, <span class="kw">timetk_idx</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">rename_index</span> <span class="kw">=</span> <span class="st">"date"</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">unnest</span>(<span class="no">decomp</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 538 x 9
@@ -408,7 +407,7 @@
 <h2 class="hasAnchor">
 <a href="#step-3-forecasting-the-model" class="anchor"></a>Step 3: Forecasting the model</h2>
 <p>We can also forecast the multiple models again using a very similar approach with the <code>forecast</code> function. We want a 12 month forecast so we add the argument for the <code>h = 12</code> (refer to <code><a href="https://rdrr.io/pkg/forecast/man/forecast.html">?forecast</a></code> for all of the parameters you can add, there’s quite a few).</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fcast</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fcast</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_fit</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">fcast.ets</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fit.ets</span>, <span class="no">forecast</span>, <span class="kw">h</span> <span class="kw">=</span> <span class="fl">12</span>))
 <span class="no">monthly_qty_by_cat2_fcast</span></pre></body></html></div>
 <pre><code>## # A tibble: 9 x 5
@@ -429,7 +428,7 @@
 <h2 class="hasAnchor">
 <a href="#step-4-tidy-the-forecast" class="anchor"></a>Step 4: Tidy the forecast</h2>
 <p>Next, we can apply <code>sw_sweep</code> to get the forecast in a nice “tidy” data frame. We use the argument <code>fitted = FALSE</code> to remove the fitted values from the forecast (leave off if fitted values are desired). We set <code>timetk_idx = TRUE</code> to use dates instead of numeric values for the index. We’ll use <code>unnest()</code> to drop the left over list-columns and return an unnested data frame.</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fcast_tidy</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_fcast</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fcast_tidy</span> <span class="kw">&lt;-</span> <span class="no">monthly_qty_by_cat2_fcast</span> <span class="kw">%&gt;%</span>
     <span class="fu">mutate</span>(<span class="kw">sweep</span> <span class="kw">=</span> <span class="fu">map</span>(<span class="no">fcast.ets</span>, <span class="no">sw_sweep</span>, <span class="kw">fitted</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">timetk_idx</span> <span class="kw">=</span> <span class="fl">TRUE</span>)) <span class="kw">%&gt;%</span>
     <span class="fu">unnest</span>(<span class="no">sweep</span>)
 <span class="no">monthly_qty_by_cat2_fcast_tidy</span></pre></body></html></div>
@@ -450,7 +449,7 @@
 ## # … with 636 more rows, and 4 more variables: lo.80 &lt;dbl&gt;, lo.95 &lt;dbl&gt;,
 ## #   hi.80 &lt;dbl&gt;, hi.95 &lt;dbl&gt;</code></pre>
 <p>Visualization is just one final step.</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fcast_tidy</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">monthly_qty_by_cat2_fcast_tidy</span> <span class="kw">%&gt;%</span>
     <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">index</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">total.qty</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="no">key</span>, <span class="kw">group</span> <span class="kw">=</span> <span class="no">category.secondary</span>)) +
     <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="kw">ymin</span> <span class="kw">=</span> <span class="no">lo.95</span>, <span class="kw">ymax</span> <span class="kw">=</span> <span class="no">hi.95</span>),
                 <span class="kw">fill</span> <span class="kw">=</span> <span class="st">"#D5DBFF"</span>, <span class="kw">color</span> <span class="kw">=</span> <span class="fl">NA</span>, <span class="kw">size</span> <span class="kw">=</span> <span class="fl">0</span>) +
