@@ -3,6 +3,7 @@ context("Testing robets tidiers")
 
 # FUNCTION: sw_*.robets -----
 test_that("sw_*.robets test returns tibble with correct rows and columns.", {
+    skip_if_not_installed("robets")
 
     # robets() ----
     fit_robets <- WWWusage %>%
