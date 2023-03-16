@@ -1,4 +1,4 @@
-# sweep 0.2.3.9000
+# sweep 0.2.4
 
 * Remove support for `robets`.
 
