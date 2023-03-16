@@ -29,5 +29,5 @@ signature, partly because it prevents rowwise_df_tidiers from
 taking a column name as the first argument.
 }
 \seealso{
-\code{\link[broom:augment]{broom::augment()}}
+\code{\link[broom:reexports]{broom::augment()}}
 }

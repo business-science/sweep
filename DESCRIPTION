@@ -1,7 +1,7 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.2.3
+Version: 0.2.3.9000
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
@@ -37,12 +37,11 @@ Suggests:
     testthat,
     purrr,
     readr,
-    robets,
     stringr,
     scales,
     tidyquant,
     tidyverse,
     fracdiff
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr

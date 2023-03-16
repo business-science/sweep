@@ -31,5 +31,5 @@ For non-time series, \code{sw_glance()} defaults to \code{broom::glance()}.
 The only difference is that the return is a tibble.
 }
 \seealso{
-\code{\link[broom:glance]{broom::glance()}}
+\code{\link[broom:reexports]{broom::glance()}}
 }

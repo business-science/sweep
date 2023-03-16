@@ -40,5 +40,5 @@ WWWusage \%>\%
 
 }
 \seealso{
-\code{\link[broom:tidy]{broom::tidy()}}
+\code{\link[broom:reexports]{broom::tidy()}}
 }
