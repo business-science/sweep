@@ -31,6 +31,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -43,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
       </span>
     </div>
 
@@ -56,7 +58,7 @@
   <a href="reference/index.html">Function Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Vignettes
      
     <span class="caret"></span>
@@ -79,7 +81,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/business-science/sweep">
+  <a href="https://github.com/business-science/sweep" class="external-link">
     <span class="fa fa-github"></span>
      
   </a>
@@ -96,55 +98,55 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="sweep" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#sweep" class="anchor"></a>sweep</h1></div>
-
+<div class="section level1">
+<div class="page-header"><h1 id="sweep">sweep<a class="anchor" aria-label="anchor" href="#sweep"></a>
+</h1></div>
+<p><a href="https://travis-ci.org/business-science/sweep" class="external-link"><img src="https://travis-ci.org/business-science/sweep.svg?branch=master" alt="Travis build status"></a> <a href="https://codecov.io/gh/business-science/sweep" class="external-link"><img src="https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg" alt="codecov"></a> <a href="https://cran.r-project.org/package=sweep" class="external-link"><img src="http://www.r-pkg.org/badges/version/sweep" alt="CRAN_Status_Badge"></a> <img src="http://cranlogs.r-pkg.org/badges/sweep?color=brightgreen"><img src="http://cranlogs.r-pkg.org/badges/grand-total/sweep?color=brightgreen"></p>
 <p><img src="reference/figures/sweep-logo.png" width="147" height="170" align="right"></p>
 <blockquote>
 <p>Extending <code>broom</code> to time series forecasting</p>
 </blockquote>
 <p>The <code>sweep</code> package extends the <code>broom</code> tools (tidy, glance, and augment) for performing forecasts and time series analysis in the “tidyverse”. The package is geared towards “tidying” the forecast workflow used with Rob Hyndman’s <code>forecast</code> package.</p>
-<div id="benefits" class="section level2">
-<h2 class="hasAnchor">
-<a href="#benefits" class="anchor"></a>Benefits</h2>
+<div class="section level2">
+<h2 id="benefits">Benefits<a class="anchor" aria-label="anchor" href="#benefits"></a>
+</h2>
 <ul>
-<li><strong>Designed for modeling and scaling forecasts using the the <code>tidyverse</code> tools in <a href="http://r4ds.had.co.nz/"><em>R for Data Science</em></a></strong></li>
+<li><strong>Designed for modeling and scaling forecasts using the the <code>tidyverse</code> tools in <a href="http://r4ds.had.co.nz/" class="external-link"><em>R for Data Science</em></a></strong></li>
 <li><strong>Extends <code>broom</code> for model analysis (ARIMA, ETS, BATS, etc)</strong></li>
 <li><strong>Tidies the <code>forecast</code> objects for easy plotting and “tidy” data manipulation</strong></li>
 <li><strong>Integrates <code>timetk</code> to enable dates and datetimes (irregular time series) in the tidied forecast output</strong></li>
 </ul>
 </div>
-<div id="tools" class="section level2">
-<h2 class="hasAnchor">
-<a href="#tools" class="anchor"></a>Tools</h2>
+<div class="section level2">
+<h2 id="tools">Tools<a class="anchor" aria-label="anchor" href="#tools"></a>
+</h2>
 <p>The package contains the following elements:</p>
-<ol>
+<ol style="list-style-type: decimal">
 <li><p><strong>model tidiers</strong>: <code>sw_tidy</code>, <code>sw_glance</code>, <code>sw_augment</code>, <code>sw_tidy_decomp</code> functions extend <code>tidy</code>, <code>glance</code>, and <code>augment</code> from the <code>broom</code> package specifically for models (<code>ets()</code>, <code>Arima()</code>, <code>bats()</code>, etc) used for forecasting.</p></li>
 <li><p><strong>forecast tidier</strong>: <code>sw_sweep</code> converts a <code>forecast</code> object to a tibble that can be easily manipulated in the “tidyverse”.</p></li>
 </ol>
 </div>
-<div id="making-forecasts-in-the-tidyverse" class="section level2">
-<h2 class="hasAnchor">
-<a href="#making-forecasts-in-the-tidyverse" class="anchor"></a>Making forecasts in the tidyverse</h2>
+<div class="section level2">
+<h2 id="making-forecasts-in-the-tidyverse">Making forecasts in the tidyverse<a class="anchor" aria-label="anchor" href="#making-forecasts-in-the-tidyverse"></a>
+</h2>
 <p><code>sweep</code> enables converting a <code>forecast</code> object to <code>tibble</code>. The result is ability to use <code>dplyr</code>, <code>tidyr</code>, and <code>ggplot</code> natively to manipulate, analyze and visualize forecasts.</p>
 <p><img src="reference/figures/forecast.png" width="100%"></p>
 </div>
-<div id="forecasting-multiple-time-series-groups-at-scale" class="section level2">
-<h2 class="hasAnchor">
-<a href="#forecasting-multiple-time-series-groups-at-scale" class="anchor"></a>Forecasting multiple time series groups at scale</h2>
+<div class="section level2">
+<h2 id="forecasting-multiple-time-series-groups-at-scale">Forecasting multiple time series groups at scale<a class="anchor" aria-label="anchor" href="#forecasting-multiple-time-series-groups-at-scale"></a>
+</h2>
 <p>Often forecasts are required on grouped data to analyse trends in sub-categories. The good news is scaling from one time series to many is easy with the various <code>sw_</code> functions in combination with <code>dplyr</code> and <code>purrr</code>.</p>
 <p><img src="reference/figures/time_series_groups.png" width="100%"></p>
 </div>
-<div id="forecasting-multiple-models-for-accuracy" class="section level2">
-<h2 class="hasAnchor">
-<a href="#forecasting-multiple-models-for-accuracy" class="anchor"></a>Forecasting multiple models for accuracy</h2>
+<div class="section level2">
+<h2 id="forecasting-multiple-models-for-accuracy">Forecasting multiple models for accuracy<a class="anchor" aria-label="anchor" href="#forecasting-multiple-models-for-accuracy"></a>
+</h2>
 <p>A common goal in forecasting is to compare different forecast models against each other. <code>sweep</code> helps in this area as well.</p>
 <p><img src="reference/figures/multiple_models.png" width="100%"></p>
 </div>
-<div id="broom-extensions-for-forecasting" class="section level2">
-<h2 class="hasAnchor">
-<a href="#broom-extensions-for-forecasting" class="anchor"></a>broom extensions for forecasting</h2>
+<div class="section level2">
+<h2 id="broom-extensions-for-forecasting">broom extensions for forecasting<a class="anchor" aria-label="anchor" href="#broom-extensions-for-forecasting"></a>
+</h2>
 <p>If you are familiar with <code>broom</code>, you know how useful it is for retrieving “tidy” format model components. <code>sweep</code> extends this benefit to the <code>forecast</code> package workflow with the following functions:</p>
 <ul>
 <li>
@@ -159,7 +161,15 @@
 <code>sw_sweep</code>: Returns tidy forecast outputs.</li>
 </ul>
 <p>The compatibility chart is listed below.</p>
-<table class="table">
+<table style="width:100%;" class="table">
+<colgroup>
+<col width="16%">
+<col width="13%">
+<col width="16%">
+<col width="17%">
+<col width="22%">
+<col width="14%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Object</th>
 <th align="center">sw_tidy()</th>
@@ -202,14 +212,6 @@
 <td align="center"></td>
 </tr>
 <tr class="odd">
-<td align="left">robets</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center">X</td>
-<td align="center"></td>
-</tr>
-<tr class="even">
 <td align="left">baggedETS</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -217,7 +219,7 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">bats</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -225,7 +227,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">tbats</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -233,7 +235,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">nnetar</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -241,7 +243,7 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">stl</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -249,7 +251,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">HoltWinters</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -257,7 +259,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">StructTS</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -265,7 +267,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">tslm</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -273,7 +275,7 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">decompose</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -281,7 +283,7 @@
 <td align="center">X</td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">adf.test</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -289,7 +291,7 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">Box.test</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -297,7 +299,7 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td align="left">kpss.test</td>
 <td align="center">X</td>
 <td align="center">X</td>
@@ -305,7 +307,7 @@
 <td align="center"></td>
 <td align="center"></td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left">forecast</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -317,21 +319,22 @@
 </table>
 <p>Function Compatibility</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>Here’s how to get started.</p>
 <p>Development version with latest features:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="co"># install.packages("devtools")</span>
-<span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span>(<span class="st">"business-science/sweep"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"business-science/sweep"</span><span class="op">)</span></span></code></pre></div>
 <!-- CRAN approved version: -->
 <!-- ```{r, eval = FALSE} -->
 <!-- install.packages("sweep") -->
 <!-- ``` -->
 </div>
-<div id="further-information" class="section level2">
-<h2 class="hasAnchor">
-<a href="#further-information" class="anchor"></a>Further Information</h2>
+<div class="section level2">
+<h2 id="further-information">Further Information<a class="anchor" aria-label="anchor" href="#further-information"></a>
+</h2>
 <p>The <code>sweep</code> package includes several vignettes to help users get up to speed quickly:</p>
 <ul>
 <li>SW00 - Introduction to <code>sweep</code>
@@ -346,48 +349,51 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=sweep">https://​cloud.r-project.org/​package=sweep</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/business-science/sweep/">https://​github.com/​business-science/​sweep/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/business-science/sweep/issues">https://​github.com/​business-science/​sweep/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=sweep" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/business-science/sweep/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/business-science/sweep/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 3)</li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing sweep</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Matt Dancho <br><small class="roles"> Author, maintainer </small>  </li>
 <li>Davis Vaughan <br><small class="roles"> Author </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://travis-ci.org/business-science/sweep"><img src="https://travis-ci.org/business-science/sweep.svg?branch=master" alt="Travis build status"></a></li>
-<li><a href="https://codecov.io/gh/business-science/sweep"><img src="https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg" alt="codecov"></a></li>
-<li><a href="https://cran.r-project.org/package=sweep"><img src="http://www.r-pkg.org/badges/version/sweep" alt="CRAN_Status_Badge"></a></li>
-</ul>
-</div>
-</div>
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Matt Dancho, Davis Vaughan.</p>
+  <p></p>
+<p>Developed by Matt Dancho, Davis Vaughan.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -395,6 +401,8 @@
 
   
 
+
+  
 
   </body>
 </html>
