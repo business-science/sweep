@@ -5,7 +5,7 @@
 
 [![Travis build
 status](https://travis-ci.org/business-science/sweep.svg?branch=master)](https://travis-ci.org/business-science/sweep)
-[![codecov](https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg)](https://codecov.io/gh/business-science/sweep)
+[![codecov](https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg)](https://app.codecov.io/gh/business-science/sweep)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sweep)](https://cran.r-project.org/package=sweep)
 ![](http://cranlogs.r-pkg.org/badges/sweep?color=brightgreen)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/sweep?color=brightgreen)
@@ -22,7 +22,7 @@ workflow used with Rob Hyndman’s `forecast` package.
 ## Benefits
 
 - **Designed for modeling and scaling forecasts using the the
-  `tidyverse` tools in [*R for Data Science*](http://r4ds.had.co.nz/)**
+  `tidyverse` tools in [*R for Data Science*](https://r4ds.had.co.nz/)**
 - **Extends `broom` for model analysis (ARIMA, ETS, BATS, etc)**
 - **Tidies the `forecast` objects for easy plotting and “tidy” data
   manipulation**

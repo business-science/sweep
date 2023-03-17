@@ -83,7 +83,7 @@ The forecasting workflow involves a few basic steps:
 3. Step 3: Forecast the models (similar to predict)
 4. Step 4: Use `sw_sweep()` to tidy the forecast.
 
-_Note that we purposely omit other steps such as testing the series for stationarity (`Box.test(type = "Ljung")`) and analysis of autocorrelations (`Acf`, `Pacf`) for brevity purposes. We recommend the analyst to follow the forecasting workflow in ["Forecasting: principles and practice"](https://www.otexts.org/book/fpp)_
+_Note that we purposely omit other steps such as testing the series for stationarity (`Box.test(type = "Ljung")`) and analysis of autocorrelations (`Acf`, `Pacf`) for brevity purposes. We recommend the analyst to follow the forecasting workflow in ["Forecasting: principles and practice"](https://otexts.com/fpp2/)_
 
 ## Step 1: Coerce to a `ts` object class
 
@@ -214,7 +214,7 @@ decomp_fit_ets %>%
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-Under normal circumstances it would make sense to refine the model at this point. However, in the interest of showing capabilities (rather than how to forecast) we move onto forecasting the model. For more information on how to forecast, please refer to the online book [_"Forecasting: principles and practices"_](https://www.otexts.org/book/fpp). 
+Under normal circumstances it would make sense to refine the model at this point. However, in the interest of showing capabilities (rather than how to forecast) we move onto forecasting the model. For more information on how to forecast, please refer to the online book [_"Forecasting: principles and practices"_](https://otexts.com/fpp2/). 
 
 ## Step 3: Forecasting the model
 

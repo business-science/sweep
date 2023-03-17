@@ -116,7 +116,7 @@ In this section we will use three models to forecast gasoline prices:
 
 ## Multiple Models Concept
 
-Before we jump into modeling, let's take a look at the multiple model process from [R for Data Science, Chapter 25 Many Models](http://r4ds.had.co.nz/many-models.html#from-a-named-list). We first create a data frame from a named list. The example below has two columns: "f" the functions as text, and "params" a nested list of parameters we will pass to the respective function in column "f".
+Before we jump into modeling, let's take a look at the multiple model process from [R for Data Science, Chapter 25 Many Models](https://r4ds.had.co.nz/many-models.html#from-a-named-list). We first create a data frame from a named list. The example below has two columns: "f" the functions as text, and "params" a nested list of parameters we will pass to the respective function in column "f".
 
 ```{r}
 df <- tibble(
