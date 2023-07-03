@@ -30,7 +30,8 @@ Imports:
     tidyr (>= 1.0.0),
     timetk (>= 2.1.0),
     rlang,
-    tidyverse
+    tidyverse, 
+    tidyquant
 Suggests:
     forcats,
     knitr,
@@ -40,7 +41,6 @@ Suggests:
     readr,
     stringr,
     scales,
-    tidyquant,
     fracdiff
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
