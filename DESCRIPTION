@@ -1,7 +1,7 @@
 Package: sweep
 Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.2.4
+Version: 0.2.5
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
@@ -29,7 +29,8 @@ Imports:
     tibble (>= 1.2),
     tidyr (>= 1.0.0),
     timetk (>= 2.1.0),
-    rlang
+    rlang,
+    tidyverse
 Suggests:
     forcats,
     knitr,
@@ -40,7 +41,6 @@ Suggests:
     stringr,
     scales,
     tidyquant,
-    tidyverse,
     fracdiff
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
