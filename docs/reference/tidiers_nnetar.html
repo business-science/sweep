@@ -24,7 +24,7 @@ series."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mat
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -159,7 +159,7 @@ a sequential index is created for plotting purposes</p></li>
 <span class="r-in"><span>    <span class="fu"><a href="https://pkg.robjhyndman.com/forecast/reference/nnetar.html" class="external-link">nnetar</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="sw_tidy.html">sw_tidy</a></span><span class="op">(</span><span class="va">fit_nnetar</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 x 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   term  estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> m            1</span>
@@ -167,13 +167,12 @@ a sequential index is created for plotting purposes</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> P            0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> size         4</span>
 <span class="r-in"><span><span class="fu"><a href="sw_glance.html">sw_glance</a></span><span class="op">(</span><span class="va">fit_nnetar</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   model.d…¹ sigma logLik AIC   BIC      ME  RMSE   MAE   MPE  MAPE  MASE    ACF1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> NNAR(8,4)  311. <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    0.262  311.  220. -<span style="color: #BB0000;">36.9</span>  51.6 0.265 -<span style="color: #BB0000;">0.049</span><span style="color: #BB0000; text-decoration: underline;">0</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​model.desc</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 x 12</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   model.desc sigma logLik AIC   BIC      ME  RMSE   MAE   MPE  MAPE  MASE   ACF1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> NNAR(8,4)   294. <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    0.127  294.  216. -<span style="color: #BB0000;">40.4</span>  54.1 0.260 0.029<span style="text-decoration: underline;">0</span></span>
 <span class="r-in"><span><span class="fu"><a href="sw_augment.html">sw_augment</a></span><span class="op">(</span><span class="va">fit_nnetar</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 114 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 114 x 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    index .actual .fitted .resid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>  <span style="text-decoration: underline;">1</span>821     269     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  </span>
@@ -184,9 +183,9 @@ a sequential index is created for plotting purposes</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>  <span style="text-decoration: underline;">1</span>826    <span style="text-decoration: underline;">2</span>821     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>  <span style="text-decoration: underline;">1</span>827    <span style="text-decoration: underline;">3</span>928     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">1</span>828    <span style="text-decoration: underline;">5</span>943     <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">1</span>829    <span style="text-decoration: underline;">4</span>950   <span style="text-decoration: underline;">4</span>591.  359. </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">1</span>830    <span style="text-decoration: underline;">2</span>577   <span style="text-decoration: underline;">2</span>487.   89.9</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 104 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">1</span>829    <span style="text-decoration: underline;">4</span>950   <span style="text-decoration: underline;">4</span>560.  390. </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">1</span>830    <span style="text-decoration: underline;">2</span>577   <span style="text-decoration: underline;">2</span>549.   28.4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 104 more rows</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -202,7 +201,7 @@ a sequential index is created for plotting purposes</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

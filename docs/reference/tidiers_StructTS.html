@@ -26,7 +26,7 @@ series."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mat
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -161,25 +161,20 @@ a sequential index is created for plotting purposes</p></li>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/stats/StructTS.html" class="external-link">StructTS</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="sw_tidy.html">sw_tidy</a></span><span class="op">(</span><span class="va">fit_StructTS</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 2</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 x 2</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   term    estimate</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> level        0  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> slope       13.0</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> epsilon      0  </span>
 <span class="r-in"><span><span class="fu"><a href="sw_glance.html">sw_glance</a></span><span class="op">(</span><span class="va">fit_StructTS</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 12</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   model.d…¹ sigma logLik   AIC   BIC      ME  RMSE   MAE   MPE  MAPE  MASE  ACF1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Local li… 0.995  -<span style="color: #BB0000;">277.</span>  559.  564. -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>  3.59  2.96 0.140  2.32 0.654 0.156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with abbreviated variable name ¹​model.desc</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 x 12</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   model.desc      sigma logLik   AIC   BIC      ME  RMSE   MAE   MPE  MAPE  MASE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> Local linear s~ 0.995  -<span style="color: #BB0000;">277.</span>  559.  564. -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">0</span>  3.59  2.96 0.140  2.32 0.654</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 1 more variable: ACF1 &lt;dbl&gt;</span></span>
 <span class="r-in"><span><span class="fu"><a href="sw_augment.html">sw_augment</a></span><span class="op">(</span><span class="va">fit_StructTS</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`select_()` was deprecated in dplyr 0.7.0.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `select()` instead.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> The deprecated feature was likely used in the <span style="color: #0000BB;">sweep</span> package.</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   Please report the issue at</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span>   <span style="color: #0000BB; font-style: italic;">&lt;</span><a href="https://github.com/business-science/sweep/issues" class="external-link"><span style="color: #0000BB; font-style: italic;">https://github.com/business-science/sweep/issues</span></a><span style="color: #0000BB; font-style: italic;">&gt;</span>.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 100 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 100 x 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    index .actual .fitted .resid</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>     1      88    88     0   </span>
@@ -192,7 +187,7 @@ a sequential index is created for plotting purposes</p></li>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>     8      85    81     4   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>     9      88    87     1   </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>    10      89    91    -<span style="color: #BB0000;">2</span>   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 90 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 90 more rows</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -208,7 +203,7 @@ a sequential index is created for plotting purposes</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

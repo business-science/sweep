@@ -23,7 +23,6 @@ library(sweep)
 
 # sweep
 
-[![Travis build status](https://travis-ci.org/business-science/sweep.svg?branch=master)](https://travis-ci.org/business-science/sweep)
 [![codecov](https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg)](https://app.codecov.io/gh/business-science/sweep)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sweep)](https://cran.r-project.org/package=sweep)
 ![](http://cranlogs.r-pkg.org/badges/sweep?color=brightgreen)

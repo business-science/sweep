@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -125,7 +125,7 @@ The index column name can be changed using the <code>rename_index</code> argumen
 <span class="r-in"><span><span class="va">USAccDeaths</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://pkg.robjhyndman.com/forecast/reference/ets.html" class="external-link">ets</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">sw_tidy_decomp</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 73 × 4</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 73 x 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    index     observed level  season</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;yearmon&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Dec 1972        <span style="color: #BB0000;">NA</span> <span style="text-decoration: underline;">9</span>248.   -<span style="color: #BB0000;">51.3</span></span>
@@ -138,13 +138,13 @@ The index column name can be changed using the <code>rename_index</code> argumen
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Jul 1973     <span style="text-decoration: underline;">11</span>317 <span style="text-decoration: underline;">9</span>746.  <span style="text-decoration: underline;">1</span>683. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Aug 1973     <span style="text-decoration: underline;">10</span>744 <span style="text-decoration: underline;">9</span>762.   971. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Sep 1973      <span style="text-decoration: underline;">9</span>713 <span style="text-decoration: underline;">9</span>805.  -<span style="color: #BB0000;">122.</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 63 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 63 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Decompose STL object</span></span></span>
 <span class="r-in"><span><span class="va">USAccDeaths</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu"><a href="https://rdrr.io/r/stats/stl.html" class="external-link">stl</a></span><span class="op">(</span>s.window <span class="op">=</span> <span class="st">'periodic'</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
 <span class="r-in"><span>    <span class="fu">sw_tidy_decomp</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 72 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 72 x 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    index     observed  season trend remainder seasadj</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;yearmon&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Jan 1973      <span style="text-decoration: underline;">9</span>007  -<span style="color: #BB0000;">820.</span>  <span style="text-decoration: underline;">9</span>935.    -<span style="color: #BB0000;">108.</span>    <span style="text-decoration: underline;">9</span>827.</span>
@@ -157,7 +157,7 @@ The index column name can be changed using the <code>rename_index</code> argumen
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Aug 1973     <span style="text-decoration: underline;">10</span>744   982.  <span style="text-decoration: underline;">9</span>500.     262.    <span style="text-decoration: underline;">9</span>762.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Sep 1973      <span style="text-decoration: underline;">9</span>713   -<span style="color: #BB0000;">62.8</span> <span style="text-decoration: underline;">9</span>431.     345.    <span style="text-decoration: underline;">9</span>776.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Oct 1973      <span style="text-decoration: underline;">9</span>938   232.  <span style="text-decoration: underline;">9</span>343.     363.    <span style="text-decoration: underline;">9</span>706.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># … with 62 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># i 62 more rows</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -174,7 +174,7 @@ The index column name can be changed using the <code>rename_index</code> argumen
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

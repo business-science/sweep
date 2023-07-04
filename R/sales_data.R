@@ -30,5 +30,5 @@
 #'   \item{frame}{The bicycle frame material, either "Carbon" or "Aluminum"}
 #' }
 #' @source
-#' The 2016 bicycle model names and prices originated from \url{http://www.cannondale.com/en/USA}
+#' The 2016 bicycle model names and prices originated from \url{https://www.cannondale.com/en-us}
 "bike_sales"

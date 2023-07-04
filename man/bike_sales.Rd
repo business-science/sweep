@@ -27,7 +27,7 @@ A data frame with 15644 rows and 17 variables:
 }
 }
 \source{
-The 2016 bicycle model names and prices originated from \url{http://www.cannondale.com/en/USA}
+The 2016 bicycle model names and prices originated from \url{https://www.cannondale.com/en-us}
 }
 \usage{
 bike_sales

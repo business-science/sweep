@@ -23,7 +23,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -92,59 +92,50 @@
         </td>
         <td><p>Fictional sales data for bike shops purchasing Cannondale bikes</p></td>
       </tr><tr><td>
-          <p><code><a href="sw_augment.html">sw_augment()</a></code> </p>
+          <p><code><a href="sweep_package.html">sweep_package</a></code> </p>
         </td>
-        <td><p>Augment data according to a tidied model</p></td>
+        <td><p>sweep: Extending broom to time series forecasting</p></td>
       </tr><tr><td>
           <p><code><a href="sw_augment.default.html">sw_augment(<i>&lt;default&gt;</i>)</a></code> </p>
         </td>
         <td><p>Default augment method</p></td>
       </tr><tr><td>
+          <p><code><a href="sw_augment.html">sw_augment()</a></code> </p>
+        </td>
+        <td><p>Augment data according to a tidied model</p></td>
+      </tr><tr><td>
           <p><code><a href="sw_augment_columns.html">sw_augment_columns()</a></code> </p>
         </td>
         <td><p>Augments data</p></td>
+      </tr><tr><td>
+          <p><code><a href="sw_glance.default.html">sw_glance(<i>&lt;default&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Default glance method</p></td>
       </tr><tr><td>
           <p><code><a href="sw_glance.html">sw_glance()</a></code> </p>
         </td>
         <td><p>Construct a single row summary "glance" of a model, fit, or other
 object</p></td>
       </tr><tr><td>
-          <p><code><a href="sw_glance.default.html">sw_glance(<i>&lt;default&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Default glance method</p></td>
-      </tr><tr><td>
           <p><code><a href="sw_sweep.html">sw_sweep()</a></code> </p>
         </td>
         <td><p>Tidy forecast objects</p></td>
-      </tr><tr><td>
-          <p><code><a href="sw_tidy.html">sw_tidy()</a></code> </p>
-        </td>
-        <td><p>Tidy the result of a time-series model into a summary tibble</p></td>
       </tr><tr><td>
           <p><code><a href="sw_tidy.default.html">sw_tidy(<i>&lt;default&gt;</i>)</a></code> </p>
         </td>
         <td><p>Default tidying method</p></td>
       </tr><tr><td>
+          <p><code><a href="sw_tidy.html">sw_tidy()</a></code> </p>
+        </td>
+        <td><p>Tidy the result of a time-series model into a summary tibble</p></td>
+      </tr><tr><td>
           <p><code><a href="sw_tidy_decomp.html">sw_tidy_decomp()</a></code> </p>
         </td>
         <td><p>Coerces decomposed time-series objects to tibble format.</p></td>
       </tr><tr><td>
-          <p><code><a href="sweep_package.html">sweep_package</a></code> </p>
-        </td>
-        <td><p>sweep: Extending broom to time series forecasting</p></td>
-      </tr><tr><td>
           <p><code><a href="tbats_string.html">tbats_string()</a></code> </p>
         </td>
         <td><p>Print the TBATS model parameters</p></td>
-      </tr><tr><td>
-          <p><code><a href="tidiers_HoltWinters.html">sw_tidy(<i>&lt;HoltWinters&gt;</i>)</a></code> <code><a href="tidiers_HoltWinters.html">sw_glance(<i>&lt;HoltWinters&gt;</i>)</a></code> <code><a href="tidiers_HoltWinters.html">sw_augment(<i>&lt;HoltWinters&gt;</i>)</a></code> <code><a href="tidiers_HoltWinters.html">sw_tidy_decomp(<i>&lt;HoltWinters&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Tidying methods for HoltWinters modeling of time series</p></td>
-      </tr><tr><td>
-          <p><code><a href="tidiers_StructTS.html">sw_tidy(<i>&lt;StructTS&gt;</i>)</a></code> <code><a href="tidiers_StructTS.html">sw_glance(<i>&lt;StructTS&gt;</i>)</a></code> <code><a href="tidiers_StructTS.html">sw_augment(<i>&lt;StructTS&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Tidying methods for StructTS (Error, Trend, Seasonal) / exponential smoothing
-modeling of time series</p></td>
       </tr><tr><td>
           <p><code><a href="tidiers_arima.html">sw_tidy(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="tidiers_arima.html">sw_glance(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="tidiers_arima.html">sw_augment(<i>&lt;Arima&gt;</i>)</a></code> <code><a href="tidiers_arima.html">sw_tidy(<i>&lt;stlm&gt;</i>)</a></code> </p>
         </td>
@@ -163,6 +154,10 @@ modeling of time series</p></td>
         <td><p>Tidying methods for ETS (Error, Trend, Seasonal) exponential smoothing
 modeling of time series</p></td>
       </tr><tr><td>
+          <p><code><a href="tidiers_HoltWinters.html">sw_tidy(<i>&lt;HoltWinters&gt;</i>)</a></code> <code><a href="tidiers_HoltWinters.html">sw_glance(<i>&lt;HoltWinters&gt;</i>)</a></code> <code><a href="tidiers_HoltWinters.html">sw_augment(<i>&lt;HoltWinters&gt;</i>)</a></code> <code><a href="tidiers_HoltWinters.html">sw_tidy_decomp(<i>&lt;HoltWinters&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Tidying methods for HoltWinters modeling of time series</p></td>
+      </tr><tr><td>
           <p><code><a href="tidiers_nnetar.html">sw_tidy(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="tidiers_nnetar.html">sw_glance(<i>&lt;nnetar&gt;</i>)</a></code> <code><a href="tidiers_nnetar.html">sw_augment(<i>&lt;nnetar&gt;</i>)</a></code> </p>
         </td>
         <td><p>Tidying methods for Nural Network Time Series models</p></td>
@@ -170,6 +165,11 @@ modeling of time series</p></td>
           <p><code><a href="tidiers_stl.html">sw_tidy(<i>&lt;stl&gt;</i>)</a></code> <code><a href="tidiers_stl.html">sw_tidy_decomp(<i>&lt;stl&gt;</i>)</a></code> <code><a href="tidiers_stl.html">sw_tidy_decomp(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="tidiers_stl.html">sw_glance(<i>&lt;stlm&gt;</i>)</a></code> <code><a href="tidiers_stl.html">sw_augment(<i>&lt;stlm&gt;</i>)</a></code> </p>
         </td>
         <td><p>Tidying methods for STL (Seasonal, Trend, Level) decomposition of time series</p></td>
+      </tr><tr><td>
+          <p><code><a href="tidiers_StructTS.html">sw_tidy(<i>&lt;StructTS&gt;</i>)</a></code> <code><a href="tidiers_StructTS.html">sw_glance(<i>&lt;StructTS&gt;</i>)</a></code> <code><a href="tidiers_StructTS.html">sw_augment(<i>&lt;StructTS&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Tidying methods for StructTS (Error, Trend, Seasonal) / exponential smoothing
+modeling of time series</p></td>
       </tr><tr><td>
           <p><code><a href="validate_index.html">validate_index()</a></code> </p>
         </td>
@@ -187,7 +187,7 @@ modeling of time series</p></td>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

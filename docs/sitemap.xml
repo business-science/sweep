@@ -4,6 +4,9 @@
     <loc>/404.html</loc>
   </url>
   <url>
+    <loc>/articles/index.html</loc>
+  </url>
+  <url>
     <loc>/articles/SW00_Introduction_to_sweep.html</loc>
   </url>
   <url>
@@ -11,9 +14,6 @@
   </url>
   <url>
     <loc>/articles/SW02_Forecasting_Multiple_Models.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
   </url>
   <url>
     <loc>/authors.html</loc>
@@ -43,6 +43,9 @@
     <loc>/reference/reexports.html</loc>
   </url>
   <url>
+    <loc>/reference/sweep_package.html</loc>
+  </url>
+  <url>
     <loc>/reference/sw_augment.default.html</loc>
   </url>
   <url>
@@ -70,16 +73,7 @@
     <loc>/reference/sw_tidy_decomp.html</loc>
   </url>
   <url>
-    <loc>/reference/sweep_package.html</loc>
-  </url>
-  <url>
     <loc>/reference/tbats_string.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tidiers_HoltWinters.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tidiers_StructTS.html</loc>
   </url>
   <url>
     <loc>/reference/tidiers_arima.html</loc>
@@ -94,6 +88,9 @@
     <loc>/reference/tidiers_ets.html</loc>
   </url>
   <url>
+    <loc>/reference/tidiers_HoltWinters.html</loc>
+  </url>
+  <url>
     <loc>/reference/tidiers_nnetar.html</loc>
   </url>
   <url>
@@ -101,6 +98,9 @@
   </url>
   <url>
     <loc>/reference/tidiers_stl.html</loc>
+  </url>
+  <url>
+    <loc>/reference/tidiers_StructTS.html</loc>
   </url>
   <url>
     <loc>/reference/validate_index.html</loc>

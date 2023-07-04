@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">sweep</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.2.5</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ tidyverse</h1>
                         <h4 data-toc-skip class="author">Matt
 Dancho</h4>
             
-            <h4 data-toc-skip class="date">2023-03-16</h4>
+            <h4 data-toc-skip class="date">2023-07-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/HEAD/vignettes/SW01_Forecasting_Time_Series_Groups.Rmd" class="external-link"><code>vignettes/SW01_Forecasting_Time_Series_Groups.Rmd</code></a></small>
       <div class="hidden name"><code>SW01_Forecasting_Time_Series_Groups.Rmd</code></div>
@@ -125,14 +125,18 @@ series</em>.</p>
 </h2>
 <p>Before we get started, load the following packages.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tidyquant" class="external-link">tidyquant</a></span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning in .recacheSubclasses(def@className, def, env): undefined subclass</span></span>
-<span><span class="co">## "xts" of class "xtsORzoo"; definition not updated</span></span></code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: package 'readr' was built under R version 4.0.5</span></span></code></pre>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tidyquant" class="external-link">tidyquant</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: package 'xts' was built under R version 4.0.5</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: package 'zoo' was built under R version 4.0.5</span></span></code></pre>
+<pre><code><span><span class="co">## Warning: package 'TTR' was built under R version 4.0.5</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/sweep" class="external-link">sweep</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: package 'forecast' was built under R version 4.0.5</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="bike-sales">Bike Sales<a class="anchor" aria-label="anchor" href="#bike-sales"></a>
@@ -143,29 +147,28 @@ with the <code>sweep</code> package for this tutorial. The
 history that spans 2011 through 2015. It simulates a sales database that
 is typical of a business. The customers are the “bike shops” and the
 products are the “models”.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bike_sales</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 15,644 × 17</span></span></span>
-<span><span class="co">##    order.date order.id order.line quantity price price…¹ custo…² bikes…³ bikes…⁴</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2011-01-07        1          1        1  <span style="text-decoration: underline;">6</span>070    <span style="text-decoration: underline;">6</span>070       2 Ithaca… Ithaca </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2011-01-07        1          2        1  <span style="text-decoration: underline;">5</span>970    <span style="text-decoration: underline;">5</span>970       2 Ithaca… Ithaca </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2011-01-10        2          1        1  <span style="text-decoration: underline;">2</span>770    <span style="text-decoration: underline;">2</span>770      10 Kansas… Kansas…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2011-01-10        2          2        1  <span style="text-decoration: underline;">5</span>970    <span style="text-decoration: underline;">5</span>970      10 Kansas… Kansas…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2011-01-10        3          1        1 <span style="text-decoration: underline;">10</span>660   <span style="text-decoration: underline;">10</span>660       6 Louisv… Louisv…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2011-01-10        3          2        1  <span style="text-decoration: underline;">3</span>200    <span style="text-decoration: underline;">3</span>200       6 Louisv… Louisv…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2011-01-10        3          3        1 <span style="text-decoration: underline;">12</span>790   <span style="text-decoration: underline;">12</span>790       6 Louisv… Louisv…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2011-01-10        3          4        1  <span style="text-decoration: underline;">5</span>330    <span style="text-decoration: underline;">5</span>330       6 Louisv… Louisv…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2011-01-10        3          5        1  <span style="text-decoration: underline;">1</span>570    <span style="text-decoration: underline;">1</span>570       6 Louisv… Louisv…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2011-01-11        4          1        1  <span style="text-decoration: underline;">4</span>800    <span style="text-decoration: underline;">4</span>800      22 Ann Ar… Ann Ar…</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 15,634 more rows, 8 more variables: bikeshop.state &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, product.id &lt;dbl&gt;, model &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   category.primary &lt;chr&gt;, category.secondary &lt;chr&gt;, frame &lt;chr&gt;, and</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   abbreviated variable names ¹​price.ext, ²​customer.id, ³​bikeshop.name,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ⁴​bikeshop.city</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 15,644 x 17</span></span></span>
+<span><span class="co">##    order.date order.id order.line quantity price price.ext customer.id</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2011-01-07        1          1        1  <span style="text-decoration: underline;">6</span>070      <span style="text-decoration: underline;">6</span>070           2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2011-01-07        1          2        1  <span style="text-decoration: underline;">5</span>970      <span style="text-decoration: underline;">5</span>970           2</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2011-01-10        2          1        1  <span style="text-decoration: underline;">2</span>770      <span style="text-decoration: underline;">2</span>770          10</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2011-01-10        2          2        1  <span style="text-decoration: underline;">5</span>970      <span style="text-decoration: underline;">5</span>970          10</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2011-01-10        3          1        1 <span style="text-decoration: underline;">10</span>660     <span style="text-decoration: underline;">10</span>660           6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2011-01-10        3          2        1  <span style="text-decoration: underline;">3</span>200      <span style="text-decoration: underline;">3</span>200           6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2011-01-10        3          3        1 <span style="text-decoration: underline;">12</span>790     <span style="text-decoration: underline;">12</span>790           6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2011-01-10        3          4        1  <span style="text-decoration: underline;">5</span>330      <span style="text-decoration: underline;">5</span>330           6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2011-01-10        3          5        1  <span style="text-decoration: underline;">1</span>570      <span style="text-decoration: underline;">1</span>570           6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2011-01-11        4          1        1  <span style="text-decoration: underline;">4</span>800      <span style="text-decoration: underline;">4</span>800          22</span></span>
+<span><span class="co">## <span style="color: #949494;"># i 15,634 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># i 10 more variables: bikeshop.name &lt;chr&gt;, bikeshop.city &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   bikeshop.state &lt;chr&gt;, latitude &lt;dbl&gt;, longitude &lt;dbl&gt;, product.id &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   model &lt;chr&gt;, category.primary &lt;chr&gt;, category.secondary &lt;chr&gt;, frame &lt;chr&gt;</span></span></span></code></pre>
 <p>We’ll analyse the monthly sales trends for the bicycle manufacturer.
 Let’s transform the data set by aggregating by month.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bike_sales_monthly</span> <span class="op">&lt;-</span> <span class="va">bike_sales</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">order.date</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>,</span>
 <span>           year  <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/year.html" class="external-link">year</a></span><span class="op">(</span><span class="va">order.date</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -173,9 +176,9 @@ Let’s transform the data set by aggregating by month.</p>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>total.qty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">quantity</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <pre><code><span><span class="co">## `summarise()` has grouped output by 'year'. You can override using the</span></span>
 <span><span class="co">## `.groups` argument.</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bike_sales_monthly</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 60 × 3</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 60 x 3</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   year [5]</span></span></span>
 <span><span class="co">##     year month total.qty</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;ord&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -189,10 +192,10 @@ Let’s transform the data set by aggregating by month.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span>  <span style="text-decoration: underline;">2</span>011 Aug        <span style="text-decoration: underline;">1</span>470</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span>  <span style="text-decoration: underline;">2</span>011 Sep         975</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span>  <span style="text-decoration: underline;">2</span>011 Oct         697</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 50 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># i 50 more rows</span></span></span></code></pre>
 <p>We can visualize package with a month plot using the
 <code>ggplot2</code> .</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bike_sales_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">month</span>, y <span class="op">=</span> <span class="va">total.qty</span>, group <span class="op">=</span> <span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_area</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">year</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -214,16 +217,16 @@ year. We’ll create a new “order.month” date using
 <code><a href="https://rdrr.io/pkg/zoo/man/yearmon.html" class="external-link">zoo::as.yearmon()</a></code> that captures the year and month
 information from the “order.date” and then passing this to
 <code><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">lubridate::as_date()</a></code> to convert to date format.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2</span> <span class="op">&lt;-</span> <span class="va">bike_sales</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>order.month <span class="op">=</span> <span class="fu"><a href="https://lubridate.tidyverse.org/reference/as_date.html" class="external-link">as_date</a></span><span class="op">(</span><span class="fu">as.yearmon</span><span class="op">(</span><span class="va">order.date</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category.secondary</span>, <span class="va">order.month</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>total.qty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">quantity</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `summarise()` has grouped output by 'category.secondary'. You can override</span></span>
 <span><span class="co">## using the `.groups` argument.</span></span></code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 538 × 3</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 538 x 3</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
 <span><span class="co">##    category.secondary order.month total.qty</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -237,31 +240,31 @@ information from the “order.date” and then passing this to
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Country Race 2011-08-01         66</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Country Race 2011-09-01         97</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Country Race 2011-10-01        189</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 528 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># i 528 more rows</span></span></span></code></pre>
 <p>Next, we use the <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest()</a></code> function from the
 <code>tidyr</code> package to consolidate each time series by group. The
 newly created list-column, “data.tbl”, contains the “order.month” and
 “total.qty” columns by group from the previous step. The
 <code><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest()</a></code> function just bundles the data together which is
 very useful for iterative functional programming.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_nest</span> <span class="op">&lt;-</span> <span class="va">monthly_qty_by_cat2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">category.secondary</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">nest</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">monthly_qty_by_cat2_nest</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 × 2</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 x 2</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
 <span><span class="co">##   category.secondary data             </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span></span></span></code></pre>
 <div class="section level3">
 <h3 id="forecasting-workflow">Forecasting Workflow<a class="anchor" aria-label="anchor" href="#forecasting-workflow"></a>
 </h3>
@@ -276,7 +279,7 @@ very useful for iterative functional programming.</p>
 <div class="section level3">
 <h3 id="step-1-coerce-to-a-ts-object-class">Step 1: Coerce to a <code>ts</code> object class<a class="anchor" aria-label="anchor" href="#step-1-coerce-to-a-ts-object-class"></a>
 </h3>
-<p>In this step we map the <code><a href="https://business-science.github.io/timetk/reference/tk_ts.html" class="external-link">tk_ts()</a></code> function into a new
+<p>In this step we map the <code><a href="https://rdrr.io/pkg/timetk/man/tk_ts.html" class="external-link">tk_ts()</a></code> function into a new
 column “data.ts”. The procedure is performed using the combination of
 <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">purrr::map()</a></code>, which works
 really well for the data science workflow where analyses are built
@@ -296,7 +299,7 @@ statement is used to drop the “order.month” from the final output so we
 don’t get a bunch of warning messages. We specify
 <code>start = 2011</code> and <code>freq = 12</code> to return a monthly
 frequency.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_ts</span> <span class="op">&lt;-</span> <span class="va">monthly_qty_by_cat2_nest</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>data.ts <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span>.x       <span class="op">=</span> <span class="va">data</span>, </span>
 <span>                         .f       <span class="op">=</span> <span class="va">tk_ts</span>, </span>
@@ -304,19 +307,19 @@ frequency.</p>
 <span>                         start    <span class="op">=</span> <span class="fl">2011</span>,</span>
 <span>                         freq     <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">monthly_qty_by_cat2_ts</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 × 3</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 x 3</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
 <span><span class="co">##   category.secondary data              data.ts      </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [58 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [58 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span></span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -330,23 +333,23 @@ list-column. In this instance, the function to map the <code>ets</code>
 function and the list-column is “data.ts”. We rename the resultant
 column “fit.ets” indicating an ETS model was fit to the time series
 data.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fit</span> <span class="op">&lt;-</span> <span class="va">monthly_qty_by_cat2_ts</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>fit.ets <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">data.ts</span>, <span class="va">ets</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">monthly_qty_by_cat2_fit</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 × 4</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 x 4</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
 <span><span class="co">##   category.secondary data              data.ts       fit.ets</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [58 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [58 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span></span></span></code></pre>
 <p>At this point, we can do some model inspection with the
 <code>sweep</code> tidiers.</p>
 <div class="section level4">
@@ -358,28 +361,27 @@ combo. The only real difference is now we <code>unnest</code> the
 generated column (named “tidy”). Last, because it’s easier to compare
 the model parameters side by side, we add one additional call to
 <code><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread()</a></code> from the <code>tidyr</code> package.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>tidy <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit.ets</span>, <span class="va">sw_tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">tidy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">category.secondary</span>, value <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 128 × 13</span></span></span>
-<span><span class="co">##    data     data.ts       fit.ets term  Cross …¹ Cyclo…² Elite…³ Endur…⁴ Fat B…⁵</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   alpha  3.98<span style="color: #949494;">e</span><span style="color: #BB0000;">-2</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   gamma  1.01<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   l      3.21<span style="color: #949494;">e</span>+2      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s0     5.03<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s1     1.10<span style="color: #949494;">e</span>+0      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s10    6.43<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s2     3.75<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s3     1.12<span style="color: #949494;">e</span>+0      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s4     6.30<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> &lt;tibble&gt; <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s5     2.06<span style="color: #949494;">e</span>+0      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span>      <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 118 more rows, 4 more variables: `Over Mountain` &lt;dbl&gt;, Sport &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   Trail &lt;dbl&gt;, Triathalon &lt;dbl&gt;, and abbreviated variable names</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ¹​`Cross Country Race`, ²​Cyclocross, ³​`Elite Road`, ⁴​`Endurance Road`,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ⁵​`Fat Bike`</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 128 x 13</span></span></span>
+<span><span class="co">##    data     data.ts   fit.ets term  `Cross Country Race` Cyclocross `Elite Road`</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   alpha             0.039<span style="text-decoration: underline;">8</span>           <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   gamma             0.000<span style="text-decoration: underline;">101</span>         <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   l               321.               <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s0                0.503            <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s1                1.10             <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s10               0.643            <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s2                0.375            <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s3                1.12             <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s4                0.630            <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   s5                2.06             <span style="color: #BB0000;">NA</span>           <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># i 118 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># i 6 more variables: `Endurance Road` &lt;dbl&gt;, `Fat Bike` &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   `Over Mountain` &lt;dbl&gt;, Sport &lt;dbl&gt;, Trail &lt;dbl&gt;, Triathalon &lt;dbl&gt;</span></span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="sw_glance">sw_glance<a class="anchor" aria-label="anchor" href="#sw_glance"></a>
@@ -387,25 +389,25 @@ the model parameters side by side, we add one additional call to
 <p>We can view the model accuracies also by mapping
 <code>sw_glance</code> within the <code>mutate</code> and
 <code>map</code> combo.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>glance <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit.ets</span>, <span class="va">sw_glance</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">glance</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 × 16</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 x 16</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
-<span><span class="co">##   catego…¹ data     data.ts fit.ets model…² sigma logLik   AIC   BIC    ME  RMSE</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross C… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 1.06   -<span style="color: #BB0000;">464.</span>  957.  989.  33.1  379.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocr… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 1.12   -<span style="color: #BB0000;">409.</span>  848.  879. -<span style="color: #BB0000;">79.8</span>  271.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite R… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 0.895  -<span style="color: #BB0000;">471.</span>  972. <span style="text-decoration: underline;">1</span>004.  24.6  447.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Enduran… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 0.759  -<span style="color: #BB0000;">439.</span>  909.  940. -<span style="color: #BB0000;">35.9</span>  294.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 2.73   -<span style="color: #BB0000;">343.</span>  715.  746. -<span style="color: #BB0000;">18.4</span>  276.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mo… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 0.910  -<span style="color: #BB0000;">423.</span>  877.  908. -<span style="color: #BB0000;">35.5</span>  209.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport    &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 0.872  -<span style="color: #BB0000;">427.</span>  884.  915. -<span style="color: #BB0000;">55.1</span>  256.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail    &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 0.741  -<span style="color: #BB0000;">411.</span>  855.  891. -<span style="color: #BB0000;">11.4</span>  203.</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triatha… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,… 1.52   -<span style="color: #BB0000;">410.</span>  850.  881.  17.6  257.</span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 5 more variables: MAE &lt;dbl&gt;, MPE &lt;dbl&gt;, MAPE &lt;dbl&gt;, MASE &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ACF1 &lt;dbl&gt;, and abbreviated variable names ¹​category.secondary, ²​model.desc</span></span></span></code></pre>
+<span><span class="co">##   category.secondary data     data.ts   fit.ets model.desc sigma logLik   AIC</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 1.06   -<span style="color: #BB0000;">464.</span>  957.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 1.12   -<span style="color: #BB0000;">409.</span>  848.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 0.895  -<span style="color: #BB0000;">471.</span>  972.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 0.759  -<span style="color: #BB0000;">439.</span>  909.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 2.73   -<span style="color: #BB0000;">343.</span>  715.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 0.910  -<span style="color: #BB0000;">423.</span>  877.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 0.872  -<span style="color: #BB0000;">427.</span>  884.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,A,M) 0.741  -<span style="color: #BB0000;">411.</span>  855.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts[...]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   ETS(M,N,M) 1.52   -<span style="color: #BB0000;">410.</span>  850.</span></span>
+<span><span class="co">## <span style="color: #949494;"># i 8 more variables: BIC &lt;dbl&gt;, ME &lt;dbl&gt;, RMSE &lt;dbl&gt;, MAE &lt;dbl&gt;, MPE &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   MAPE &lt;dbl&gt;, MASE &lt;dbl&gt;, ACF1 &lt;dbl&gt;</span></span></span></code></pre>
 </div>
 <div class="section level4">
 <h4 id="sw_augment">sw_augment<a class="anchor" aria-label="anchor" href="#sw_augment"></a>
@@ -414,31 +416,32 @@ the model parameters side by side, we add one additional call to
 same manner. This returns nine groups data. Note that we pass
 <code>timetk_idx = TRUE</code> to return the date format times as
 opposed to the regular (yearmon or numeric) time series.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">augment_fit_ets</span> <span class="op">&lt;-</span> <span class="va">monthly_qty_by_cat2_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>augment <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit.ets</span>, <span class="va">sw_augment</span>, timetk_idx <span class="op">=</span> <span class="cn">TRUE</span>, rename_index <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">augment</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">augment_fit_ets</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 538 × 8</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 538 x 8</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
-<span><span class="co">##    category.second…¹ data     data.ts fit.ets date       .actual .fitted  .resid</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-01-01     122    373. -<span style="color: #BB0000;">0.673</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-02-01     489    201.  1.43  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-03-01     505    465.  0.086<span style="text-decoration: underline;">4</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-04-01     343    161.  1.12  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-05-01     263    567. -<span style="color: #BB0000;">0.537</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-06-01     735    296.  1.48  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-07-01     183    741. -<span style="color: #BB0000;">0.753</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-08-01      66    220. -<span style="color: #BB0000;">0.700</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-09-01      97    381. -<span style="color: #BB0000;">0.745</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Country Ra… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-10-01     189    123.  0.534 </span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 528 more rows, and abbreviated variable name ¹​category.secondary</span></span></span></code></pre>
+<span><span class="co">##    category.secondary data     data.ts       fit.ets date       .actual .fitted</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-01-01     122    373.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-02-01     489    201.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-03-01     505    465.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-04-01     343    161.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-05-01     263    567.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-06-01     735    296.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-07-01     183    741.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-08-01      66    220.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-09-01      97    381.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-10-01     189    123.</span></span>
+<span><span class="co">## <span style="color: #949494;"># i 528 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># i 1 more variable: .resid &lt;dbl&gt;</span></span></span></code></pre>
 <p>We can plot the residuals for the nine categories like so.
 Unfortunately we do see some very high residuals (especially with “Fat
 Bike”). This is often the case with realworld data.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">augment_fit_ets</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">.resid</span>, group <span class="op">=</span> <span class="va">category.secondary</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="fl">0</span>, color <span class="op">=</span> <span class="st">"grey40"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -458,26 +461,26 @@ Bike”). This is often the case with realworld data.</p>
 <p>We can create decompositions using the same procedure with
 <code><a href="../reference/sw_tidy_decomp.html">sw_tidy_decomp()</a></code> and the <code>mutate</code> and
 <code>map</code> combo.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>decomp <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit.ets</span>, <span class="va">sw_tidy_decomp</span>, timetk_idx <span class="op">=</span> <span class="cn">TRUE</span>, rename_index <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">decomp</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 538 × 9</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 538 x 9</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
-<span><span class="co">##    category.sec…¹ data     data.ts fit.ets date       obser…² level season slope</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-01-01     122  313.  1.16     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-02-01     489  331.  0.643    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-03-01     505  332.  1.41     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-04-01     343  347.  0.487    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-05-01     263  339.  1.64     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-06-01     735  359.  0.873    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-07-01     183  348.  2.06     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-08-01      66  339.  0.630    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-09-01      97  329.  1.12     <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Country… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   2011-10-01     189  336.  0.375    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 528 more rows, and abbreviated variable names ¹​category.secondary,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ²​observed</span></span></span></code></pre>
+<span><span class="co">##    category.secondary data     data.ts       fit.ets date       observed level</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-01-01      122  313.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-02-01      489  331.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-03-01      505  332.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-04-01      343  347.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-05-01      263  339.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-06-01      735  359.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-07-01      183  348.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-08-01       66  339.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-09-01       97  329.</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   2011-10-01      189  336.</span></span>
+<span><span class="co">## <span style="color: #949494;"># i 528 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># i 2 more variables: season &lt;dbl&gt;, slope &lt;dbl&gt;</span></span></span></code></pre>
 </div>
 </div>
 <div class="section level3">
@@ -486,25 +489,25 @@ Bike”). This is often the case with realworld data.</p>
 <p>We can also forecast the multiple models again using a very similar
 approach with the <code>forecast</code> function. We want a 12 month
 forecast so we add the argument for the <code>h = 12</code> (refer to
-<code><a href="https://generics.r-lib.org/reference/forecast.html" class="external-link">?forecast</a></code> for all of the parameters you can add, there’s
+<code><a href="https://pkg.robjhyndman.com/forecast/reference/forecast.html" class="external-link">?forecast</a></code> for all of the parameters you can add, there’s
 quite a few).</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fcast</span> <span class="op">&lt;-</span> <span class="va">monthly_qty_by_cat2_fit</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>fcast.ets <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit.ets</span>, <span class="va">forecast</span>, h <span class="op">=</span> <span class="fl">12</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">monthly_qty_by_cat2_fcast</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 × 5</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 9 x 5</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
 <span><span class="co">##   category.secondary data              data.ts       fit.ets fcast.ets </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [58 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 × 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 × 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Cross Country Race <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> Cyclocross         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> Elite Road         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> Endurance Road     <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> Fat Bike           <span style="color: #949494;">&lt;tibble [58 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [58 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> Over Mountain      <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> Sport              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> Trail              <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">9</span> Triathalon         <span style="color: #949494;">&lt;tibble [60 x 2]&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="step-4-tidy-the-forecast">Step 4: Tidy the forecast<a class="anchor" aria-label="anchor" href="#step-4-tidy-the-forecast"></a>
@@ -516,29 +519,30 @@ values are desired). We set <code>timetk_idx = TRUE</code> to use dates
 instead of numeric values for the index. We’ll use <code><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest()</a></code>
 to drop the left over list-columns and return an unnested data
 frame.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fcast_tidy</span> <span class="op">&lt;-</span> <span class="va">monthly_qty_by_cat2_fcast</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>sweep <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fcast.ets</span>, <span class="va">sw_sweep</span>, fitted <span class="op">=</span> <span class="cn">FALSE</span>, timetk_idx <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">sweep</span><span class="op">)</span></span>
 <span><span class="va">monthly_qty_by_cat2_fcast_tidy</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 646 × 12</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 646 x 12</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   category.secondary [9]</span></span></span>
-<span><span class="co">##    category…¹ data     data.ts fit.ets fcast.ets  index      key   total…² lo.80</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-01-01 actu…     122    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-02-01 actu…     489    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-03-01 actu…     505    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-04-01 actu…     343    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-05-01 actu…     263    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-06-01 actu…     735    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-07-01 actu…     183    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-08-01 actu…      66    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-09-01 actu…      97    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Cou… &lt;tibble&gt; &lt;ts[…]&gt; <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-10-01 actu…     189    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># … with 636 more rows, 3 more variables: lo.95 &lt;dbl&gt;, hi.80 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   hi.95 &lt;dbl&gt;, and abbreviated variable names ¹​category.secondary, ²​total.qty</span></span></span></code></pre>
+<span><span class="co">##    category.secondary data     data.ts       fit.ets fcast.ets  index      key  </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-01-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-02-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-03-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-04-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-05-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-06-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-07-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-08-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-09-01 actu~</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> Cross Country Race <span style="color: #949494;">&lt;tibble&gt;</span> <span style="color: #949494;">&lt;ts [60 x 1]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>   <span style="color: #949494;">&lt;forecast&gt;</span> 2011-10-01 actu~</span></span>
+<span><span class="co">## <span style="color: #949494;"># i 636 more rows</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># i 5 more variables: total.qty &lt;dbl&gt;, lo.80 &lt;dbl&gt;, lo.95 &lt;dbl&gt;, hi.80 &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   hi.95 &lt;dbl&gt;</span></span></span></code></pre>
 <p>Visualization is just one final step.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">monthly_qty_by_cat2_fcast_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">index</span>, y <span class="op">=</span> <span class="va">total.qty</span>, color <span class="op">=</span> <span class="va">key</span>, group <span class="op">=</span> <span class="va">category.secondary</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_ribbon.html" class="external-link">geom_ribbon</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>ymin <span class="op">=</span> <span class="va">lo.95</span>, ymax <span class="op">=</span> <span class="va">hi.95</span><span class="op">)</span>, </span>
@@ -556,7 +560,10 @@ frame.</p>
 <span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span></code></pre>
+<span><span class="co">## <span style="color: #00BBBB;">i</span> Please use `linewidth` instead.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <p><img src="SW01_Forecasting_Time_Series_Groups_files/figure-html/unnamed-chunk-17-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -586,7 +593,7 @@ models to a time series.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
