@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sweep <img src="man/figures/sweep-logo.png" width="147" height="170" align="right" />
+# sweep <img src="man/figures/logo.png" width="147" height="170" align="right" />
 
 > Extending `broom` to time series forecasting
 
