@@ -14,7 +14,7 @@ Description:
     for various forecasting models,
     and enables converting 'forecast' objects to 
     "tidy" data frames with 'sw_sweep'.
-URL: https://github.com/business-science/sweep
+URL: https://business-science.github.io/sweep/, https://github.com/business-science/sweep
 BugReports: https://github.com/business-science/sweep/issues
 License: GPL (>= 3)
 Encoding: UTF-8
