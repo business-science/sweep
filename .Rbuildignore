@@ -15,3 +15,5 @@ img
 ^Meta$
 ^CRAN-RELEASE$
 ^CRAN-SUBMISSION$
+^\.github$
+^pkgdown$

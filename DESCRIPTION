@@ -1,12 +1,10 @@
 Package: sweep
-Type: Package
 Title: Tidy Tools for Forecasting
-Version: 0.2.5
+Version: 0.2.5.9000
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
   )
-Maintainer: Matt Dancho <mdancho@business-science.io>
 Description: 
     Tidies up the forecasting modeling and prediction work flow, 
     extends the 'broom' package 
@@ -14,7 +12,7 @@ Description:
     for various forecasting models,
     and enables converting 'forecast' objects to 
     "tidy" data frames with 'sw_sweep'.
-URL: https://github.com/business-science/sweep
+URL: https://business-science.github.io/sweep/, https://github.com/business-science/sweep
 BugReports: https://github.com/business-science/sweep/issues
 License: GPL (>= 3)
 Encoding: UTF-8

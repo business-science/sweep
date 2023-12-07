@@ -1,16 +1,17 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# sweep
+# sweep <img src="man/figures/logo.png" width="147" height="170" align="right" />
 
+> Extending `broom` to time series forecasting
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/business-science/sweep/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/business-science/sweep/actions/workflows/R-CMD-check.yaml)
 [![codecov](https://codecov.io/gh/business-science/sweep/branch/master/graph/badge.svg)](https://app.codecov.io/gh/business-science/sweep)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/sweep)](https://cran.r-project.org/package=sweep)
 ![](http://cranlogs.r-pkg.org/badges/sweep?color=brightgreen)
 ![](http://cranlogs.r-pkg.org/badges/grand-total/sweep?color=brightgreen)
-
-<img src="man/figures/sweep-logo.png" width="147" height="170" align="right" />
-
-> Extending `broom` to time series forecasting
+<!-- badges: end -->
 
 The `sweep` package extends the `broom` tools (tidy, glance, and
 augment) for performing forecasts and time series analysis in the
@@ -20,7 +21,7 @@ workflow used with Rob Hyndman’s `forecast` package.
 ## Benefits
 
 - **Designed for modeling and scaling forecasts using the the
-  `tidyverse` tools in [*R for Data Science*](https://r4ds.had.co.nz/)**
+  `tidyverse` tools in [*R for Data Science*](https://r4ds.hadley.nz/)**
 - **Extends `broom` for model analysis (ARIMA, ETS, BATS, etc)**
 - **Tidies the `forecast` objects for easy plotting and “tidy” data
   manipulation**
@@ -106,8 +107,8 @@ Here’s how to get started.
 Development version with latest features:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("business-science/sweep")
+# install.packages("remotes")
+remotes::install_github("business-science/sweep")
 ```
 
 <!-- CRAN approved version: -->
