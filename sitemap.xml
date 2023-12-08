@@ -1,105 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>/404.html</loc>
+    <loc>https://business-science.github.io/sweep/404.html</loc>
   </url>
   <url>
-    <loc>/articles/SW00_Introduction_to_sweep.html</loc>
+    <loc>https://business-science.github.io/sweep/articles/SW00_Introduction_to_sweep.html</loc>
   </url>
   <url>
-    <loc>/articles/SW01_Forecasting_Time_Series_Groups.html</loc>
+    <loc>https://business-science.github.io/sweep/articles/SW01_Forecasting_Time_Series_Groups.html</loc>
   </url>
   <url>
-    <loc>/articles/SW02_Forecasting_Multiple_Models.html</loc>
+    <loc>https://business-science.github.io/sweep/articles/SW02_Forecasting_Multiple_Models.html</loc>
   </url>
   <url>
-    <loc>/articles/index.html</loc>
+    <loc>https://business-science.github.io/sweep/articles/index.html</loc>
   </url>
   <url>
-    <loc>/authors.html</loc>
+    <loc>https://business-science.github.io/sweep/authors.html</loc>
   </url>
   <url>
-    <loc>/index.html</loc>
+    <loc>https://business-science.github.io/sweep/index.html</loc>
   </url>
   <url>
-    <loc>/news/index.html</loc>
+    <loc>https://business-science.github.io/sweep/news/index.html</loc>
   </url>
   <url>
-    <loc>/reference/add_index.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/add_index.html</loc>
   </url>
   <url>
-    <loc>/reference/arima_string.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/arima_string.html</loc>
   </url>
   <url>
-    <loc>/reference/bats_string.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/bats_string.html</loc>
   </url>
   <url>
-    <loc>/reference/bike_sales.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/bike_sales.html</loc>
   </url>
   <url>
-    <loc>/reference/index.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/index.html</loc>
   </url>
   <url>
-    <loc>/reference/reexports.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_augment.default.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_augment.default.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_augment.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_augment.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_augment_columns.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_augment_columns.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_glance.default.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_glance.default.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_glance.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_glance.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_sweep.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_sweep.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_tidy.default.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_tidy.default.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_tidy.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_tidy.html</loc>
   </url>
   <url>
-    <loc>/reference/sw_tidy_decomp.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sw_tidy_decomp.html</loc>
   </url>
   <url>
-    <loc>/reference/sweep-package.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/sweep-package.html</loc>
   </url>
   <url>
-    <loc>/reference/tbats_string.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tbats_string.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_HoltWinters.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_HoltWinters.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_StructTS.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_StructTS.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_arima.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_arima.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_bats.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_bats.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_decomposed_ts.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_decomposed_ts.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_ets.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_ets.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_nnetar.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_nnetar.html</loc>
   </url>
   <url>
-    <loc>/reference/tidiers_stl.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/tidiers_stl.html</loc>
   </url>
   <url>
-    <loc>/reference/validate_index.html</loc>
+    <loc>https://business-science.github.io/sweep/reference/validate_index.html</loc>
   </url>
 </urlset>
