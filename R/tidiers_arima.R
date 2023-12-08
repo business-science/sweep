@@ -18,7 +18,6 @@
 #' @examples
 #' library(dplyr)
 #' library(forecast)
-#' library(sweep)
 #'
 #' fit_arima <- WWWusage %>%
 #'     auto.arima()

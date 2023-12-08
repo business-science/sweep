@@ -37,7 +37,6 @@
 #'
 #' @examples
 #' library(forecast)
-#' library(sweep)
 #' library(dplyr)
 #'
 #' # ETS forecasts

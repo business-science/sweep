@@ -17,7 +17,6 @@
 #' @examples
 #' library(dplyr)
 #' library(forecast)
-#' library(sweep)
 #'
 #' fit_bats <- WWWusage %>%
 #'     bats()

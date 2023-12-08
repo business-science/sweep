@@ -32,7 +32,6 @@ ggplot2.
 \examples{
 library(dplyr)
 library(forecast)
-library(sweep)
 
 WWWusage \%>\%
     auto.arima() \%>\%

@@ -85,7 +85,6 @@ modeling of time series
 \examples{
 library(dplyr)
 library(forecast)
-library(sweep)
 
 fit_ets <- WWWusage \%>\%
     ets()

@@ -14,7 +14,6 @@
 #' @examples
 #' library(dplyr)
 #' library(forecast)
-#' library(sweep)
 #'
 #' fit_decomposed <- USAccDeaths %>%
 #'     decompose()
