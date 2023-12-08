@@ -71,7 +71,6 @@ series.
 \examples{
 library(dplyr)
 library(forecast)
-library(sweep)
 
 fit_nnetar <- lynx \%>\%
     nnetar()

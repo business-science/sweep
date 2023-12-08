@@ -82,7 +82,6 @@ series.
 \examples{
 library(dplyr)
 library(forecast)
-library(sweep)
 
 fit_hw <- USAccDeaths \%>\%
     stats::HoltWinters()

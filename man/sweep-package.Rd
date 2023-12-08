@@ -2,8 +2,8 @@
 % Please edit documentation in R/sweep-package.R
 \docType{package}
 \name{sweep-package}
+\alias{sweep}
 \alias{sweep-package}
-\alias{_PACKAGE}
 \title{sweep: Tidy Tools for Forecasting}
 \description{
 The \code{sweep} package "tidies" up the modeling workflow of the \code{forecast} package.

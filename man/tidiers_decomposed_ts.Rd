@@ -35,7 +35,6 @@ Tidying methods for decomposed time series
 \examples{
 library(dplyr)
 library(forecast)
-library(sweep)
 
 fit_decomposed <- USAccDeaths \%>\%
     decompose()

@@ -12,7 +12,6 @@
 #' To learn more about `sweep`, start with the vignettes:
 #'  `browseVignettes(package = "sweep")`
 #'
-#' @aliases sweep-package
 #' @keywords internal
 "_PACKAGE"
 

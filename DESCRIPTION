@@ -23,23 +23,24 @@ Imports:
     broom (>= 0.5.6),
     dplyr (>= 1.0.0),
     forecast (>= 8.0),
-    lubridate (>= 1.6.0),
     tibble (>= 1.2),
-    tidyr (>= 1.0.0),
     timetk (>= 2.1.0),
-    rlang,
-    tidyverse, 
-    tidyquant
+    rlang
 Suggests:
-    forcats,
+    ggplot2,
     knitr,
+    lubridate,
     rmarkdown,
-    testthat,
+    testthat (>= 2.0.0),
     purrr,
     readr,
     stringr,
     scales,
-    fracdiff
+    fracdiff,
+    tidyr (>= 1.0.0),
+    tidyquant,
+    zoo
 RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
+Config/testthat/edition: 2

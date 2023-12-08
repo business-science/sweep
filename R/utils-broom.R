@@ -101,7 +101,7 @@ add_index <- function(ret, rename_index) {
 
     # Rearrange index
     ret <- ret %>%
-        dplyr::select_(rename_index, "dplyr::everything()")
+        dplyr::relocate(dplyr::all_of(rename_index))
 
     return(ret)
 

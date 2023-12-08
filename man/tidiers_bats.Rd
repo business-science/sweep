@@ -82,7 +82,6 @@ Tidying methods for BATS and TBATS modeling of time series
 \examples{
 library(dplyr)
 library(forecast)
-library(sweep)
 
 fit_bats <- WWWusage \%>\%
     bats()

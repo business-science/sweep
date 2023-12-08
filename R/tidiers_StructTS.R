@@ -19,7 +19,6 @@
 #' @examples
 #' library(dplyr)
 #' library(forecast)
-#' library(sweep)
 #'
 #' fit_StructTS <- WWWusage %>%
 #'     StructTS()

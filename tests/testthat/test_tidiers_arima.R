@@ -1,6 +1,3 @@
-context("Testing arima tidiers")
-
-
 # FUNCTION: sw_*.Arima -----
 test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
 
@@ -10,21 +7,21 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
 
     # sw_tidy ----
     test <- sw_tidy(fit_arima)
-    expect_is(test, "tbl")
+    expect_s3_class(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 2)
     expect_equal(ncol(test), 2)
 
     # sw_glance ----
     test <- sw_glance(fit_arima)
-    expect_is(test, "tbl")
+    expect_s3_class(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 1)
     expect_equal(ncol(test), 12)
 
     # sw_augment ----
     test <- sw_augment(fit_arima, rename_index = "date")
-    expect_is(test, "tbl")
+    expect_s3_class(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 100)
     expect_equal(ncol(test), 4)
@@ -36,14 +33,14 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
 
     # sw_tidy ----
     test <- sw_tidy(fit_arima_stats)
-    expect_is(test, "tbl")
+    expect_s3_class(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 2)
     expect_equal(ncol(test), 2)
 
     # sw_glance ----
     test <- suppressWarnings(sw_glance(fit_arima_stats))
-    expect_is(test, "tbl")
+    expect_s3_class(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 1)
     expect_equal(ncol(test), 10)
@@ -51,7 +48,7 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
 
     # sw_augment ----
     test <- suppressWarnings(sw_augment(fit_arima_stats, rename_index = "date"))
-    expect_is(test, "tbl")
+    expect_s3_class(test, "tbl")
     # expect_false(any(lapply(test, is.factor) %>% unlist())) # No factors
     expect_equal(nrow(test), 100)
     expect_equal(ncol(test), 2) # stats::arima() returns only one column for residuals
@@ -65,44 +62,44 @@ test_that("sw_*.Arima test returns tibble with correct rows and columns.", {
     # Check warning if no timetk index exists
     expect_warning(
         WWWusage %>%
-            auto.arima() %>%
-            sw_augment(timetk_idx = T)
+            forecast::auto.arima() %>%
+            sw_augment(timetk_idx = TRUE)
     )
 
     # Test sw_augment
     monthly_bike_sales <- bike_sales %>%
-        mutate(month.date = as_date(as.yearmon(order.date))) %>%
-        group_by(month.date) %>%
-        summarize(total.daily.sales = sum(price.ext))
+        dplyr::mutate(month.date = lubridate::as_date(zoo::as.yearmon(order.date))) %>%
+        dplyr::group_by(month.date) %>%
+        dplyr::summarize(total.daily.sales = sum(price.ext))
 
     monthly_bike_sales_ts <- tk_ts(monthly_bike_sales, start = 2011, freq = 12, silent = TRUE)
 
-    fit <- auto.arima(monthly_bike_sales_ts)
+    fit <- forecast::auto.arima(monthly_bike_sales_ts)
 
     test <- fit %>% sw_augment()
-    expect_equal(class(test$index), "yearmon")
+    expect_s3_class(test$index, "yearmon")
 
-    test <- fit %>% sw_augment(timetk_idx = T)
-    expect_equal(class(test$index), "Date")
+    test <- fit %>% sw_augment(timetk_idx = TRUE)
+    expect_s3_class(test$index, "Date")
 
     # agument data = ts
 
     test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = F)
-    expect_equal(class(test$index), "yearmon")
+    expect_s3_class(test$index, "yearmon")
     expect_equal(colnames(test)[[2]], "total.daily.sales")
 
     test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = T)
-    expect_equal(class(test$index), "Date")
+    expect_s3_class(test$index, "Date")
 
-    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = T, rename_index = "date")
-    expect_equal(class(test$date), "Date")
+    test <- fit %>% sw_augment(data = monthly_bike_sales_ts, timetk_idx = TRUE, rename_index = "date")
+    expect_s3_class(test$date, "Date")
 
     # augment data = tbl
 
-    test <- fit %>% sw_augment(data = monthly_bike_sales, timetk_idx = F)
-    expect_equal(class(test$month.date), "Date")
+    test <- fit %>% sw_augment(data = monthly_bike_sales, timetk_idx = FALSE)
+    expect_s3_class(test$month.date, "Date")
     expect_equal(colnames(test)[[2]], "total.daily.sales")
 
-    expect_warning(fit %>% sw_augment(data = monthly_bike_sales, timetk_idx = T))
+    expect_warning(fit %>% sw_augment(data = monthly_bike_sales, timetk_idx = TRUE))
 
 })
