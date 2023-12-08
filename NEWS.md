@@ -1,8 +1,8 @@
 # sweep (development version)
 
-* sweep no longer imports tidyverse. (@olivroy, #21)
+* sweep no longer imports tidyverse. (@olivroy, #22)
 
-* Remove internal usage of `dplyr::select_()`. (@olivroy, #21)
+* Remove internal usage of `dplyr::select_()`. (@olivroy, #22)
 
 # sweep 0.2.5
 
