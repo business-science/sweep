@@ -11,7 +11,7 @@ navbar:
   - icon: fa-home
     href: index.html
   - text: Start
-    href: articles/TK04_Plotting_Time_Series.html
+    href: articles/SW00_Introduction_to_sweep.html
   - text: Articles
     href: articles/index.html
   - text: API
