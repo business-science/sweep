@@ -40,7 +40,11 @@ In this vignette we'll review how `sweep` can help the __second situation__: _Ap
 Before we get started, load the following packages.
 
 ```{r, message = F}
-library(tidyverse)
+library(tidyr)
+library(dplyr)
+library(purrr)
+library(lubridate)
+library(ggplot2)
 library(tidyquant)
 library(timetk)
 library(sweep)
@@ -98,9 +102,9 @@ Another quick visualization to show the reduction in granularity.
 ```{r}
 gas_prices_quarterly %>%
     ggplot(aes(x = date, y = price)) +
-    geom_line(color = palette_light()[[1]], size = 1) +
+    geom_line(color = palette_light()[[1]], linewidth = 1) +
     labs(title = "Gasoline Prices, Quarterly", x = "", y = "USD") +
-    scale_y_continuous(labels = scales::dollar) +
+    scale_y_continuous(labels = scales::label_dollar()) +
     scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
     theme_tq()
 ```
@@ -140,6 +144,7 @@ df$params
 Next we apply the functions to the parameters using a special function, `invoke_map()`. The parameter lists in the "params" column are passed to the function in the "f" column. The output is in a nested list-column named "out".
 
 ```{r}
+# FIXME invoke_map is deprecated
 df_out <- df %>% 
     mutate(out = invoke_map(f, params))
 df_out
@@ -188,10 +193,10 @@ models_list <- list(
 )
 ```
 
-Now, convert to a data frame using the function, `enframe()` that turns lists into tibbles. Set the arguments `name = "f"` and `value = "params"`. In doing so we get a bonus: the model names are the now convieniently located in column "f".
+Now, convert to a data frame using the function, `enframe()` that turns lists into tibbles. Set the arguments `name = "f"` and `value = "params"`. In doing so we get a bonus: the model names are the now conveniently located in column "f".
 
 ```{r}
-models_tbl <- enframe(models_list, name = "f", value = "params")
+models_tbl <- tibble::enframe(models_list, name = "f", value = "params")
 models_tbl
 ```
 
@@ -199,7 +204,7 @@ We are ready to invoke the map. Combine `mutate()` with `invoke_map()` as follow
 
 ```{r}
 models_tbl_fit <- models_tbl %>%
-    mutate(fit = invoke_map(f, params))
+    mutate(fit = purrr::invoke_map(f, params))
 models_tbl_fit
 ```
 
@@ -281,15 +286,15 @@ models_tbl_fcast_tidy %>%
     unnest(sweep) %>%
     ggplot(aes(x = date, y = price, color = key, group = f)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
-                fill = "#D5DBFF", color = NA, size = 0) +
+                fill = "#D5DBFF", color = NA, linewidth = 0) +
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
-                fill = "#596DD5", color = NA, size = 0, alpha = 0.8) +
-    geom_line(size = 1) +
+                fill = "#596DD5", color = NA, linewidth = 0, alpha = 0.8) +
+    geom_line(linewidth = 1) +
     facet_wrap(~f, nrow = 3) +
     labs(title = "Gasoline Price Forecasts",
          subtitle = "Forecasting multiple models with sweep: ARIMA, BATS, ETS",
          x = "", y = "Price") +
-    scale_y_continuous(labels = scales::dollar) +
+    scale_y_continuous(labels = scales::label_dollar()) +
     scale_x_date(date_breaks = "5 years", date_labels = "%Y") +
     theme_tq() +
     scale_color_tq()

@@ -40,7 +40,11 @@ In this vignette we'll review how `sweep` can help the __first situation__: _App
 Before we get started, load the following packages.
 
 ```{r, message = F}
-library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(purrr)
+library(lubridate)
 library(tidyquant)
 library(timetk)
 library(sweep)
@@ -231,9 +235,9 @@ Visualization is just one final step.
 monthly_qty_by_cat2_fcast_tidy %>%
     ggplot(aes(x = index, y = total.qty, color = key, group = category.secondary)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
-                fill = "#D5DBFF", color = NA, size = 0) +
+                fill = "#D5DBFF", color = NA, linewidth = 0) +
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
-                fill = "#596DD5", color = NA, size = 0, alpha = 0.8) +
+                fill = "#596DD5", color = NA, linewidth = 0, alpha = 0.8) +
     geom_line() +
     labs(title = "Bike Quantity Sold By Secondary Category",
          subtitle = "ETS Model Forecasts",

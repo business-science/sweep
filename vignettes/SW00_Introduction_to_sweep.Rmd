@@ -41,7 +41,7 @@ To illustrate, let's take a basic forecasting workflow starting from data collec
 Before we get started, load the following packages.
 
 ```{r, message = F}
-library(tidyverse)
+library(ggplot2)
 library(tidyquant)
 library(timetk)
 library(sweep)
@@ -65,7 +65,7 @@ We can quickly visualize using the `ggplot2` package. We can see that there appe
 ```{r}
 alcohol_sales_tbl %>%
     ggplot(aes(x = date, y = price)) +
-    geom_line(size = 1, color = palette_light()[[1]]) +
+    geom_line(linewidth = 1, color = palette_light()[[1]]) +
     geom_smooth(method = "loess") +
     labs(title = "US Alcohol Sales: Monthly", x = "", y = "Millions") +
     scale_y_continuous(labels = scales::dollar) +
@@ -202,8 +202,8 @@ We can review the decomposition using `ggplot2` as well.  The data will need to 
 
 ```{r}
 decomp_fit_ets %>%
-    gather(key = key, value = value, -index) %>%
-    mutate(key = forcats::as_factor(key)) %>%
+    tidyr::gather(key = key, value = value, -index) %>%
+    dplyr::mutate(key = as.factor(key)) %>%
     ggplot(aes(x = index, y = value, group = key)) +
     geom_line(color = palette_light()[[2]]) +
     geom_ma(ma_fun = SMA, n = 12, size = 1) +
@@ -248,13 +248,13 @@ Let's visualize the forecast with `ggplot2`. We'll use a combination of `geom_li
 sw_sweep(fcast_ets) %>%
     ggplot(aes(x = index, y = price, color = key)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
-                fill = "#D5DBFF", color = NA, size = 0) +
+                fill = "#D5DBFF", color = NA, linewidth = 0) +
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
-                fill = "#596DD5", color = NA, size = 0, alpha = 0.8) +
-    geom_line(size = 1) +
+                fill = "#596DD5", color = NA, linewidth = 0, alpha = 0.8) +
+    geom_line(linewidth = 1) +
     labs(title = "US Alcohol Sales, ETS Model Forecast", x = "", y = "Millions",
          subtitle = "Regular Time Index") +
-    scale_y_continuous(labels = scales::dollar) +
+    scale_y_continuous(labels = scales::label_dollar()) +
     scale_x_yearmon(n = 12, format = "%Y") +
     scale_color_tq() +
     scale_fill_tq() +
@@ -279,10 +279,10 @@ We can build the same plot with dates in the x-axis now.
 sw_sweep(fcast_ets, timetk_idx = TRUE) %>%
     ggplot(aes(x = index, y = price, color = key)) +
     geom_ribbon(aes(ymin = lo.95, ymax = hi.95), 
-                fill = "#D5DBFF", color = NA, size = 0) +
+                fill = "#D5DBFF", color = NA, linewidth = 0) +
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
-                fill = "#596DD5", color = NA, size = 0, alpha = 0.8) +
-    geom_line(size = 1) +
+                fill = "#596DD5", color = NA, linewidth = 0, alpha = 0.8) +
+    geom_line(linewidth = 1) +
     labs(title = "US Alcohol Sales, ETS Model Forecast", x = "", y = "Millions", 
          subtitle = "Irregular Time Index") +
     scale_y_continuous(labels = scales::dollar) +
