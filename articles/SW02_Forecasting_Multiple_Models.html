@@ -36,7 +36,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">sweep</a>
 
@@ -50,18 +50,30 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
-<li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/SW00_Introduction_to_sweep.html">Introduction to sweep</a>
-    <a class="dropdown-item" href="../articles/SW01_Forecasting_Time_Series_Groups.html">Forecasting Time Series Groups in the tidyverse</a>
-    <a class="dropdown-item" href="../articles/SW02_Forecasting_Multiple_Models.html">Forecasting Using Multiple Models</a>
-  </div>
+  <a class="nav-link" href="../index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
+  <a class="nav-link" href="../articles/TK04_Plotting_Time_Series.html">Start</a>
+</li>
+<li class="active nav-item">
+  <a class="nav-link" href="../articles/index.html">Articles</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-api">API</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-api">
+    <h6 class="dropdown-header" data-toc-skip>API Functions</h6>
+    <a class="dropdown-item" href="../reference/index.html">
+      <span class="fa fa-home"></span>
+       
+      Function Reference
+    </a>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header" data-toc-skip>Change History</h6>
+    <a class="dropdown-item" href="../news/index.html">News</a>
+  </div>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -70,8 +82,8 @@
 
       <ul class="navbar-nav">
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/business-science/sweep/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a class="external-link nav-link" href="https://github.com/business-science/sweep">
+    <span class="fa fa-github"></span>
      
   </a>
 </li>
@@ -301,15 +313,15 @@ list of functions to a list of parameters. Pretty powerful!</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_out</span><span class="op">$</span><span class="va">out</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">##  [1] 0.337451726 0.402159190 0.804830300 0.925809391 0.821785778 0.005553173</span></span>
-<span><span class="co">##  [7] 0.982680756 0.896448085 0.966044653 0.091443048</span></span>
+<span><span class="co">##  [1] 0.88819900 0.83087990 0.80271581 0.10973528 0.07814299 0.05532355</span></span>
+<span><span class="co">##  [7] 0.87947606 0.94068024 0.61945487 0.74286914</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">## [1] 11  7  7 14 10</span></span>
+<span><span class="co">## [1]  9 12 11 17 10</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[3]]</span></span>
-<span><span class="co">##  [1]   0.9338186  -7.7117749  -1.1187636 -17.2449212  -5.9917996  -8.6861980</span></span>
-<span><span class="co">##  [7]   4.7165295 -22.2869849  -7.3594103 -13.4730128</span></span></code></pre>
+<span><span class="co">##  [1]   6.619238  -7.676579  -1.192676 -19.825006  15.414336  13.294211</span></span>
+<span><span class="co">##  [7]   3.624769   6.554334  -5.546080  -6.198067</span></span></code></pre>
 <p>Take a minute to understand the conceptual process of the
 <code>invoke_map</code> function and specifically the parameter setup.
 Once you are comfortable, we can move on to model implementation.</p>
