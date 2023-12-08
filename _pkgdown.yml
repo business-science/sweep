@@ -1,6 +1,7 @@
-url: ~
+url: https://business-science.github.io/sweep/
 template:
   bootstrap: 5
-  bootswatch: flatly
+  bootswatch: lux
   params:
-    ganalytics: UA-76139189-1
+    ganalytics: G-20GDZ5LL77
+

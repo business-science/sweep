@@ -1,5 +1,5 @@
 ## Release Summary
-This is to upgrade to `broom` 0.7.0
+This is to get sweep back on cran following inadvertant timetk archival
 
 
 ## Test environments
