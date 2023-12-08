@@ -15,7 +15,6 @@ knitr::opts_chunk$set(
 ```
 
 ```{r, echo=FALSE}
-library(tidyverse)
 library(tidyquant)
 library(sweep)
 ```

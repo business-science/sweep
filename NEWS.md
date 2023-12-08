@@ -1,8 +1,12 @@
 # sweep (development version)
 
+* sweep no longer imports tidyverse. (@olivroy, #21)
+
+* Remove internal usage of `dplyr::select_()`. (@olivroy, #21)
+
 # sweep 0.2.5
 
-- Fixes to get `sweep` back on CRAN following inadvertent `timetk` archival. 
+* Fixes to get `sweep` back on CRAN following inadvertent `timetk` archival. 
 
 # sweep 0.2.4
 
