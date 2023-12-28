@@ -103,7 +103,7 @@
                         <h4 data-toc-skip class="author">Matt
 Dancho</h4>
             
-            <h4 data-toc-skip class="date">2023-12-08</h4>
+            <h4 data-toc-skip class="date">2023-12-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/HEAD/vignettes/SW02_Forecasting_Multiple_Models.Rmd" class="external-link"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
       <div class="d-none name"><code>SW02_Forecasting_Multiple_Models.Rmd</code></div>
@@ -144,7 +144,7 @@ time series</em>.</p>
 </h2>
 <p>To start, let’s get some data from the FRED data base using
 <code>tidyquant</code>. We’ll use <code><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html" class="external-link">tq_get()</a></code> to retrieve the
-Gasoline Prices from 1990 through today (2023-12-08).</p>
+Gasoline Prices from 1990 through today (2023-12-28).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gas_prices_monthly_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html" class="external-link">tq_get</a></span><span class="op">(</span></span>
 <span>    x    <span class="op">=</span> <span class="st">"GASREGCOVM"</span>, </span>
@@ -313,15 +313,15 @@ list of functions to a list of parameters. Pretty powerful!</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_out</span><span class="op">$</span><span class="va">out</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">##  [1] 0.61657441 0.55673180 0.09973687 0.24120838 0.95648464 0.96559421</span></span>
-<span><span class="co">##  [7] 0.81569557 0.14628270 0.74399189 0.99927564</span></span>
+<span><span class="co">##  [1] 0.43872858 0.28465883 0.84943912 0.84561588 0.07014807 0.70347772</span></span>
+<span><span class="co">##  [7] 0.36236192 0.78298809 0.19649185 0.85122581</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">## [1] 12 11  6 10 13</span></span>
+<span><span class="co">## [1]  9 10 10 12  9</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[3]]</span></span>
-<span><span class="co">##  [1]  -5.2543056  -5.0202253 -10.3650983  18.0608076   0.7694283   8.1149371</span></span>
-<span><span class="co">##  [7]   7.6024748   1.2158757   0.5179223  -6.5793767</span></span></code></pre>
+<span><span class="co">##  [1]  10.03371353 -15.90055900 -17.23650991  -9.39415959  16.56242493</span></span>
+<span><span class="co">##  [6]   8.18828973  -9.33137140   4.57302312  -0.07964688  -1.64578790</span></span></code></pre>
 <p>Take a minute to understand the conceptual process of the
 <code>invoke_map</code> function and specifically the parameter setup.
 Once you are comfortable, we can move on to model implementation.</p>
