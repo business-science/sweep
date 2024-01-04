@@ -1,10 +1,13 @@
-
 .navbar-brand {
     color: #FFFFFF !important;
 }
 
 .nav-link {
     color: #FFFFFF !important;
+}
+
+#toc>.nav a.nav-link {
+    color: #000000 !important;
 }
 
 .navbar-dark .navbar-nav .active>.nav-link {
