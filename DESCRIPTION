@@ -23,20 +23,20 @@ Imports:
     broom (>= 0.5.6),
     dplyr (>= 1.0.0),
     forecast (>= 8.0),
+    rlang,
     tibble (>= 1.2),
-    timetk (>= 2.1.0),
-    rlang
+    timetk (>= 2.1.0)
 Suggests:
+    fracdiff,
     ggplot2,
     knitr,
     lubridate,
-    rmarkdown,
-    testthat (>= 2.0.0),
     purrr,
     readr,
-    stringr,
+    rmarkdown,
     scales,
-    fracdiff,
+    stringr,
+    testthat (>= 2.0.0),
     tidyr (>= 1.0.0),
     tidyquant,
     zoo
