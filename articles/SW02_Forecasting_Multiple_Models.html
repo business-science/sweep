@@ -5,26 +5,19 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="sweep">
 <title>Forecasting Using Multiple Models • sweep</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Forecasting Using Multiple Models">
-<meta property="og:description" content="sweep">
-<meta property="og:image" content="https://business-science.github.io/sweep/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-20GDZ5LL77"></script><script>
+<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-20GDZ5LL77"></script><script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
@@ -34,63 +27,41 @@
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-dark navbar-expand-lg bg-primary"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-primary" data-bs-theme="dark" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">sweep</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.5.9000</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="nav-item">
-  <a class="nav-link" href="../index.html">
-    <span class="fa fa-home"></span>
-     
-  </a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../articles/SW00_Introduction_to_sweep.html">Start</a>
-</li>
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/index.html">Articles</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../index.html"><span class="fa fa-home"></span></a></li>
+<li class="nav-item"><a class="nav-link" href="../articles/SW00_Introduction_to_sweep.html">Start</a></li>
+<li class="active nav-item"><a class="nav-link" href="../articles/index.html">Articles</a></li>
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-api">API</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-api">
-    <h6 class="dropdown-header" data-toc-skip>API Functions</h6>
-    <a class="dropdown-item" href="../reference/index.html">
-      <span class="fa fa-home"></span>
-       
-      Function Reference
-    </a>
-    <div class="dropdown-divider"></div>
-    <h6 class="dropdown-header" data-toc-skip>Change History</h6>
-    <a class="dropdown-item" href="../news/index.html">News</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-api" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">API</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-api">
+<li><h6 class="dropdown-header" data-toc-skip>API Functions</h6></li>
+    <li><a class="dropdown-item" href="../reference/index.html"><span class="fa fa-home"></span> Function Reference</a></li>
+    <li><hr class="dropdown-divider"></li>
+    <li><h6 class="dropdown-header" data-toc-skip>Change History</h6></li>
+    <li><a class="dropdown-item" href="../news/index.html">News</a></li>
+  </ul>
 </li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/business-science/sweep">
-    <span class="fa fa-github"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/business-science/sweep"><span class="fa fa-github"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -103,9 +74,9 @@
                         <h4 data-toc-skip class="author">Matt
 Dancho</h4>
             
-            <h4 data-toc-skip class="date">2024-01-04</h4>
+            <h4 data-toc-skip class="date">2025-08-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/HEAD/vignettes/SW02_Forecasting_Multiple_Models.Rmd" class="external-link"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/master/vignettes/SW02_Forecasting_Multiple_Models.Rmd" class="external-link"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
       <div class="d-none name"><code>SW02_Forecasting_Multiple_Models.Rmd</code></div>
     </div>
 
@@ -134,7 +105,7 @@ time series</em>.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://purrr.tidyverse.org/" class="external-link">purrr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://lubridate.tidyverse.org" class="external-link">lubridate</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/tidyquant" class="external-link">tidyquant</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://business-science.github.io/tidyquant/" class="external-link">tidyquant</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/business-science/timetk" class="external-link">timetk</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://business-science.github.io/sweep/">sweep</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span></span></code></pre></div>
@@ -143,10 +114,10 @@ time series</em>.</p>
 <h2 id="forecasting-gasoline-prices">Forecasting Gasoline Prices<a class="anchor" aria-label="anchor" href="#forecasting-gasoline-prices"></a>
 </h2>
 <p>To start, let’s get some data from the FRED data base using
-<code>tidyquant</code>. We’ll use <code><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html" class="external-link">tq_get()</a></code> to retrieve the
-Gasoline Prices from 1990 through today (2024-01-04).</p>
+<code>tidyquant</code>. We’ll use <code><a href="https://business-science.github.io/tidyquant/reference/tq_get.html" class="external-link">tq_get()</a></code> to retrieve the
+Gasoline Prices from 1990 through today (2025-08-28).</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_monthly_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/tq_get.html" class="external-link">tq_get</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">gas_prices_monthly_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/tq_get.html" class="external-link">tq_get</a></span><span class="op">(</span></span>
 <span>    x    <span class="op">=</span> <span class="st">"GASREGCOVM"</span>, </span>
 <span>    get  <span class="op">=</span> <span class="st">"economic.data"</span>, </span>
 <span>    from <span class="op">=</span> <span class="st">"1990-01-01"</span>, </span>
@@ -184,20 +155,20 @@ data.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gas_prices_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gasoline Prices, Monthly"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"USD"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">dollar</a></span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-6-1.png" width="95%" style="display: block; margin: auto;"></p>
 <p>Monthly periodicity might be a bit granular for model fitting. We can
-easily switch periodicity to quarterly using <code><a href="https://rdrr.io/pkg/tidyquant/man/tq_mutate.html" class="external-link">tq_transmute()</a></code>
+easily switch periodicity to quarterly using <code><a href="https://business-science.github.io/tidyquant/reference/tq_mutate.html" class="external-link">tq_transmute()</a></code>
 from the <code>tidyquant</code> package along with the periodicity
 aggregation function <code>to.period</code> from the <code>xts</code>
 package. We’ll convert the date to <code>yearqtr</code> class which is
 regularized.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gas_prices_quarterly</span> <span class="op">&lt;-</span> <span class="va">gas_prices_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/tq_mutate.html" class="external-link">tq_transmute</a></span><span class="op">(</span>mutate_fun <span class="op">=</span> <span class="va">to.period</span>, period <span class="op">=</span> <span class="st">"quarters"</span><span class="op">)</span> </span>
+<span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/tq_mutate.html" class="external-link">tq_transmute</a></span><span class="op">(</span>mutate_fun <span class="op">=</span> <span class="va">to.period</span>, period <span class="op">=</span> <span class="st">"quarters"</span><span class="op">)</span> </span>
 <span><span class="va">gas_prices_quarterly</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 106 × 2</span></span></span>
 <span><span class="co">##    date       price</span></span>
@@ -217,11 +188,11 @@ regularized.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gas_prices_quarterly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gasoline Prices, Quarterly"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"USD"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"5 years"</span>, date_labels <span class="op">=</span> <span class="st">"%Y"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-8-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
@@ -313,15 +284,15 @@ list of functions to a list of parameters. Pretty powerful!</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_out</span><span class="op">$</span><span class="va">out</span></span></code></pre></div>
 <pre><code><span><span class="co">## [[1]]</span></span>
-<span><span class="co">##  [1] 0.42155563 0.42379228 0.46917184 0.10316305 0.26565995 0.09874709</span></span>
-<span><span class="co">##  [7] 0.08690328 0.07262046 0.69857270 0.49356690</span></span>
+<span><span class="co">##  [1] 0.080750138 0.834333037 0.600760886 0.157208442 0.007399441 0.466393497</span></span>
+<span><span class="co">##  [7] 0.497777389 0.289767245 0.732881987 0.772521511</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[2]]</span></span>
-<span><span class="co">## [1] 14  7 10  4 10</span></span>
+<span><span class="co">## [1] 13  4  7  9  8</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## [[3]]</span></span>
-<span><span class="co">##  [1]   4.407060  11.573701 -15.967180 -19.109283 -10.849322   2.106939</span></span>
-<span><span class="co">##  [7]   5.287479  -3.501710  -4.141385   2.282338</span></span></code></pre>
+<span><span class="co">##  [1]   3.289820  17.650249 -19.309894   2.124269 -21.630115  -8.220125</span></span>
+<span><span class="co">##  [7]  -3.526019   2.429963 -12.140748   1.681544</span></span></code></pre>
 <p>Take a minute to understand the conceptual process of the
 <code>invoke_map</code> function and specifically the parameter setup.
 Once you are comfortable, we can move on to model implementation.</p>
@@ -338,10 +309,10 @@ implementation:</p>
 <li>Invoke a function map</li>
 </ol>
 <p>This is easier than it sounds. Let’s start by coercing the univariate
-time series with <code><a href="https://rdrr.io/pkg/timetk/man/tk_ts.html" class="external-link">tk_ts()</a></code>.</p>
+time series with <code><a href="https://business-science.github.io/timetk/reference/tk_ts.html" class="external-link">tk_ts()</a></code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gas_prices_quarterly_ts</span> <span class="op">&lt;-</span> <span class="va">gas_prices_quarterly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/timetk/man/tk_ts.html" class="external-link">tk_ts</a></span><span class="op">(</span>select <span class="op">=</span> <span class="op">-</span><span class="va">date</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">3</span><span class="op">)</span>, freq <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://business-science.github.io/timetk/reference/tk_ts.html" class="external-link">tk_ts</a></span><span class="op">(</span>select <span class="op">=</span> <span class="op">-</span><span class="va">date</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">3</span><span class="op">)</span>, freq <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">gas_prices_quarterly_ts</span></span></code></pre></div>
 <pre><code><span><span class="co">##       Qtr1  Qtr2  Qtr3  Qtr4</span></span>
 <span><span class="co">## 1990             1.258 1.324</span></span>
@@ -497,12 +468,12 @@ bats model has relatively low residuals.</p>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>augment <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">sw_augment</span>, rename_index <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">augment</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">.resid</span>, group <span class="op">=</span> <span class="va">f</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"loess"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">f</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Residuals Plot"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-19-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
@@ -587,8 +558,8 @@ and piping to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html
 <span>         x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Price"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"5 years"</span>, date_labels <span class="op">=</span> <span class="st">"%Y"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/tidyquant/man/scale_manual.html" class="external-link">scale_color_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/scale_manual.html" class="external-link">scale_color_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-23-1.png" width="95%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
@@ -598,28 +569,26 @@ and piping to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html
 models. In the next vignette we will review time series object coercion
 with <code>sweep</code>.</p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Matt Dancho, Davis Vaughan.</p>
+  <p>Developed by Matt Dancho, Davis Vaughan.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
