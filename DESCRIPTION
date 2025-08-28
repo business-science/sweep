@@ -1,6 +1,6 @@
 Package: sweep
 Title: Tidy Tools for Forecasting
-Version: 0.2.5.9000
+Version: 0.2.6
 Authors@R: c(
     person("Matt", "Dancho", email = "mdancho@business-science.io", role = c("aut", "cre")),
     person("Davis", "Vaughan", email = "dvaughan@business-science.io", role = c("aut"))
