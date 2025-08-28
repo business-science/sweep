@@ -1,8 +1,10 @@
-# sweep (development version)
+# sweep (0.2.6)
 
 * sweep no longer imports tidyverse. (@olivroy, #22)
 
 * Remove internal usage of `dplyr::select_()`. (@olivroy, #22)
+
+* CRAN: Fix links
 
 # sweep 0.2.5
 
