@@ -5,7 +5,7 @@ articles:
   SW00_Introduction_to_sweep: SW00_Introduction_to_sweep.html
   SW01_Forecasting_Time_Series_Groups: SW01_Forecasting_Time_Series_Groups.html
   SW02_Forecasting_Multiple_Models: SW02_Forecasting_Multiple_Models.html
-last_built: 2025-08-28T15:14Z
+last_built: 2025-08-28T19:09Z
 urls:
   reference: https://business-science.github.io/sweep/reference
   article: https://business-science.github.io/sweep/articles
