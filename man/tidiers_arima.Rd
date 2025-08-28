@@ -92,5 +92,5 @@ sw_augment(fit_arima)
 
 }
 \seealso{
-\code{\link[=arima]{arima()}}, \link[=arima]{Arima()}
+\code{\link[stats:arima]{stats::arima()}}
 }

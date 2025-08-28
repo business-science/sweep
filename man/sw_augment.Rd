@@ -16,11 +16,11 @@ Given an R statistical model or other non-tidy object, add columns to the
 original dataset such as predictions, residuals and cluster assignments.
 }
 \details{
-\code{sw_augment()} is a wrapper for \code{broom::augment()}. The benefit of \code{sw_augment}
+\code{sw_augment()} is a wrapper for \code{\link[broom:reexports]{broom::augment()}}. The benefit of \code{sw_augment}
 is that it has methods for various time-series model classes such as
 \code{HoltWinters}, \code{ets}, \code{Arima}, etc.
 
-For non-time series, \code{sw_augment()} defaults to \code{broom::augment()}.
+For non-time series, \code{sw_augment()} defaults to \code{\link[broom:reexports]{broom::augment()}}.
 The only difference is that the return is a tibble.
 
 Note that by convention the first argument is almost always \code{data},

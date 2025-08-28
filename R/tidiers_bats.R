@@ -12,7 +12,7 @@
 #' @param ... Additional parameters (not used)
 #'
 #'
-#' @seealso [bats()], [tbats()]
+#' @seealso [forecast::bats()], [forecast::tbats()]
 #'
 #' @examples
 #' library(dplyr)

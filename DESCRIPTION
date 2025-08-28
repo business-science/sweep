@@ -40,7 +40,7 @@ Suggests:
     tidyr (>= 1.0.0),
     tidyquant,
     zoo
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 VignetteBuilder: knitr
 Config/testthat/edition: 2

@@ -13,7 +13,7 @@
 #' @param ... Not used.
 #'
 #'
-#' @seealso [ets()]
+#' @seealso [forecast::ets()]
 #'
 #' @examples
 #' library(dplyr)

@@ -17,7 +17,7 @@ to develop forecast. Otherwise uses default index.}
 
 \item{rename_index}{Enables the index column to be renamed.}
 
-\item{...}{Additional arguments passed to \code{tk_make_future_timeseries()}}
+\item{...}{Additional arguments passed to \code{\link[timetk:tk_make_future_timeseries]{timetk::tk_make_future_timeseries()}}}
 }
 \value{
 Returns a \code{tibble} object.
@@ -41,9 +41,9 @@ higher order \code{yearmon} and \code{yearqtr} classes from the \code{zoo} packa
 A higher order class is attempted to be returned.
 \item If \code{timetk_idx = TRUE} and a timetk index is present, an irregular time index
 will be returned that combines the original time series (i.e. date or datetime)
-along with a computed future time series created using \code{tk_make_future_timeseries()}
+along with a computed future time series created using \code{\link[timetk:tk_make_future_timeseries]{timetk::tk_make_future_timeseries()}}
 from the \code{timetk} package. The \code{...} can be used to pass additional arguments
-to \code{tk_make_future_timeseries()} such as \code{inspect_weekdays}, \code{skip_values}, etc
+to \code{\link[timetk:tk_make_future_timeseries]{timetk::tk_make_future_timeseries()}} such as \code{inspect_weekdays}, \code{skip_values}, etc
 that can be useful in tuning the future time series sequence.
 }
 
@@ -62,5 +62,5 @@ USAccDeaths \%>\%
 
 }
 \seealso{
-\code{\link[=tk_make_future_timeseries]{tk_make_future_timeseries()}}
+\code{\link[timetk:tk_make_future_timeseries]{timetk::tk_make_future_timeseries()}}
 }

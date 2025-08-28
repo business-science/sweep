@@ -81,5 +81,5 @@ sw_augment(fit_nnetar)
 
 }
 \seealso{
-\code{\link[=nnetar]{nnetar()}}
+\code{\link[forecast:nnetar]{forecast::nnetar()}}
 }

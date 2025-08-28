@@ -14,7 +14,7 @@
 #' Uses a irregular timetk index if present.
 #'
 #'
-#' @seealso [StructTS()]
+#' @seealso [stats::StructTS()]
 #'
 #' @examples
 #' library(dplyr)

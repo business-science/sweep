@@ -6,7 +6,7 @@
 #' @param rename_index Enables the index column to be renamed.
 #' @param timetk_idx If timetk index (non-regularized index) is present, uses it
 #' to develop forecast. Otherwise uses default index.
-#' @param ... Additional arguments passed to `tk_make_future_timeseries()`
+#' @param ... Additional arguments passed to [timetk::tk_make_future_timeseries()]
 #'
 #' @return Returns a `tibble` object.
 #'
@@ -26,14 +26,14 @@
 #'
 #' * If `timetk_idx = TRUE` and a timetk index is present, an irregular time index
 #' will be returned that combines the original time series (i.e. date or datetime)
-#' along with a computed future time series created using `tk_make_future_timeseries()`
+#' along with a computed future time series created using [timetk::tk_make_future_timeseries()]
 #' from the `timetk` package. The `...` can be used to pass additional arguments
-#' to `tk_make_future_timeseries()` such as `inspect_weekdays`, `skip_values`, etc
+#' to [timetk::tk_make_future_timeseries()] such as `inspect_weekdays`, `skip_values`, etc
 #' that can be useful in tuning the future time series sequence.
 #'
 #' The index column name can be changed using the `rename_index` argument.
 #'
-#' @seealso [tk_make_future_timeseries()]
+#' @seealso [timetk::tk_make_future_timeseries()]
 #'
 #' @examples
 #' library(forecast)

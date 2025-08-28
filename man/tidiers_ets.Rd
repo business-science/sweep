@@ -96,5 +96,5 @@ sw_tidy_decomp(fit_ets)
 
 }
 \seealso{
-\code{\link[=ets]{ets()}}
+\code{\link[forecast:ets]{forecast::ets()}}
 }

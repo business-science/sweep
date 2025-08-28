@@ -92,5 +92,5 @@ sw_augment(fit_bats)
 
 }
 \seealso{
-\code{\link[=bats]{bats()}}, \code{\link[=tbats]{tbats()}}
+\code{\link[forecast:bats]{forecast::bats()}}, \code{\link[forecast:tbats]{forecast::tbats()}}
 }

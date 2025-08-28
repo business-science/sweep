@@ -6,14 +6,14 @@
 #' @param ... other arguments passed to methods
 #'
 #' @details
-#' `sw_glance()` is a wrapper for `broom::glance()`. The benefit of `sw_glance`
+#' `sw_glance()` is a wrapper for [broom::glance()]. The benefit of `sw_glance`
 #' is that it has methods for various time-series model classes such as
 #' `HoltWinters`, `ets`, `Arima`, etc.
 #' `sw_glance` methods always return either a one-row tibble or `NULL`.
 #' The single row includes summary statistics relevent to the model accuracy,
 #' which can be used to assess model fit and quality.
 #'
-#' For non-time series, `sw_glance()` defaults to `broom::glance()`.
+#' For non-time series, `sw_glance()` defaults to [broom::glance()].
 #' The only difference is that the return is a tibble.
 #'
 #' @return single-row tibble with model summary information.

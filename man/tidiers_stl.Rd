@@ -87,5 +87,5 @@ sw_tidy_decomp(fit_stl)
 
 }
 \seealso{
-\code{\link[=stl]{stl()}}
+\code{\link[stats:stl]{stats::stl()}}
 }

@@ -20,14 +20,14 @@ Construct a single row summary "glance" of a model, fit, or other
 object
 }
 \details{
-\code{sw_glance()} is a wrapper for \code{broom::glance()}. The benefit of \code{sw_glance}
+\code{sw_glance()} is a wrapper for \code{\link[broom:reexports]{broom::glance()}}. The benefit of \code{sw_glance}
 is that it has methods for various time-series model classes such as
 \code{HoltWinters}, \code{ets}, \code{Arima}, etc.
 \code{sw_glance} methods always return either a one-row tibble or \code{NULL}.
 The single row includes summary statistics relevent to the model accuracy,
 which can be used to assess model fit and quality.
 
-For non-time series, \code{sw_glance()} defaults to \code{broom::glance()}.
+For non-time series, \code{sw_glance()} defaults to \code{\link[broom:reexports]{broom::glance()}}.
 The only difference is that the return is a tibble.
 }
 \seealso{

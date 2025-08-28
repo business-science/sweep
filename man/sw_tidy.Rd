@@ -18,12 +18,12 @@ a tibble
 Tidy the result of a time-series model into a summary tibble
 }
 \details{
-\code{sw_tidy()} is a wrapper for \code{broom::tidy()}. The main benefit of \code{sw_tidy()}
+\code{sw_tidy()} is a wrapper for \code{\link[broom:reexports]{broom::tidy()}}. The main benefit of \code{sw_tidy()}
 is that it has methods for various time-series model classes such as
 \code{HoltWinters}, \code{ets}, \code{Arima}, etc.
 \code{sw_tidy()} methods always returns a "tidy" tibble with model coefficient / parameters.
 
-For non-time series, \code{sw_tidy()} defaults to \code{broom::tidy()}.
+For non-time series, \code{sw_tidy()} defaults to \code{\link[broom:reexports]{broom::tidy()}}.
 The only difference is that the return is a tibble.
 The output of \code{sw_tidy()} is always a tibble with disposable row names. It is
 therefore suited for further manipulation by packages like dplyr and

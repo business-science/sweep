@@ -13,7 +13,7 @@
 #' Uses a irregular timetk index if present.
 #'
 #'
-#' @seealso [nnetar()]
+#' @seealso [forecast::nnetar()]
 #'
 #' @examples
 #' library(dplyr)

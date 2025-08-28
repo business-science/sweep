@@ -14,7 +14,7 @@
 #' @param ... Additional parameters (not used)
 #'
 #'
-#' @seealso [HoltWinters()]
+#' @seealso [stats::HoltWinters()]
 #'
 #' @examples
 #' library(dplyr)

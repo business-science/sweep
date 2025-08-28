@@ -93,5 +93,5 @@ sw_tidy_decomp(fit_hw)
 
 }
 \seealso{
-\code{\link[=HoltWinters]{HoltWinters()}}
+\code{\link[stats:HoltWinters]{stats::HoltWinters()}}
 }

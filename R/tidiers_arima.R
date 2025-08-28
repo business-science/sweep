@@ -13,7 +13,7 @@
 #' Uses a irregular timetk index if present.
 #'
 #'
-#' @seealso [arima()], [Arima()]
+#' @seealso [stats::arima()]
 #'
 #' @examples
 #' library(dplyr)

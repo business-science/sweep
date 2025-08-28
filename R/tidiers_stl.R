@@ -9,7 +9,7 @@
 #' @param ... Not used.
 #'
 #'
-#' @seealso [stl()]
+#' @seealso [stats::stl()]
 #'
 #' @examples
 #' library(dplyr)
