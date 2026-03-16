@@ -48,27 +48,27 @@ library(sweep)
 library(forecast)
 ```
 
-# Forecasting Sales of Beer, Wine, and Distilled Alcohol Beverages
+# Forecasting Monthly Bike Sales Revenue
 
-We'll use the `tidyquant` package to get the US alcohol sales, which comes from the FRED data base (the origin is the US Bureau of the Census, one of the 80+ data sources FRED connects to). The FRED code is "S4248SM144NCEN" and the data set can be found [here](https://fred.stlouisfed.org/series/S4248SM144NCEN).
+We'll use the `bike_sales` data set that ships with `sweep` and aggregate it to monthly revenue. This gives us a local, reproducible series with both seasonality and trend.
 
 ```{r}
-alcohol_sales_tbl <- tq_get("S4248SM144NCEN", 
-                            get  = "economic.data", 
-                            from = "2007-01-01",
-                            to   = "2016-12-31")
-alcohol_sales_tbl
+monthly_sales_tbl <- bike_sales %>%
+    dplyr::mutate(date = lubridate::floor_date(order.date, unit = "month")) %>%
+    dplyr::group_by(date) %>%
+    dplyr::summarise(price = sum(price.ext), .groups = "drop")
+monthly_sales_tbl
 ```
 
 We can quickly visualize using the `ggplot2` package. We can see that there appears to be some seasonality and an upward trend.
 
 ```{r}
-alcohol_sales_tbl %>%
+monthly_sales_tbl %>%
     ggplot(aes(x = date, y = price)) +
     geom_line(linewidth = 1, color = palette_light()[[1]]) +
     geom_smooth(method = "loess") +
-    labs(title = "US Alcohol Sales: Monthly", x = "", y = "Millions") +
-    scale_y_continuous(labels = scales::dollar) +
+    labs(title = "Bike Sales Revenue: Monthly", x = "", y = "Revenue") +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1 / 1000000, suffix = "M")) +
     scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
     theme_tq()
 ```
@@ -91,14 +91,14 @@ The `forecast` package uses the `ts` data structure, which is quite a bit differ
 
 
 ```{r}
-alcohol_sales_ts <- tk_ts(alcohol_sales_tbl, start = 2007, freq = 12, silent = TRUE)
-alcohol_sales_ts
+monthly_sales_ts <- tk_ts(monthly_sales_tbl, start = 2011, freq = 12, silent = TRUE)
+monthly_sales_ts
 ```
 
 A significant benefit is that the resulting `ts` object maintains a "timetk index", which will help with forecasting dates later. We can verify this using `has_timetk_idx()` from the `timetk` package.
 
 ```{r}
-has_timetk_idx(alcohol_sales_ts)
+has_timetk_idx(monthly_sales_ts)
 ```
 
 
@@ -109,7 +109,7 @@ Now that a time series has been coerced, let's proceed with modeling.
 The modeling workflow takes a time series object and applies a model. Nothing new here: we'll simply use the `ets()` function from the `forecast` package to get an Exponential Smoothing ETS (Error, Trend, Seasonal) model.
 
 ```{r}
-fit_ets <- alcohol_sales_ts %>%
+fit_ets <- monthly_sales_ts %>%
     ets()
 ```
 
@@ -184,7 +184,7 @@ augment_fit_ets %>%
     geom_point(color = palette_light()[[1]], alpha = 0.5) +
     geom_smooth(method = "loess") +
     scale_x_yearmon(n = 10) +
-    labs(title = "US Alcohol Sales: ETS Residuals", x = "") + 
+    labs(title = "Bike Sales Revenue: ETS Residuals", x = "") + 
     theme_tq()
 ```
 
@@ -209,7 +209,7 @@ decomp_fit_ets %>%
     geom_ma(ma_fun = SMA, n = 12, size = 1) +
     facet_wrap(~ key, scales = "free_y") +
     scale_x_yearmon(n = 10) +
-    labs(title = "US Alcohol Sales: ETS Decomposition", x = "") + 
+    labs(title = "Bike Sales Revenue: ETS Decomposition", x = "") + 
     theme_tq() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
@@ -252,9 +252,9 @@ sw_sweep(fcast_ets) %>%
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
                 fill = "#596DD5", color = NA, linewidth = 0, alpha = 0.8) +
     geom_line(linewidth = 1) +
-    labs(title = "US Alcohol Sales, ETS Model Forecast", x = "", y = "Millions",
+    labs(title = "Bike Sales Revenue, ETS Model Forecast", x = "", y = "Revenue",
          subtitle = "Regular Time Index") +
-    scale_y_continuous(labels = scales::label_dollar()) +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1 / 1000000, suffix = "M")) +
     scale_x_yearmon(n = 12, format = "%Y") +
     scale_color_tq() +
     scale_fill_tq() +
@@ -283,9 +283,9 @@ sw_sweep(fcast_ets, timetk_idx = TRUE) %>%
     geom_ribbon(aes(ymin = lo.80, ymax = hi.80, fill = key), 
                 fill = "#596DD5", color = NA, linewidth = 0, alpha = 0.8) +
     geom_line(linewidth = 1) +
-    labs(title = "US Alcohol Sales, ETS Model Forecast", x = "", y = "Millions", 
+    labs(title = "Bike Sales Revenue, ETS Model Forecast", x = "", y = "Revenue", 
          subtitle = "Irregular Time Index") +
-    scale_y_continuous(labels = scales::dollar) +
+    scale_y_continuous(labels = scales::label_dollar(scale = 1 / 1000000, suffix = "M")) +
     scale_x_date(date_breaks = "1 year", date_labels = "%Y") +
     scale_color_tq() +
     scale_fill_tq() +
@@ -297,4 +297,3 @@ In this example, there is not much benefit to returning an irregular time series
 # Recap
 
 This was an overview of how various functions within the `sweep` package can be used to assist in forecast analysis. In the next vignette, we discuss some more powerful concepts including forecasting at scale with grouped time series analysis. 
-

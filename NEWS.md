@@ -1,3 +1,7 @@
+# sweep (0.2.7)
+
+* New vignette updates - remove tidyquant dependencies
+
 # sweep (0.2.6)
 
 * sweep no longer imports tidyverse. (@olivroy, #22)
