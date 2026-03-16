@@ -33,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">sweep</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.7</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
                         <h4 data-toc-skip class="author">Matt
 Dancho</h4>
             
-            <h4 data-toc-skip class="date">2025-08-28</h4>
+            <h4 data-toc-skip class="date">2026-03-16</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/master/vignettes/SW02_Forecasting_Multiple_Models.Rmd" class="external-link"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
       <div class="d-none name"><code>SW02_Forecasting_Multiple_Models.Rmd</code></div>
@@ -111,55 +111,56 @@ time series</em>.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://pkg.robjhyndman.com/forecast/" class="external-link">forecast</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="forecasting-gasoline-prices">Forecasting Gasoline Prices<a class="anchor" aria-label="anchor" href="#forecasting-gasoline-prices"></a>
+<h2 id="forecasting-bike-sales-revenue">Forecasting Bike Sales Revenue<a class="anchor" aria-label="anchor" href="#forecasting-bike-sales-revenue"></a>
 </h2>
-<p>To start, let’s get some data from the FRED data base using
-<code>tidyquant</code>. We’ll use <code><a href="https://business-science.github.io/tidyquant/reference/tq_get.html" class="external-link">tq_get()</a></code> to retrieve the
-Gasoline Prices from 1990 through today (2025-08-28).</p>
+<p>To start, we’ll build a monthly revenue series from the
+<code>bike_sales</code> data set that ships with <code>sweep</code>. To
+keep the missing-value cleanup step in the example, we’ll intentionally
+blank a few monthly observations.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_monthly_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/tq_get.html" class="external-link">tq_get</a></span><span class="op">(</span></span>
-<span>    x    <span class="op">=</span> <span class="st">"GASREGCOVM"</span>, </span>
-<span>    get  <span class="op">=</span> <span class="st">"economic.data"</span>, </span>
-<span>    from <span class="op">=</span> <span class="st">"1990-01-01"</span>, </span>
-<span>    to   <span class="op">=</span> <span class="st">"2016-12-31"</span><span class="op">)</span> </span>
-<span><span class="va">gas_prices_monthly_raw</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 316 × 3</span></span></span>
-<span><span class="co">##    symbol     date       price</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> GASREGCOVM 1990-09-01  1.26</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> GASREGCOVM 1990-10-01  1.34</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> GASREGCOVM 1990-11-01  1.32</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> GASREGCOVM 1990-12-01 <span style="color: #BB0000;">NA</span>   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> GASREGCOVM 1991-01-01 <span style="color: #BB0000;">NA</span>   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> GASREGCOVM 1991-02-01  1.09</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> GASREGCOVM 1991-03-01  1.04</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> GASREGCOVM 1991-04-01  1.08</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> GASREGCOVM 1991-05-01  1.13</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> GASREGCOVM 1991-06-01  1.13</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 306 more rows</span></span></span></code></pre>
-<p>Upon a brief inspection, the data contains 2 <code>NA</code> values
+<code class="sourceCode R"><span><span class="va">sales_monthly_raw</span> <span class="op">&lt;-</span> <span class="va">bike_sales</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/round_date.html" class="external-link">floor_date</a></span><span class="op">(</span><span class="va">order.date</span>, unit <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">price.ext</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>    <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>price <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7L</span>, <span class="fl">19L</span>, <span class="fl">38L</span><span class="op">)</span>, <span class="cn">NA_real_</span>, <span class="va">price</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">sales_monthly_raw</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 60 × 2</span></span></span>
+<span><span class="co">##    date          price</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2011-01-01  1<span style="text-decoration: underline;">165</span>365</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2011-02-01  5<span style="text-decoration: underline;">794</span>945</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2011-03-01  6<span style="text-decoration: underline;">811</span>655</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2011-04-01 14<span style="text-decoration: underline;">097</span>770</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2011-05-01  8<span style="text-decoration: underline;">488</span>650</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2011-06-01 14<span style="text-decoration: underline;">725</span>405</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2011-07-01       <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2011-08-01  4<span style="text-decoration: underline;">456</span>670</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2011-09-01  3<span style="text-decoration: underline;">505</span>000</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2011-10-01  1<span style="text-decoration: underline;">548</span>640</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 50 more rows</span></span></span></code></pre>
+<p>Upon a brief inspection, the data contains 3 <code>NA</code> values
 that will need to be dealt with.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">gas_prices_monthly_raw</span><span class="op">$</span><span class="va">price</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's </span></span>
-<span><span class="co">##   0.900   1.138   1.615   1.974   2.697   4.002       2</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sales_monthly_raw</span><span class="op">$</span><span class="va">price</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA's </span></span>
+<span><span class="co">##  1165365  4204590  6394690  7928688 10331390 25227175        3</span></span></code></pre>
 <p>We can use the <code><a href="https://tidyr.tidyverse.org/reference/fill.html" class="external-link">fill()</a></code> from the <code>tidyr</code>
 package to help deal with these data. We first fill down and then fill
 up to use the previous and then post days prices to fill in the missing
 data.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_monthly</span> <span class="op">&lt;-</span> <span class="va">gas_prices_monthly_raw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">sales_monthly</span> <span class="op">&lt;-</span> <span class="va">sales_monthly_raw</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/fill.html" class="external-link">fill</a></span><span class="op">(</span><span class="va">price</span>, .direction <span class="op">=</span> <span class="st">"down"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/fill.html" class="external-link">fill</a></span><span class="op">(</span><span class="va">price</span>, .direction <span class="op">=</span> <span class="st">"up"</span><span class="op">)</span></span></code></pre></div>
 <p>We can now visualize the data.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">sales_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gasoline Prices, Monthly"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"USD"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">dollar</a></span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Bike Sales Revenue, Monthly"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Revenue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">1000000</span>, suffix <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-6-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="95%" style="display: block; margin: auto;"></p>
 <p>Monthly periodicity might be a bit granular for model fitting. We can
 easily switch periodicity to quarterly using <code><a href="https://business-science.github.io/tidyquant/reference/tq_mutate.html" class="external-link">tq_transmute()</a></code>
 from the <code>tidyquant</code> package along with the periodicity
@@ -167,39 +168,48 @@ aggregation function <code>to.period</code> from the <code>xts</code>
 package. We’ll convert the date to <code>yearqtr</code> class which is
 regularized.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_quarterly</span> <span class="op">&lt;-</span> <span class="va">gas_prices_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">sales_quarterly</span> <span class="op">&lt;-</span> <span class="va">sales_monthly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/tq_mutate.html" class="external-link">tq_transmute</a></span><span class="op">(</span>mutate_fun <span class="op">=</span> <span class="va">to.period</span>, period <span class="op">=</span> <span class="st">"quarters"</span><span class="op">)</span> </span>
-<span><span class="va">gas_prices_quarterly</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 106 × 2</span></span></span>
-<span><span class="co">##    date       price</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 1990-09-01  1.26</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 1990-12-01  1.32</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 1991-03-01  1.04</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 1991-06-01  1.13</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 1991-09-01  1.11</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 1991-12-01  1.08</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 1992-03-01  1.01</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 1992-06-01  1.14</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 1992-09-01  1.12</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 1992-12-01  1.08</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 96 more rows</span></span></span></code></pre>
+<span><span class="va">sales_quarterly</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 20 × 2</span></span></span>
+<span><span class="co">##    date          price</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 2011-03-01  6<span style="text-decoration: underline;">811</span>655</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 2011-06-01 14<span style="text-decoration: underline;">725</span>405</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 2011-09-01  3<span style="text-decoration: underline;">505</span>000</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 2011-12-01  4<span style="text-decoration: underline;">081</span>460</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 2012-03-01 25<span style="text-decoration: underline;">227</span>175</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 2012-06-01  6<span style="text-decoration: underline;">394</span>690</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 2012-09-01  9<span style="text-decoration: underline;">678</span>210</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 2012-12-01  2<span style="text-decoration: underline;">711</span>705</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 2013-03-01 15<span style="text-decoration: underline;">584</span>435</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 2013-06-01 15<span style="text-decoration: underline;">182</span>715</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 2013-09-01  5<span style="text-decoration: underline;">358</span>180</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> 2013-12-01  3<span style="text-decoration: underline;">953</span>565</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> 2014-03-01  3<span style="text-decoration: underline;">678</span>090</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">14</span> 2014-06-01  6<span style="text-decoration: underline;">596</span>090</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">15</span> 2014-09-01 10<span style="text-decoration: underline;">907</span>310</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">16</span> 2014-12-01  7<span style="text-decoration: underline;">190</span>935</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">17</span> 2015-03-01 19<span style="text-decoration: underline;">645</span>635</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">18</span> 2015-06-01 11<span style="text-decoration: underline;">146</span>845</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">19</span> 2015-09-01  6<span style="text-decoration: underline;">377</span>295</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">20</span> 2015-12-01  7<span style="text-decoration: underline;">740</span>870</span></span></code></pre>
 <p>Another quick visualization to show the reduction in granularity.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_quarterly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">sales_quarterly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">date</span>, y <span class="op">=</span> <span class="va">price</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/palette_tq.html" class="external-link">palette_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gasoline Prices, Quarterly"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"USD"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Bike Sales Revenue, Quarterly"</span>, x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Revenue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">1000000</span>, suffix <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"5 years"</span>, date_labels <span class="op">=</span> <span class="st">"%Y"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-8-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="95%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="performing-forecasts-using-multiple-models">Performing Forecasts Using Multiple Models<a class="anchor" aria-label="anchor" href="#performing-forecasts-using-multiple-models"></a>
 </h2>
-<p>In this section we will use three models to forecast gasoline
-prices:</p>
+<p>In this section we will use three models to forecast bike sales
+revenue:</p>
 <ol style="list-style-type: decimal">
 <li>ARIMA</li>
 <li>ETS</li>
@@ -266,11 +276,13 @@ nested list-column named “out”.</p>
 <code class="sourceCode R"><span><span class="co"># FIXME invoke_map is deprecated</span></span>
 <span><span class="va">df_out</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>out <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/invoke.html" class="external-link">invoke_map</a></span><span class="op">(</span><span class="va">f</span>, <span class="va">params</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: There was 1 warning in `mutate()`.</span></span>
+<pre><code><span><span class="co">## Warning: There were 2 warnings in `mutate()`.</span></span>
+<span><span class="co">## The first warning was:</span></span>
 <span><span class="co">## <span style="color: #00BBBB;">ℹ</span> In argument: `out = invoke_map(f, params)`.</span></span>
 <span><span class="co">## Caused by warning:</span></span>
 <span><span class="co">## <span style="color: #BBBB00;">!</span> `invoke_map()` was deprecated in purrr 1.0.0.</span></span>
-<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use map() + exec() instead.</span></span></code></pre>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use map() + exec() instead.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Run `dplyr::last_dplyr_warnings()` to see the 1 remaining warning.</span></span></code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df_out</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
@@ -311,51 +323,29 @@ implementation:</p>
 <p>This is easier than it sounds. Let’s start by coercing the univariate
 time series with <code><a href="https://business-science.github.io/timetk/reference/tk_ts.html" class="external-link">tk_ts()</a></code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gas_prices_quarterly_ts</span> <span class="op">&lt;-</span> <span class="va">gas_prices_quarterly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://business-science.github.io/timetk/reference/tk_ts.html" class="external-link">tk_ts</a></span><span class="op">(</span>select <span class="op">=</span> <span class="op">-</span><span class="va">date</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1990</span>, <span class="fl">3</span><span class="op">)</span>, freq <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
-<span><span class="va">gas_prices_quarterly_ts</span></span></code></pre></div>
-<pre><code><span><span class="co">##       Qtr1  Qtr2  Qtr3  Qtr4</span></span>
-<span><span class="co">## 1990             1.258 1.324</span></span>
-<span><span class="co">## 1991 1.040 1.128 1.109 1.076</span></span>
-<span><span class="co">## 1992 1.013 1.145 1.122 1.078</span></span>
-<span><span class="co">## 1993 1.052 1.097 1.050 1.014</span></span>
-<span><span class="co">## 1994 1.008 1.078 1.144 1.060</span></span>
-<span><span class="co">## 1995 1.059 1.186 1.108 1.066</span></span>
-<span><span class="co">## 1996 1.129 1.243 1.200 1.233</span></span>
-<span><span class="co">## 1997 1.197 1.189 1.216 1.119</span></span>
-<span><span class="co">## 1998 1.014 1.048 0.994 0.923</span></span>
-<span><span class="co">## 1999 0.961 1.095 1.239 1.261</span></span>
-<span><span class="co">## 2000 1.498 1.612 1.525 1.418</span></span>
-<span><span class="co">## 2001 1.384 1.548 1.506 1.072</span></span>
-<span><span class="co">## 2002 1.221 1.341 1.363 1.348</span></span>
-<span><span class="co">## 2003 1.636 1.452 1.616 1.448</span></span>
-<span><span class="co">## 2004 1.689 1.910 1.841 1.800</span></span>
-<span><span class="co">## 2005 2.063 2.123 2.862 2.174</span></span>
-<span><span class="co">## 2006 2.413 2.808 2.501 2.284</span></span>
-<span><span class="co">## 2007 2.503 3.024 2.817 2.984</span></span>
-<span><span class="co">## 2008 3.215 3.989 3.709 1.669</span></span>
-<span><span class="co">## 2009 1.937 2.597 2.480 2.568</span></span>
-<span><span class="co">## 2010 2.742 2.684 2.678 2.951</span></span>
-<span><span class="co">## 2011 3.509 3.628 3.573 3.220</span></span>
-<span><span class="co">## 2012 3.774 3.465 3.801 3.256</span></span>
-<span><span class="co">## 2013 3.648 3.576 3.474 3.209</span></span>
-<span><span class="co">## 2014 3.474 3.626 3.354 2.488</span></span>
-<span><span class="co">## 2015 2.352 2.700 2.275 1.946</span></span>
-<span><span class="co">## 2016 1.895 2.303 2.161 2.192</span></span></code></pre>
+<code class="sourceCode R"><span><span class="va">sales_quarterly_ts</span> <span class="op">&lt;-</span> <span class="va">sales_quarterly</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://business-science.github.io/timetk/reference/tk_ts.html" class="external-link">tk_ts</a></span><span class="op">(</span>select <span class="op">=</span> <span class="op">-</span><span class="va">date</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2011</span>, <span class="fl">1</span><span class="op">)</span>, freq <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">sales_quarterly_ts</span></span></code></pre></div>
+<pre><code><span><span class="co">##          Qtr1     Qtr2     Qtr3     Qtr4</span></span>
+<span><span class="co">## 2011  6811655 14725405  3505000  4081460</span></span>
+<span><span class="co">## 2012 25227175  6394690  9678210  2711705</span></span>
+<span><span class="co">## 2013 15584435 15182715  5358180  3953565</span></span>
+<span><span class="co">## 2014  3678090  6596090 10907310  7190935</span></span>
+<span><span class="co">## 2015 19645635 11146845  6377295  7740870</span></span></code></pre>
 <p>Next, create a nested list using the function names as the
 first-level keys (this is important as you’ll see in the next step).
 Pass the model parameters as name-value pairs in the second level.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">models_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>    auto.arima <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>        y <span class="op">=</span> <span class="va">gas_prices_quarterly_ts</span></span>
+<span>        y <span class="op">=</span> <span class="va">sales_quarterly_ts</span></span>
 <span>        <span class="op">)</span>,</span>
 <span>    ets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>        y <span class="op">=</span> <span class="va">gas_prices_quarterly_ts</span>,</span>
+<span>        y <span class="op">=</span> <span class="va">sales_quarterly_ts</span>,</span>
 <span>        damped <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    bats <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>        y <span class="op">=</span> <span class="va">gas_prices_quarterly_ts</span></span>
+<span>        y <span class="op">=</span> <span class="va">sales_quarterly_ts</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Now, convert to a data frame using the function,
@@ -382,9 +372,9 @@ models fitted using the parameters we defined previously.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
 <span><span class="co">##   f          params           fit       </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.arima <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets        <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>     </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats       <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.arima <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets        <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats       <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span></span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -407,29 +397,22 @@ function.</p>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>tidy <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">fit</span>, <span class="va">sw_tidy</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">tidy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span>key <span class="op">=</span> <span class="va">f</span>, value <span class="op">=</span> <span class="va">estimate</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 20 × 6</span></span></span>
-<span><span class="co">##    params           fit        term              auto.arima       bats       ets</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> ar1                    0.834 <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> ma1                   -<span style="color: #BB0000;">0.964</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> sar1                   0.939 <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> sma1                  -<span style="color: #BB0000;">0.776</span> <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     alpha                 <span style="color: #BB0000;">NA</span>      0.588     <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     ar.coefficients       <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     beta                  <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     damping.parameter     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     gamma.values          <span style="color: #BB0000;">NA</span>     -<span style="color: #BB0000;">0.026</span><span style="color: #BB0000; text-decoration: underline;">2</span>    <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     lambda                <span style="color: #BB0000;">NA</span>      0.000<span style="text-decoration: underline;">060</span>5 <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     ma.coefficients       <span style="color: #BB0000;">NA</span>      0.256     <span style="color: #BB0000;">NA</span>       </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      alpha                 <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          0.831   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      b                     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         -<span style="color: #BB0000;">0.052</span><span style="color: #BB0000; text-decoration: underline;">4</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">14</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      beta                  <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          0.000<span style="text-decoration: underline;">100</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">15</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      gamma                 <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          0.052<span style="text-decoration: underline;">1</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">16</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      l                     <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          1.29    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">17</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      phi                   <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          0.837   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">18</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      s0                    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>          0.046<span style="text-decoration: underline;">9</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">19</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      s1                    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         -<span style="color: #BB0000;">0.020</span><span style="color: #BB0000; text-decoration: underline;">9</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">20</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      s2                    <span style="color: #BB0000;">NA</span>     <span style="color: #BB0000;">NA</span>         -<span style="color: #BB0000;">0.040</span><span style="color: #BB0000; text-decoration: underline;">7</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 13 × 6</span></span></span>
+<span><span class="co">##    params           fit        term              auto.arima        bats      ets</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> intercept           9<span style="text-decoration: underline;">324</span>863. <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> alpha                    <span style="color: #BB0000;">NA</span>  -<span style="color: #BB0000;">0.010</span><span style="color: #BB0000; text-decoration: underline;">00</span>    <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ar.coefficients          <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> beta                     <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> damping.parameter        <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> gamma.values             <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> lambda                   <span style="color: #BB0000;">NA</span>   0.000<span style="text-decoration: underline;">005</span>21 <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ma.coefficients          <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>          <span style="color: #BB0000;">NA</span>   <span style="color: #949494;"> </span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> alpha                    <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>           1.00<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> b                        <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>           4.57<span style="color: #949494;">e</span>+5</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> beta                     <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>           1.00<span style="color: #949494;">e</span><span style="color: #BB0000;">-4</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> l                        <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>           8.67<span style="color: #949494;">e</span>+6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> phi                      <span style="color: #BB0000;">NA</span>  <span style="color: #BB0000;">NA</span>           8.00<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="sw_glance">sw_glance<a class="anchor" aria-label="anchor" href="#sw_glance"></a>
@@ -448,12 +431,13 @@ lowest AIC by far.</p>
 <span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
-<span><span class="co">##   f     params       fit        model.desc sigma logLik   AIC   BIC     ME  RMSE</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> ARIMA(1,1… 0.298  -<span style="color: #BB0000;">20.6</span>  51.2  64.4 0.018<span style="text-decoration: underline;">0</span> 0.291</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets   <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      ETS(M,Ad,… 0.118  -<span style="color: #BB0000;">76.6</span> 173.  200.  0.014<span style="text-decoration: underline;">9</span> 0.292</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats  <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     BATS(0, {… 0.116  159.  179.  184.  0.019<span style="text-decoration: underline;">3</span> 0.259</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 5 more variables: MAE &lt;dbl&gt;, MPE &lt;dbl&gt;, MAPE &lt;dbl&gt;, MASE &lt;dbl&gt;, ACF1 &lt;dbl&gt;</span></span></span></code></pre>
+<span><span class="co">##   f        params       fit        model.desc   sigma logLik   AIC   BIC      ME</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.ar… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ARIMA(0,0… 6.02<span style="color: #949494;">e</span>+6  -<span style="color: #BB0000;">340.</span>  684.  686.  0   <span style="color: #949494;"> </span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets      <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ETS(A,Ad,… 6.86<span style="color: #949494;">e</span>+6  -<span style="color: #BB0000;">342.</span>  696.  702. -<span style="color: #BB0000;">8.06</span><span style="color: #949494;">e</span>5</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> BATS(0, {… 6.02<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>   674.  680.  682.  1.64<span style="color: #949494;">e</span>6</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 6 more variables: RMSE &lt;dbl&gt;, MAE &lt;dbl&gt;, MPE &lt;dbl&gt;, MAPE &lt;dbl&gt;, MASE &lt;dbl&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #949494;">#   ACF1 &lt;dbl&gt;</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="sw_augment">sw_augment<a class="anchor" aria-label="anchor" href="#sw_augment"></a>
@@ -475,7 +459,7 @@ bats model has relatively low residuals.</p>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Residuals Plot"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre>
-<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-19-1.png" width="95%" style="display: block; margin: auto;"></p>
+<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="95%" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -491,9 +475,9 @@ withe the argument <code>h = 6</code>.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 4</span></span></span>
 <span><span class="co">##   f          params           fit        fcast     </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>    </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.arima <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets        <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats       <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     <span style="color: #949494;">&lt;forecast&gt;</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.arima <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets        <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats       <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="tidying-the-forecast">Tidying the forecast<a class="anchor" aria-label="anchor" href="#tidying-the-forecast"></a>
@@ -516,30 +500,30 @@ for the index.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">models_tbl_fcast_tidy</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 5</span></span></span>
-<span><span class="co">##   f          params           fit        fcast      sweep             </span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>            </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.arima <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> <span style="color: #949494;">&lt;tibble [112 × 7]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets        <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;ets&gt;</span>      <span style="color: #949494;">&lt;forecast&gt;</span> <span style="color: #949494;">&lt;tibble [112 × 7]&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats       <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;bats&gt;</span>     <span style="color: #949494;">&lt;forecast&gt;</span> <span style="color: #949494;">&lt;tibble [112 × 7]&gt;</span></span></span></code></pre>
+<span><span class="co">##   f          params           fit        fcast      sweep            </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.arima <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> <span style="color: #949494;">&lt;tibble [26 × 7]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets        <span style="color: #949494;">&lt;named list [2]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> <span style="color: #949494;">&lt;tibble [26 × 7]&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats       <span style="color: #949494;">&lt;named list [1]&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> <span style="color: #949494;">&lt;tibble [26 × 7]&gt;</span></span></span></code></pre>
 <p>We can unnest the “sweep” column to get the results of all three
 models.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">models_tbl_fcast_tidy</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">sweep</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 336 × 11</span></span></span>
-<span><span class="co">##    f       params       fit        fcast      date       key   price lo.80 lo.95</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1990-09-01 actu…  1.26    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1990-12-01 actu…  1.32    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1991-03-01 actu…  1.04    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1991-06-01 actu…  1.13    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1991-09-01 actu…  1.11    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1991-12-01 actu…  1.08    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1992-03-01 actu…  1.01    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1992-06-01 actu…  1.14    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1992-09-01 actu…  1.12    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fr_ARIMA&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 1992-12-01 actu…  1.08    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 326 more rows</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 78 × 11</span></span></span>
+<span><span class="co">##    f      params       fit        fcast      date       key    price lo.80 lo.95</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;date&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2011-03-01 actu… 6.81<span style="color: #949494;">e</span>6    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2011-06-01 actu… 1.47<span style="color: #949494;">e</span>7    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2011-09-01 actu… 3.51<span style="color: #949494;">e</span>6    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2011-12-01 actu… 4.08<span style="color: #949494;">e</span>6    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2012-03-01 actu… 2.52<span style="color: #949494;">e</span>7    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2012-06-01 actu… 6.39<span style="color: #949494;">e</span>6    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2012-09-01 actu… 9.68<span style="color: #949494;">e</span>6    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2012-12-01 actu… 2.71<span style="color: #949494;">e</span>6    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2013-03-01 actu… 1.56<span style="color: #949494;">e</span>7    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> auto.… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> <span style="color: #949494;">&lt;forecast&gt;</span> 2013-06-01 actu… 1.52<span style="color: #949494;">e</span>7    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 68 more rows</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 2 more variables: hi.80 &lt;dbl&gt;, hi.95 &lt;dbl&gt;</span></span></span></code></pre>
 <p>Finally, we can plot the forecasts by unnesting the “sweep” column
 and piping to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>.</p>
@@ -553,14 +537,18 @@ and piping to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html
 <span>                fill <span class="op">=</span> <span class="st">"#596DD5"</span>, color <span class="op">=</span> <span class="cn">NA</span>, linewidth <span class="op">=</span> <span class="fl">0</span>, alpha <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>linewidth <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">f</span>, nrow <span class="op">=</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Gasoline Price Forecasts"</span>,</span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Bike Sales Revenue Forecasts"</span>,</span>
 <span>         subtitle <span class="op">=</span> <span class="st">"Forecasting multiple models with sweep: ARIMA, BATS, ETS"</span>,</span>
-<span>         x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Price"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>         x <span class="op">=</span> <span class="st">""</span>, y <span class="op">=</span> <span class="st">"Revenue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/dollar_format.html" class="external-link">label_dollar</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">1000000</span>, suffix <span class="op">=</span> <span class="st">"M"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_date.html" class="external-link">scale_x_date</a></span><span class="op">(</span>date_breaks <span class="op">=</span> <span class="st">"5 years"</span>, date_labels <span class="op">=</span> <span class="st">"%Y"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/theme_tq.html" class="external-link">theme_tq</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://business-science.github.io/tidyquant/reference/scale_manual.html" class="external-link">scale_color_tq</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-23-1.png" width="95%" style="display: block; margin: auto;"></p>
+<pre><code><span><span class="co">## Warning: Removed 60 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_ribbon()`).</span></span>
+<span><span class="co">## Removed 60 rows containing missing values or values outside the scale range</span></span>
+<span><span class="co">## (`geom_ribbon()`).</span></span></code></pre>
+<p><img src="SW02_Forecasting_Multiple_Models_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="95%" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="recap">Recap<a class="anchor" aria-label="anchor" href="#recap"></a>
@@ -580,7 +568,7 @@ with <code>sweep</code>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
