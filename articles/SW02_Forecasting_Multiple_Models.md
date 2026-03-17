@@ -408,11 +408,11 @@ models_tbl_fit %>%
     ## generated.
 
     ## # A tibble: 3 × 15
-    ##   f       params       fit        model.desc   sigma logLik   AIC   BIC       ME
-    ##   <chr>   <list>       <list>     <chr>        <dbl>  <dbl> <dbl> <dbl>    <dbl>
-    ## 1 auto.a… <named list> <fc_model> ARIMA(0,0… 6.02e+6  -340.  684.  686.  1.86e-9
-    ## 2 ets     <named list> <fc_model> ETS(A,Ad,… 6.86e+6  -342.  696.  702. -8.06e+5
-    ## 3 bats    <named list> <fc_model> BATS(0, {… 6.02e-1   674.  680.  682.  1.64e+6
+    ##   f        params       fit        model.desc   sigma logLik   AIC   BIC      ME
+    ##   <chr>    <list>       <list>     <chr>        <dbl>  <dbl> <dbl> <dbl>   <dbl>
+    ## 1 auto.ar… <named list> <fc_model> ARIMA(0,0… 6.02e+6  -340.  684.  686.  0     
+    ## 2 ets      <named list> <fc_model> ETS(A,Ad,… 6.86e+6  -342.  696.  702. -8.06e5
+    ## 3 bats     <named list> <fc_model> BATS(0, {… 6.02e-1   674.  680.  682.  1.64e6
     ## # ℹ 6 more variables: RMSE <dbl>, MAE <dbl>, MPE <dbl>, MAPE <dbl>, MASE <dbl>,
     ## #   ACF1 <dbl>
 
