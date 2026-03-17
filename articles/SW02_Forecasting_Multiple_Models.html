@@ -74,9 +74,9 @@
                         <h4 data-toc-skip class="author">Matt
 Dancho</h4>
             
-            <h4 data-toc-skip class="date">2026-03-16</h4>
+            <h4 data-toc-skip class="date">2026-03-17</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/master/vignettes/SW02_Forecasting_Multiple_Models.Rmd" class="external-link"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/business-science/sweep/blob/0.2.7/vignettes/SW02_Forecasting_Multiple_Models.Rmd" class="external-link"><code>vignettes/SW02_Forecasting_Multiple_Models.Rmd</code></a></small>
       <div class="d-none name"><code>SW02_Forecasting_Multiple_Models.Rmd</code></div>
     </div>
 
@@ -431,11 +431,11 @@ lowest AIC by far.</p>
 <span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 15</span></span></span>
-<span><span class="co">##   f        params       fit        model.desc   sigma logLik   AIC   BIC      ME</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.ar… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ARIMA(0,0… 6.02<span style="color: #949494;">e</span>+6  -<span style="color: #BB0000;">340.</span>  684.  686.  0   <span style="color: #949494;"> </span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets      <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ETS(A,Ad,… 6.86<span style="color: #949494;">e</span>+6  -<span style="color: #BB0000;">342.</span>  696.  702. -<span style="color: #BB0000;">8.06</span><span style="color: #949494;">e</span>5</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> BATS(0, {… 6.02<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>   674.  680.  682.  1.64<span style="color: #949494;">e</span>6</span></span>
+<span><span class="co">##   f       params       fit        model.desc   sigma logLik   AIC   BIC       ME</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> auto.a… <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ARIMA(0,0… 6.02<span style="color: #949494;">e</span>+6  -<span style="color: #BB0000;">340.</span>  684.  686.  1.86<span style="color: #949494;">e</span><span style="color: #BB0000;">-9</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> ets     <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> ETS(A,Ad,… 6.86<span style="color: #949494;">e</span>+6  -<span style="color: #BB0000;">342.</span>  696.  702. -<span style="color: #BB0000;">8.06</span><span style="color: #949494;">e</span>+5</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> bats    <span style="color: #949494;">&lt;named list&gt;</span> <span style="color: #949494;">&lt;fc_model&gt;</span> BATS(0, {… 6.02<span style="color: #949494;">e</span><span style="color: #BB0000;">-1</span>   674.  680.  682.  1.64<span style="color: #949494;">e</span>+6</span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 6 more variables: RMSE &lt;dbl&gt;, MAE &lt;dbl&gt;, MPE &lt;dbl&gt;, MAPE &lt;dbl&gt;, MASE &lt;dbl&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   ACF1 &lt;dbl&gt;</span></span></span></code></pre>
 </div>

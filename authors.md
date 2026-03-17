@@ -9,7 +9,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/business-science/sweep/blob/master/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/business-science/sweep/blob/0.2.7/DESCRIPTION)
 
 Dancho M, Vaughan D (2026). *sweep: Tidy Tools for Forecasting*. R
 package version 0.2.7, <https://business-science.github.io/sweep/>.
