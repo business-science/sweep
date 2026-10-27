@@ -144,9 +144,8 @@ df$params
 Next we apply the functions to the parameters using a special function, `invoke_map()`. The parameter lists in the "params" column are passed to the function in the "f" column. The output is in a nested list-column named "out".
 
 ```{r}
-# FIXME invoke_map is deprecated
 df_out <- df %>% 
-    mutate(out = invoke_map(f, params))
+    mutate(out = map2(f, params, function(f, p) do.call(f, p)))
 df_out
 ```
 
@@ -204,7 +203,7 @@ We are ready to invoke the map. Combine `mutate()` with `invoke_map()` as follow
 
 ```{r}
 models_tbl_fit <- models_tbl %>%
-    mutate(fit = purrr::invoke_map(f, params))
+    mutate(fit = purrr::map2(f, params, function(f, p) do.call(f, p)))
 models_tbl_fit
 ```
 
